@@ -21,12 +21,6 @@
     <?php else : ?>
       <a class="nav-link" href="<?= base_url() ?>Donasi" style="color: #CAA615">DONASI</a>
     <?php endif ?>
-
-    <?php if ($judul == 'Adopsi') : ?>
-      <b><a class="nav-link" href="<?= base_url() ?>Adopsi" style="color: #CAA615">ADOPSI</a></b>
-    <?php else : ?>
-      <a class="nav-link" href="<?= base_url() ?>Adopsi" style="color: #CAA615">ADOPSI</a>
-    <?php endif ?>
   </div>
 
   <ul class="navbar-nav ml-auto">

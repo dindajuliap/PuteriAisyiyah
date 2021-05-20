@@ -14,6 +14,14 @@
       $this->load->view('Registrasi/index');
       $this->load->view('Templates/foot');
     }
+
+    public function DataDiri(){
+      $data['judul'] = 'Data Diri';
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Registrasi/DataDiri');
+      $this->load->view('Templates/foot');
+    }
   }
 
       //$this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email|is_unique[daftar_akun.email_user]', ['is_unique' => 'Email sudah terdaftar.']);
