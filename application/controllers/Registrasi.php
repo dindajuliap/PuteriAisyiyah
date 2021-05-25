@@ -67,7 +67,7 @@
         $this->email->message('<h3>Selamat Datang di Puteri Aisyiyah.</h3>
               Untuk dapat masuk ke akun Anda, maka Anda harus melakukan Verifikasi Akun terlebih dahulu. <br>
               Tautan hanya berlaku selama 24 jam. <br><br>
-              Klik tautan ini untuk mengaktifkan akun Anda :  <a href="'.base_url() . 'registrasi/verify?email_user=' . $this->input->post('email_user') . '&token=' . urlencode($token) .'">Aktifkan Akun Saya Sekarang</a><br><br>
+              Klik tautan ini untuk mengaktifkan akun Anda :  <a href="'.base_url() . 'registrasi/DataDiri">Aktifkan Akun Saya Sekarang</a><br><br>
               Terima kasih...');
       }
       else if($type == 'forgot'){
