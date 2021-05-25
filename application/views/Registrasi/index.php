@@ -18,7 +18,7 @@
         <b>Registrasi</b>
       </h2>
 
-      <form action="<?= base_url('VerifikasiEmail') ?>" method="post">
+      <form action="" method="post">
         <input type="text" name="email_user" id="email_user" placeholder="Email" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <small class="form-text text-danger"><?= form_error('email_user') ?></small>
 
