@@ -2,9 +2,7 @@
   defined('BASEPATH') or exit('No direct script access allowed');
 
   class Registrasi extends CI_Controller{
-
-    public function __construct()
-    {
+    public function __construct(){
       parent::__construct();
       $this->load->library('form_validation');
     }
@@ -12,7 +10,7 @@
     public function index(){
       $data['judul'] = 'Registrasi';
 
-      $this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email|is_unique[daftar_akun.email_user]', ['is_unique' => 'Email sudah terdaftar.']);
+      $this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email|is_unique[tabel_akun.email_user]', ['is_unique' => 'Email sudah terdaftar.']);
       $this->form_validation->set_rules('password', 'Kata sandi', 'required|trim|min_length[6]|matches[konfirmasi_password]', ['matches' => 'Konfirmasi sandi tidak cocok.', 'min_length' => 'Kata sandi minimal 6 Karakter']);
       $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi Sandi', 'required|trim|matches[password]');
 
@@ -28,19 +26,20 @@
         ];
 
         $token = base64_encode(random_bytes(32));
+        date_default_timezone_set('Asia/Jakarta');
 
         $user_token = [
-          'email_user'   => $this->input->post('email_user', true),
-          'token'        => $token,
-          'date_created' => time()
+          'email_user'     => $this->input->post('email_user', true),
+          'token'          => $token,
+          'tanggal_daftar' => date("Y-m-d")
         ];
-        $this->db->insert('daftar_akun', $data);
+
+        $this->db->insert('tabel_akun', $data);
         $this->db->insert('user_token', $user_token);
 
         $this->_sendEmail($token, 'verify');
 
-        $this->session->set_flashdata('message', '<p style="font-family: Roboto">Periksa email Anda untuk melakukan verifikasi agar dapat melanjutkan registrasi!</p>');
-        redirect('VerifikasiEmail');
+        redirect('VerifikasiEmail/Registrasi');
       }
     }
 
@@ -59,16 +58,21 @@
       $this->load->library('email', $config);
       $this->email->initialize($config);
 
-      $this->email->from('puteriaisyiyah@gmail.com', 'Puteri Aisyiyah');
+      $this->email->from('puteriaisyiyah@gmail.com', 'Panti Asuhan Puteri Aisyiyah');
       $this->email->to($this->input->post('email_user'));
 
       if($type == 'verify'){
-        $this->email->subject('Verifikasi Akun');
-        $this->email->message('<h3>Selamat Datang di Puteri Aisyiyah.</h3>
-              Untuk dapat masuk ke akun Anda, maka Anda harus melakukan Verifikasi Akun terlebih dahulu. <br>
-              Tautan hanya berlaku selama 24 jam. <br><br>
-              Klik tautan ini untuk mengaktifkan akun Anda :  <a href="'.base_url() . 'registrasi/DataDiri?email_user=' . $this->input->post('email_user') . '&token=' . urlencode($token) .'">Aktifkan Akun Saya Sekarang</a><br><br>
-              Terima kasih...');
+        $this->email->subject('Verifikasi Email');
+        $this->email->message('
+          Hai '.$_POST['email_user'].',<br><br>
+          Selamat datang di Panti Asuhan Puteri Aisyiyah.<br>
+          Anda telah memasukkan email ini sebagai alamat email akun Anda. Jika benar Anda yang memasukkan email ini, mohon verifikasi email Anda dengan menekan tombol di bawah untuk melanjutkan pendaftaran akun Anda.<br><br>
+          Salam,<br>
+          Panti Asuhan Puteri Aisyiyah<br><br><br>
+          <a href="'.base_url() . 'registrasi/DataDiri?&token=' . urlencode($token) .'">
+          <button style="background: #030153; color: white; border-radius: 10px; height: 45px; width: 20%">Verifikasi Email</button>
+          </a>
+        ');
       }
       else if($type == 'forgot'){
         $this->email->subject('Buat Kata Sandi Baru');

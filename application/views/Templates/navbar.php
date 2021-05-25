@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand topbar static-top" style="background-color: #030153">
+<nav class="navbar navbar-expand topbar static-top" style="background-color: #030153; font-family: Arial">
   <a class="navbar-brand">
     <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 41px; margin-left: 10px">
   </a>

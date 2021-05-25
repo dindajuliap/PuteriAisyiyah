@@ -7,27 +7,27 @@
       $this->load->library('form_validation');
     }
 
-    public function index(){
+    public function Registrasi(){
       $data['judul'] = 'Verifikasi Email';
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('VerifikasiEmail/index');
+      $this->load->view('VerifikasiEmail/Registrasi');
       $this->load->view('Templates/foot');
     }
 
     public function verify(){
       $email_user = $this->input->get('email_user');
       $token      = $this->input->get('token');
-      $user       = $this->db->get_where('daftar_akun', ['email_user' => $email_user])->row_array();
+      $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
 
       if($user){
         $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
 
         if($user_token){
-          if(time() - $user_token['date_created'] < (60*60*24)){
+          if(time() - $user_token['tanggal_daftar'] < (60*60*24)){
             $this->db->set('status_user', 1);
             $this->db->where('email_user', $email_user);
-            $this->db->update('daftar_akun');
+            $this->db->update('tabel_akun');
 
             $this->db->delete('user_token', ['email_user' => $email_user]);
 
