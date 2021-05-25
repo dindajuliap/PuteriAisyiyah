@@ -20,11 +20,14 @@
 
       <form action="<?= base_url('VerifikasiEmail') ?>" method="post">
         <input type="text" name="email_user" id="email_user" placeholder="Email" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <small class="form-text text-danger"><?= form_error('email_user') ?></small>
 
         <input type="password" name="password" id="password" placeholder="Kata Sandi" class="form-control mt-4" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <small class="form-text text-danger"><?= form_error('password') ?></small>
         <span id="show1" onclick="show1()" style="position: relative; z-index: 1; left: 30%; top: -2.1rem; cursor: pointer; color: #7E7E7E"><i class="fa fa-eye icon"></i></span>
 
         <input type="password" name="konfirmasi_password" id="konfirmasi_password" placeholder="Konfirmasi Kata Sandi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <small class="form-text text-danger"><?= form_error('konfirmasi_password') ?></small>
         <span id="show2" onclick="show2()" style="position: relative; z-index: 1; left: 64%; top: -3.4rem; cursor: pointer; color: #7E7E7E"><i class="fa fa-eye icon"></i></span>
 
         <button type="submit" class="form-control btn mt-4" style="background: #030153; color: white; border-radius: 10px; width: 70%; height: 45px; margin-left: -3%">Selanjutnya</button>
