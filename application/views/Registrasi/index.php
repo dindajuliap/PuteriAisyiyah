@@ -41,29 +41,29 @@
 </body>
 
 <script type="text/javascript">
-function show1(){
-  var x = document.getElementById('password').type;
+  function show1(){
+    var x = document.getElementById('password').type;
 
-  if (x == 'password'){
-    document.getElementById('password').type = 'text';
-    document.getElementById('show1').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
+    if (x == 'password'){
+      document.getElementById('password').type = 'text';
+      document.getElementById('show1').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
+    }
+    else{
+      document.getElementById('password').type = 'password';
+      document.getElementById('show1').innerHTML = '<i class="fa fa-eye icon"></i>';
+    }
   }
-  else{
-    document.getElementById('password').type = 'password';
-    document.getElementById('show1').innerHTML = '<i class="fa fa-eye icon"></i>';
-  }
-}
 
-function show2(){
-  var x = document.getElementById('konfirmasi_password').type;
+  function show2(){
+    var x = document.getElementById('konfirmasi_password').type;
 
-  if (x == 'password'){
-    document.getElementById('konfirmasi_password').type = 'text';
-    document.getElementById('show2').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
+    if (x == 'password'){
+      document.getElementById('konfirmasi_password').type = 'text';
+      document.getElementById('show2').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
+    }
+    else{
+      document.getElementById('konfirmasi_password').type = 'password';
+      document.getElementById('show2').innerHTML = '<i class="fa fa-eye icon"></i>';
+    }
   }
-  else{
-    document.getElementById('konfirmasi_password').type = 'password';
-    document.getElementById('show2').innerHTML = '<i class="fa fa-eye icon"></i>';
-  }
-}
 </script>
