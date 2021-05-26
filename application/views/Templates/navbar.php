@@ -1,3 +1,7 @@
+<?php
+  $user = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
+?>
+
 <nav class="navbar navbar-expand topbar static-top" style="background-color: #030153; font-family: Arial">
   <a class="navbar-brand">
     <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 41px; margin-left: 10px">
@@ -42,7 +46,7 @@
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #CAA615">
           <i class="fas fa-user fa-sm fa-fw mr-2"></i>
-          <span class="mr-2 d-none d-lg-inline"><?= strtoupper($tabel_akun['nama_user']) ?></span>
+          <span class="mr-2 d-none d-lg-inline"><?= strtoupper($user['nama_user']) ?></span>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
