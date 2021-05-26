@@ -18,7 +18,7 @@
         <b>Registrasi</b>
       </h2>
 
-      <form action="<?= base_url('Masuk') ?>" method="post">
+      <form action="" method="post">
         <input type="text" name="nama_user" id="nama_user" placeholder="Nama Lengkap" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <input type="text" name="tmpt_lahir_user" id="tmpt_lahir_user" placeholder="Tempat Lahir" class="form-control mt-3" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <input type="text" name="tgl_lahir_user" id="tgl_lahir_user" placeholder="Tanggal Lahir" class="form-control date mt-3" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
@@ -27,11 +27,11 @@
 
         <div class="form-inline mt-3" style="text-align: center; color: #7E7E7E">
           <div class="form-group" style="margin-left: 25%">
-            <input type="radio" class="mr-3" name="jk_user"> Pria
+            <input type="radio" value="L" class="mr-3" name="jk_user"> Pria
           </div>
 
           <div class="form-group" style="margin-left: 25%">
-            <input type="radio" class="mr-3" name="jk_user"> Wanita
+            <input type="radio" value="P" class="mr-3" name="jk_user"> Wanita
           </div>
         </div>
 
