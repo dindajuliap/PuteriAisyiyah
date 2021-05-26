@@ -12,7 +12,7 @@
 
       $this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email|is_unique[tabel_akun.email_user]', ['is_unique' => 'Email sudah terdaftar.']);
       $this->form_validation->set_rules('password', 'Kata sandi', 'required|trim|min_length[6]|matches[konfirmasi_password]', ['matches' => 'Konfirmasi sandi tidak cocok.', 'min_length' => 'Kata sandi minimal 6 Karakter']);
-      $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi Sandi', 'required|trim|matches[password]');
+      $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi sandi', 'required|trim|matches[password]');
 
       if ($this->form_validation->run() == FALSE){
         $this->load->view('Templates/head', $data);
@@ -20,9 +20,12 @@
         $this->load->view('Templates/foot');
       }
       else{
+        $email_user = strtolower($this->input->post('email_user'));
+        $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+
         $data = [
-          'email_user'   => strtolower($_POST['email_user']),
-          'password'     => sha1($_POST['password'])
+          'email_user'   => strtolower($this->input->post('email_user')),
+          'password'     => sha1($this->input->post('password'))
         ];
 
         $token = base64_encode(random_bytes(32));
@@ -31,7 +34,7 @@
         $user_token = [
           'email_user'     => $this->input->post('email_user', true),
           'token'          => $token,
-          'tanggal_daftar' => date("Y-m-d")
+          'tanggal_daftar' => date("Y-m-d G:i:s")
         ];
 
         $this->db->insert('tabel_akun', $data);
@@ -44,6 +47,9 @@
     }
 
     private function _sendEmail($token, $type){
+      $email_user = strtolower($this->input->post('email_user'));
+      $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+
       $config = [
         'protocol'  => 'smtp',
         'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -59,18 +65,18 @@
       $this->email->initialize($config);
 
       $this->email->from('puteriaisyiyah@gmail.com', 'Panti Asuhan Puteri Aisyiyah');
-      $this->email->to($this->input->post('email_user'));
+      $this->email->to($user['email_user']);
 
       if($type == 'verify'){
-        $this->email->subject('Verifikasi Email');
+        $this->email->subject('Verifikasi Akun');
         $this->email->message('
-          Hai '.$_POST['email_user'].',<br><br>
+          Hai '.$this->input->post('email_user').',<br><br>
           Selamat datang di Panti Asuhan Puteri Aisyiyah.<br>
           Anda telah memasukkan email ini sebagai alamat email akun Anda. Jika benar Anda yang memasukkan email ini, mohon verifikasi email Anda dengan menekan tombol di bawah untuk melanjutkan pendaftaran akun Anda.<br><br>
           Salam,<br>
           Panti Asuhan Puteri Aisyiyah<br><br><br>
-          <a href="'.base_url() . 'registrasi/DataDiri?&token=' . urlencode($token) .'">
-          <button style="background: #030153; color: white; border-radius: 10px; height: 45px; width: 20%">Verifikasi Email</button>
+          <a href="'.base_url() . 'Registrasi/DataDiri/'.$user['id_user'].'?&token='.urlencode($token).'">
+          <button style="background: #030153; color: white; border-radius: 10px; height: 45px; width: 20%">Verifikasi Akun</button>
           </a>
         ');
       }
@@ -90,41 +96,44 @@
       die;
     }
 
-    public function DataDiri(){
+    public function DataDiri($id_user){
         $data['judul'] = 'Data Diri';
+        $user          = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
 
-        $this->form_validation->set_rules('nama_user', 'Nama Lengkap', 'required|trim|alpha_numeric|is_unique[tabel_akun.nama_user]', ['is_unique' => 'Username sudah terdaftar.', 'alpha_numeric' => 'Username hanya boleh terdiri dari huruf dan angka.']);
-        $this->form_validation->set_rules('tmpt_lahir_user', 'Tempat Lahir User', 'required|trim[tabel_akun.tmpt_lahir_user]');
-        $this->form_validation->set_rules('tgl_lahir_user', 'Tanggal Lahir User', 'required|trim[tabel_akun.tgl_lahir_user]');
-        $this->form_validation->set_rules('nomorhp_user', 'Nomor handphone', 'required|trim|numeric|is_unique[tabel_akun.nomorhp_user]|greater_than[0]', ['is_unique' => 'Nomor handphone sudah terdaftar.', 'greater_than' => 'Nomor handphone tidak valid']);
-        $this->form_validation->set_rules('alamat_user', 'Alamat', 'required|trim[tabel_akun.alamat_user]');
-        $this->form_validation->set_rules('jk_user', 'Jenis Kelamin', 'required|trim[tabel_akun.jk_user]');
+        $this->db->set('status_user', 1);
+        $this->db->where('id_user', $id_user);
+        $this->db->update('tabel_akun');
+
+        $this->form_validation->set_rules('nama_user', ' ', 'required|trim');
+        $this->form_validation->set_rules('tmpt_lahir_user', ' ', 'required|trim');
+        $this->form_validation->set_rules('tgl_lahir_user', ' ', 'required|trim');
+        $this->form_validation->set_rules('nomorhp_user', ' ', 'required|trim|numeric|is_unique[tabel_akun.nomorhp_user]|greater_than[0]|min_length[11]|max_length[13]', ['is_unique' => 'sudah terdaftar.', 'greater_than' => 'tidak valid.', 'min_length' => 'tidak valid.', 'max_length' => 'tidak valid.', 'numeric' => 'tidak valid.']);
+        $this->form_validation->set_rules('alamat_user', ' ', 'required|trim');
+        $this->form_validation->set_rules('jk_user', ' ', 'required|trim', ['required' => 'harus dipilih.']);
 
 
-        if ($this->form_validation->run() == FALSE) {
+        if($this->form_validation->run() == FALSE){
+          $this->load->view('templates/head', $data);
+          $this->load->view('Registrasi/DataDiri');
+          $this->load->view('templates/foot');
+        }
+        else{
+          $nama = strtolower($this->input->post('nama_user'));
 
-        $this->load->view('templates/head', $data);
-        $this->load->view('registrasi/DataDiri');
-        $this->load->view('templates/foot');
-      }
-      else{
-        $nama = strtolower($_POST['nama_user']);
+          $data = [
+            'nama_user'           => ucwords($nama),
+            'tmpt_lahir_user'     => $this->input->post('tmpt_lahir_user'),
+            'tgl_lahir_user'      => $this->input->post('tgl_lahir_user'),
+            'nomorhp_user'        => $this->input->post('nomorhp_user'),
+            'alamat_user'         => $this->input->post('alamat_user'),
+            'jk_user'             => $this->input->post('jk_user'),
+            'role_id'             => 2,
+            'status_user'         => 1
+          ];
+          $this->db->where('id_user', $user['id_user']);
+          $this->db->update('tabel_akun', $data);
 
-        $data = [
-          'nama_user'           => ucwords($nama),
-          'tmpt_lahir_user'     => $_POST['tmpt_lahir_user'],
-          'tgl_lahir_user'      => $_POST['tgl_lahir_user'],
-          'nomorhp_user'        => $_POST['nomorhp_user'],
-          'alamat_user'         => $_POST['alamat_user'],
-          'jk_user'             => $_POST['jk_user'],
-          'role_id'             => 2,
-          'status_user'         => 0
-        ];
-
-        $this->db->insert('tabel_akun', $data);
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show alert-dismissible fade show" role="alert" style="font-family: Arial">Akun berhasil dibuat! Aktifkan akun melalui Email Anda.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('Login');
+          redirect('Masuk');
+        }
       }
     }
-  }

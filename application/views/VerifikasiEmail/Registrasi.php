@@ -4,8 +4,8 @@
       <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 30%; margin-top: 4.5rem">
     </a>
 
-    <h4 style="color: white" class="mt-5">
-      Periksa email Anda untuk melakukan verifikasi agar dapat melanjutkan registrasi!
-    </h4>
+    <h5 style="color: white" class="mt-5">
+      Email Anda telah didaftarkan. Periksa email Anda untuk melakukan verifikasi agar dapat melanjutkan registrasi!
+    </h5>
   </div>
 </body>

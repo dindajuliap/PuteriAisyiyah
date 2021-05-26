@@ -23,38 +23,66 @@
     <?php endif ?>
   </div>
 
-  <ul class="navbar-nav ml-auto">
-    <!--<li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $daftar_akun['nama_lengkap'] ?></span>
-        <img class="img-profile rounded-circle" src="<?= base_url('assets/img/foto_profil/') . $daftar_akun['foto_profil'] ?>" style="width: 30px">
-      </a>
+  <?php if(!isset($_SESSION['id_user'])) : ?>
+    <ul class="navbar-nav ml-auto">
+      <?php if ($judul == 'Registrasi') : ?>
+        <b><a class="nav-link" href="<?= base_url('Registrasi') ?>" style="color: #CAA615">REGISTRASI</a></b>
+      <?php else : ?>
+        <a class="nav-link" href="<?= base_url('Registrasi') ?>" style="color: #CAA615">REGISTRASI</a>
+      <?php endif ?>
 
-      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="<?= base_url() ?>profilsaya">
-          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-          Profil Saya
+      <?php if ($judul == 'Masuk') : ?>
+        <b><a class="nav-link" href="<?= base_url() ?>Masuk" style="color: #CAA615">MASUK</a></b>
+      <?php else : ?>
+        <a class="nav-link" href="<?= base_url() ?>Masuk" style="color: #CAA615">MASUK</a>
+      <?php endif ?>
+    </ul>
+  <?php else : ?>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #CAA615">
+          <i class="fas fa-user fa-sm fa-fw mr-2"></i>
+          <span class="mr-2 d-none d-lg-inline"><?= strtoupper($tabel_akun['nama_user']) ?></span>
         </a>
 
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="<?= base_url() ?>ProfilSaya">
+            Profil Saya
+          </a>
 
-        <a class="dropdown-item" href="<?= base_url('login/logout') ?>" data-toggle="modal" data-target="#logoutModal">
-          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-          Keluar
-        </a>
-      </div>
-    </li>-->
+          <div class="dropdown-divider"></div>
 
-    <?php if ($judul == 'Registrasi') : ?>
-      <b><a class="nav-link" href="<?= base_url('Registrasi') ?>" style="color: #CAA615">REGISTRASI</a></b>
-    <?php else : ?>
-      <a class="nav-link" href="<?= base_url('Registrasi') ?>" style="color: #CAA615">REGISTRASI</a>
-    <?php endif ?>
-
-    <?php if ($judul == 'Masuk') : ?>
-      <b><a class="nav-link" href="<?= base_url() ?>Masuk" style="color: #CAA615">MASUK</a></b>
-    <?php else : ?>
-      <a class="nav-link" href="<?= base_url() ?>Masuk" style="color: #CAA615">MASUK</a>
-    <?php endif ?>
-  </ul>
+          <a class="dropdown-item" href="<?= base_url('Logout') ?>" data-toggle="modal" data-target="#keluarModal">
+            Keluar
+          </a>
+        </div>
+      </li>
+    </ul>
+  <?php endif ?>
 </nav>
+
+<!--<div class="modal fade" id="keluarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
+      <div class="modal-body">
+        <span>
+          <p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 30px"></p>
+          <p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 196px">!</p>
+        </span>
+
+        <h3 class="modal-title mt-4" id="exampleModalLabel" align="center">
+          <b style="font-family: Arial; color: #595959">Keluar</b>
+        </h3>
+
+        <div class="row mb-3">
+          <h5 style="margin-left: auto; margin-right: auto">Kamu yakin ingin keluar dari Konflix?</h5>
+        </div>
+
+        <div class="row">
+          <a type="submit" class="btn btn-primary text-center" href="<?= base_url('index/keluar') ?>" style="width: 100px; margin-left: auto; margin-right: 7px; background: #DB202C; border-color: #DB202C">Yakin</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

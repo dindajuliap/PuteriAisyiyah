@@ -34,20 +34,20 @@
             redirect('Registrasi/DataDiri');
           }
           else{
-            /*$this->db->delete('daftar_akun', ['email_user' => $email_user]);
+            $this->db->delete('tabel_akun', ['email_user' => $email_user]);
             $this->db->delete('user_token', ['email_user' => $email_user]);
-*/
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Token kadaluwarsa.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Token kadaluwarsa.</div>');
             redirect('Registrasi');
           }
         }
         else{
-          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Aktivasi akun gagal! Salah token.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Aktivasi akun gagal! Salah token.</div>');
           redirect('Registrasi');
         }
       }
       else{
-        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Aktivasi akun gagal! Salah email.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial">Aktivasi akun gagal! Salah email.</div>');
         redirect('Registrasi');
       }
     }
