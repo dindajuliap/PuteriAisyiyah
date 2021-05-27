@@ -32,13 +32,13 @@
             <?php $no = 1 ?>
             <?php foreach ($user as $data) : ?>
               <tr>
-                <td style="color: black"><?= $no++ ?></td>
-                <td style="color: black"><?= $data['nama_user'] ?></td>
-                <td style="color: black"><?= $data['email_user'] ?></td>
-                <td style="color: black">
-                  <a href="" style="color: black"><i class="fas fa-eye"></i><a>
-                  <a href="" style="color: green"><i class="fas fa-edit"></i></a>
-                  <a href="" style="color: red"><i class="fas fa-trash-alt"></i></a>
+                <td style="color: black" align="center"><?= $no++ ?></td>
+                <td style="color: black"><?= $data->nama_user ?></td>
+                <td style="color: black"><?= $data->email_user ?></td>
+                <td style="color: black" align="center">
+                  <a href="" style="color: black"><i class="fas fa-eye ml-3 fa-lg"></i><a>
+                  <a href="" style="color: green"><i class="fas fa-edit ml-3 fa-lg"></i></a>
+                  <a href="" style="color: red"><i class="fas fa-trash-alt ml-3 fa-lg"></i></a>
                 </td>
               </tr>
             <?php endforeach ?>

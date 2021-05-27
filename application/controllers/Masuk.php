@@ -41,8 +41,8 @@
                 }
               }
               else{
-                $token = $this->db->get_where('user_token', ['email_user' => $user['email_user']])->row_array();
-                redirect('Registrasi/DataDiri/'.$user['id_user'].'?&token='.$token['token']);
+                $token = $this->db->get_where('user_token', ['email_user' => $email_user])->row_array();
+                redirect('Registrasi/DataDiri?email_user='.$email_user.'&token='.$token['token']);
               }
             }
             else{

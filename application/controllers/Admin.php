@@ -17,7 +17,7 @@
       $this->db->select('*');
       $this->db->from('tabel_akun');
       $this->db->where('status_user', 1);
-      $this->db->where('nama_user', '');
+      $this->db->where_not_in('nama_user', null);
       $this->db->where_not_in('role_id', 1);
       $data['user'] = $this->db->get()->result();
 
