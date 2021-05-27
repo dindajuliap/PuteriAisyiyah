@@ -3,37 +3,43 @@
 
   class Admin extends CI_Controller{
     public function index(){
-      $data['judul'] = 'Admin';
+      $data['judul'] = 'Admin Panel';
 
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbarAdmin', $data);
       $this->load->view('Admin/index');
-      $this->load->view('Templates/foot');
-    }
-
-    public function DaftarAnak(){
-      $data['judul'] = 'Daftar Anak';
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
-      $this->load->view('Admin/DaftarAnak/index');
       $this->load->view('Templates/foot');
     }
 
     public function DaftarAkun(){
-      $data['judul'] = 'Daftar Akun';
+      $data['judul'] = 'Admin Panel - Daftar Akun';
 
-      $data1['user'] = $this->M_user->Alldata();
+      $this->db->select('*');
+      $this->db->from('tabel_akun');
+      $this->db->where('status_user', 1);
+      $this->db->where('nama_user', '');
+      $this->db->where_not_in('role_id', 1);
+      $data['user'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbarAdmin', $data);
       $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarAkun/index', $data1);
+      $this->load->view('Admin/DaftarAkun/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function DaftarAnak(){
+      $data['judul'] = 'Admin Panel - Daftar Anak';
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAnak/index');
       $this->load->view('Templates/foot');
     }
 
     public function TambahData() {
-      $data['judul'] = 'Tambah Data';
+      $data['judul'] = 'Admin Panel - Tambah Data';
 
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbarAdmin', $data);

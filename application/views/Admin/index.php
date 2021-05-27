@@ -1,95 +1,63 @@
-<style>
-  .style1{
-    background-color: #030153;
-  }
-  .style2{
-    color: white;
-    text-align: center;
-  }
-
-  .style3{
-    width: 50px;
-    height: 60px;
-    color: white;
-  }
-
-  .style4{
-    background-color: #CAA615;
-  }
-</style>
-
-
 <body>
-  <br><br>
- <div class="container post">
-         <div class="row">
-           <div class="col-md-3 ">
-             <div class="card mb-4 box-shadow style1">
-               <a href=""><i class="fas fa-home style3"></i>
-               <div class="card-body">
-                 <p class="card-text style2">Profil Panti</p></a>
-               </div>
-             </div>
-           </div>
-           <div class="col-md-3 ">
-             <div class="card mb-4 box-shadow style4">
-               <a href="<?= base_url('Admin/DaftarAkun') ?>"><i class="fas fa-users style3"></i></a>
-               <div class="card-body">
-                 <p class="card-text style2">Daftar Akun</p></a>
-               </div>
-             </div>
-           </div>
-           <div class="col-md-3 ">
-             <div class="card mb-4 box-shadow style1">
-               <a href="#"><i class="fas fa-child style3"></i></a>
-               <div class="card-body">
-                 <p class="card-text style2">Daftar Anak</p>
-               </div>
-             </div>
-           </div>
-           <div class="col-md-3 ">
-             <div class="card mb-4 box-shadow style4">
-               <a href="#"><i class="fas fa-user-tie style3"></i></a>
-               <div class="card-body">
-                 <p class="card-text style2">Daftar Petugas</p>
-               </div>
-             </div>
-           </div>
-          </div>
-<br><br>
-          <div class="row">
-            <div class="col-md-3 ">
-              <div class="card mb-4 box-shadow style4">
-                <a href="#"><i class="fas fa-home style3"></i></a>
-                <div class="card-body">
-                  <p class="card-text style2">Daftar Pengadopsi</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 ">
-              <div class="card mb-4 box-shadow style1">
-                <a href="#"><i class="fas fa-hand-holding-heart style3"></i></a>
-                <div class="card-body">
-                  <p class="card-text style2">Daftar Donasi</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 ">
-              <div class="card mb-4 box-shadow style4">
-                <a href="#"><i class="fas fa-file-invoice-dollar style3"></i></a>
-                <div class="card-body">
-                  <p class="card-text style2">Daftar Dana</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3 ">
-              <div class="card mb-4 box-shadow style1">
-                <a href="#"><i class="fas fa-calculator style3"></i></a>
-                <div class="card-body">
-                  <p class="card-text style2">Daftar Berita</p>
-                </div>
-              </div>
-            </div>
-           </div>
-       </main>
- </body>
+  <div class="container post mt-4">
+    <div class="card" style="width: 100%; height: 30%">
+      <div class="row mb-4 mt-4" style="margin-left: auto; margin-right: auto" align="center">
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/ProfilPanti') ?>">
+            <button class="btn" style="background-color: #030153; width: 90%; color: white">
+              <i class="fas fa-home fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Profil Panti</h5>
+            </button>
+          </a>
+        </div>
+
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/DaftarAkun') ?>">
+            <button class="btn" style="background-color: #CAA615; width: 90%; color: white">
+              <i class="fas fa-users fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Akun</h5>
+            </button>
+          </a>
+        </div>
+
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/DaftarAnak') ?>">
+            <button class="btn" style="background-color: #030153; width: 90%; color: white">
+              <i class="fas fa-child fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Anak</h5>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div class="row mb-4" style="margin-left: auto; margin-right: auto" align="center">
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/DaftarPetugas') ?>">
+            <button class="btn" style="background-color: #CAA615; width: 90%; color: white">
+              <i class="fas fa-user-tie fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Petugas</h5>
+            </button>
+          </a>
+        </div>
+
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/DaftarDonasi') ?>">
+            <button class="btn" style="background-color: #030153; width: 90%; color: white">
+              <i class="fas fa-hand-holding-heart fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Donasi</h5>
+            </button>
+          </a>
+        </div>
+
+        <div class="col-lg-4">
+          <a href="<?= base_url('Admin/DaftarBerita') ?>">
+            <button class="btn" style="background-color: #CAA615; width: 90%; color: white">
+              <i class="fas fa-newspaper fa-3x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Berita</h5>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
