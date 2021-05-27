@@ -1,11 +1,11 @@
 <body style="font-family: Arial">
   <div class="container post mt-4 mb-4">
     <div class="card">
-      <h2 style="color: #030153; font-weight: 700" align="center" class="mt-4">DAFTAR ANAK</h2>
+      <h2 style="color: #030153; font-weight: 700" align="center" class="mt-4">DAFTAR PETUGAS</h2>
 
       <div class="row mt-3 mb-3" style="margin-left: auto; margin-right: auto">
         <div class="col-lg-3">
-          <a href="<?= base_url('Admin/DaftarAnak/TambahDataAnak') ?>">
+          <a href="<?= base_url('Admin/DaftarPetugas/TambahDataPetugas') ?>">
             <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
               <i class="fas fa-plus-circle mr-2"></i>
               Tambah Data
@@ -28,21 +28,22 @@
             <td>Pengaturan</td>
           </tr>
 
-          <?php if($anak) : ?>
+          <?php if($petugas) : ?>
             <?php $no = 1 ?>
-            <?php foreach ($anak as $data) : ?>
+            <?php foreach ($petugas as $data) : ?>
               <tr>
                 <td style="color: black" align="center"><?= $no++ ?></td>
-                <td style="color: black"><?= $data->nama_anak ?></td>
+                <td style="color: black"><?= $data->nama_pengurus ?></td>
                 <td style="color: black">
-                <?php
-                  $data->nama_anak;
-                  if($data = 1){
-                    echo "Belum diadopsi";
-                    } else {
-                      echo "Telah diadopsi";
-                    }
-                  ?>
+                  <?php
+                    $data->status_pengurus;
+                    if($data = 1){
+                      echo "Belum diadopsi";
+                      } else {
+                        echo "Telah diadopsi";
+                      }
+                    ?>
+                  </td>
                 </td>
                 <td style="color: black" align="center">
                   <a href="" style="color: black"><i class="fas fa-eye ml-3 fa-lg"></i><a>
@@ -53,7 +54,7 @@
             <?php endforeach ?>
           <?php else : ?>
             <tr>
-              <td colspan="4" align="center">Tidak ada data anak.</td>
+              <td colspan="4" align="center">Tidak ada data petugas.</td>
             </tr>
           <?php endif ?>
         </table>
