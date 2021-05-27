@@ -1,4 +1,4 @@
-<body style="font family: Arial">
+<body style="font-family: Arial">
   <form action="" method="post">
     <div class="row" style="margin: 0px; padding: 0px">
       <div class="siderbar-col col-lg-6 d-none d-md-block" style="background: linear-gradient(to left, #010020, #030153)" align="center">

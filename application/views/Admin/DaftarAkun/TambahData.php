@@ -1,3 +1,3 @@
-<body style="font family: Arial">
+<body style="font-family: Arial">
   halaman tambah data
 </body>

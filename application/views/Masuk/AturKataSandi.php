@@ -5,7 +5,7 @@
   }
 </style>
 
-<body style="font family: Arial">
+<body style="font-family: Arial">
   <div class="row" id="body-row">
     <div class="siderbar-col col-lg-6 d-none d-md-block" style="background: linear-gradient(to left, #010020, #030153); margin-left: auto; margin-right: auto" align="center">
       <a href="<?= base_url() ?>">
