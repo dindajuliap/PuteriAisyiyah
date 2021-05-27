@@ -1,4 +1,4 @@
-<body style="color: #030153">
+<body style="color: #030153; font-family: Arial">
 	<div class="container" style="margin-left: 70px">
 		<div class="row">
       <div class="col-lg-6 mt-5">

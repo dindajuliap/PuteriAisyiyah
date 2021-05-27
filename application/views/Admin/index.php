@@ -1,4 +1,4 @@
-<body>
+<body style="font family: Arial">
   <div class="container post mt-4">
     <div class="card" style="width: 100%; height: 30%">
       <div class="row mb-4 mt-4" style="margin-left: auto; margin-right: auto" align="center">

@@ -1,4 +1,4 @@
-<body style="background: linear-gradient(to left, #010020, #030153); font-family: Roboto">
+<body style="background: linear-gradient(to left, #010020, #030153); font-family: Arial">
   <div class="col-lg-12" style="margin-left: auto; margin-right: auto" align="center">
     <a href="<?= base_url() ?>">
       <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 30%; margin-top: 4.5rem">

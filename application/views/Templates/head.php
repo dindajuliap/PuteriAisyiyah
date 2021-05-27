@@ -23,9 +23,9 @@
 
     <title><?= $judul ?></title>
 
-    <!--<style>
+    <style>
       ::-webkit-scrollbar{
-        width:12px
+        width: 10px
       }
 
       ::-webkit-scrollbar-track{
@@ -33,7 +33,7 @@
       }
 
       ::-webkit-scrollbar-thumb{
-        background:#30454A
+        background: black
       }
-    </style>-->
+    </style>
   </head>
