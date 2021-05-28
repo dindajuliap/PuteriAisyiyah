@@ -32,7 +32,7 @@
 
     <div class="row" style="margin-left: auto; margin-right: auto; display: block" align="center">
       <?php if(!isset($_SESSION['id_user'])) : ?>
-        <a href="<?= base_url('Masuk') ?>" style="">
+        <a href="<?= base_url('Donasi/Masuk') ?>" style="">
           <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
             Form Donasi
           </button>

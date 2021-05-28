@@ -6,7 +6,7 @@
       $data['judul'] = 'Admin Panel';
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Templates/foot');
     }
@@ -22,7 +22,7 @@
       $data['user'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarAkun/index', $data);
       $this->load->view('Templates/foot');
@@ -36,7 +36,7 @@
       $data['anak'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarAnak/index');
       $this->load->view('Templates/foot');
@@ -51,7 +51,7 @@
       $data['petugas'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarPetugas/index');
       $this->load->view('Templates/foot');
@@ -65,7 +65,7 @@
       $data['donasi'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarDonasi/index');
       $this->load->view('Templates/foot');
@@ -79,7 +79,7 @@
       $data['berita'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarBerita/index');
       $this->load->view('Templates/foot');
@@ -93,7 +93,7 @@
       $data['berita'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/ProfilPanti/index');
       $this->load->view('Templates/foot');
     }
@@ -102,7 +102,7 @@
       $data['judul'] = 'Admin Panel - Tambah Data';
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin', $data);
+      $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/TambahData');
       $this->load->view('Templates/foot');
     }

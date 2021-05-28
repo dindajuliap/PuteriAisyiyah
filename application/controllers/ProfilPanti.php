@@ -6,7 +6,7 @@
       $data['judul'] = 'Profil Panti';
 
       $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbar', $data);
+      $this->load->view('Templates/navbar');
       $this->load->view('Profil/index');
       $this->load->view('Templates/foot');
     }
