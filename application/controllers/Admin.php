@@ -28,6 +28,16 @@
       $this->load->view('Templates/foot');
     }
 
+		public function HapusDataAkun($id_user){
+			$this->db->where('id_user', $id_user);
+			$this->db->delete('tabel_akun');
+
+			if($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; margin: 2%;">Akun berhasil dihapus.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect('Admin/DaftarAkun');
+			}
+		}
+
     public function DaftarAnak(){
       $data['judul'] = 'Admin Panel - Daftar Anak';
 
@@ -41,6 +51,16 @@
       $this->load->view('Admin/DaftarAnak/index');
       $this->load->view('Templates/foot');
     }
+
+		public function HapusDataAnak($id_anak){
+			$this->db->where('id_anak', $id_anak);
+			$this->db->delete('tabel_anak');
+
+			if($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; margin: 2%;">Data anak berhasil dihapus.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect('Admin/DaftarAnak');
+			}
+		}
 
     public function DaftarPetugas(){
       $data['judul'] = 'Admin Panel - Daftar Petugas';
