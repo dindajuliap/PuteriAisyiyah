@@ -41,8 +41,19 @@
                 }
               }
               else{
-                $token = $this->db->get_where('user_token', ['email_user' => $email_user])->row_array();
-                redirect('Registrasi/DataDiri?email_user='.$email_user.'&token='.$token['token']);
+                $user_token = $this->db->get_where('user_token', ['email_user' => $user['email_user']])->row_array();
+                $hari_ini   = date("Y-m-d");
+
+                if($user_token['tanggal_daftar'] == $hari_ini){
+                  redirect('Registrasi/DataDiri?email_user='.$user['email_user'].'&token='.$user_token['token']);
+                }
+                else{
+                  $this->db->delete('tabel_akun', ['email_user' => $user['email_user']]);
+                  $this->db->delete('user_token', ['email_user' => $user['email_user']]);
+
+                  $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Token Kadaluwarsa! Registrasi Ulang.</div>');
+                  redirect('Masuk');
+                }
               }
             }
             else{
