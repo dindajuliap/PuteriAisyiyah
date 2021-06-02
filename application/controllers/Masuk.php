@@ -62,7 +62,7 @@
             }
           }
           else{
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Akun telah dihapus.</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Verifikasi email Anda terlebih dahulu.</div>');
             redirect('Masuk');
           }
         }

@@ -3,12 +3,12 @@
     <div class="row" style="margin: 0px; padding: 0px">
       <div class="siderbar-col col-lg-6 d-none d-md-block" style="background: linear-gradient(to left, #010020, #030153)" align="center">
         <a href="<?= base_url() ?>">
-          <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 70%; margin-top: 12.9%; margin-bottom: 12.8%">
+          <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 70%; margin-top: 15.3%; margin-bottom: 15.3%">
         </a>
       </div>
 
       <div class="col-lg-6" align="center">
-        <h2 style="color: #030153; margin-left: 16%; margin-top: 11%" class="mb-3" align="left">
+        <h2 style="color: #030153; margin-left: 16%; margin-top: 14%" class="mb-3" align="left">
           <b>Registrasi</b>
         </h2>
 

@@ -26,7 +26,6 @@
         $data = [
           'email_user'   => strtolower($this->input->post('email_user')),
           'password'     => sha1($this->input->post('password')),
-          'status_user'  => 1
         ];
         $this->db->insert('tabel_akun', $data);
 
@@ -94,7 +93,7 @@
 
       if($token == $user_token['token']){
         $data['judul'] = 'Data Diri';
-        $user          = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+        $user = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
 
         $this->db->set('status_user', 1);
         $this->db->where('email_user', $email_user);
