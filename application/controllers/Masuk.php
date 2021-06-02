@@ -51,7 +51,7 @@
                   $this->db->delete('tabel_akun', ['email_user' => $user['email_user']]);
                   $this->db->delete('user_token', ['email_user' => $user['email_user']]);
 
-                  $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Token Kadaluwarsa! Registrasi Ulang.</div>');
+                  $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Token Kadaluwarsa. Registrasi Ulang!</div>');
                   redirect('Masuk');
                 }
               }
