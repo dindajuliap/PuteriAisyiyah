@@ -25,7 +25,7 @@
     </p>
 
     <p align="justify" style="color: #030153">
-      Untuk donasi Transfer Bank, harap melakukan konfirmasi dengan mengisi form donasi di bawah ini. <b>Terima kasih atas kebaikan Bapak/Ibu.</b>
+      Untuk donasi Transfer Bank, harap melakukan konfirmasi dengan mengisi form donasi di bawah ini. Terima kasih atas kebaikan Bapak/Ibu.
     </p>
 
     <br>

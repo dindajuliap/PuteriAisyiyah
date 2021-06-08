@@ -13,13 +13,13 @@
         </h2>
 
         <input type="text" name="email_user" id="email_user" placeholder="Email" class="form-control mt-4" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
-        <small class="form-text text-danger" align="left" style="margin-left: 15%"><?= form_error('email_user') ?></small>
+        <small class="form-text text-danger" align="left" style="margin-left: 15%; margin-bottom: 2.5%"><?= form_error('email_user') ?></small>
 
-        <input type="password" name="password" id="password" placeholder="Kata Sandi" class="form-control mt-3" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <input type="password" name="password" id="password" placeholder="Kata Sandi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <span id="show1" onclick="show1()" style="position: relative; z-index: 1; left: 30%; top: -2.1rem; cursor: pointer; color: #7E7E7E"><i class="fa fa-eye icon"></i></span>
-        <small class="form-text text-danger" align="left" style="margin-left: 15%; margin-top: -3%"><?= form_error('password') ?></small>
+        <small class="form-text text-danger" align="left" style="margin-left: 15%; margin-top: -3%; margin-bottom: 2%"><?= form_error('password') ?></small>
 
-        <input type="password" name="konfirmasi_password" id="konfirmasi_password" placeholder="Konfirmasi Kata Sandi" class="form-control mt-3" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <input type="password" name="konfirmasi_password" id="konfirmasi_password" placeholder="Konfirmasi Kata Sandi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <span id="show2" onclick="show2()" style="position: relative; z-index: 1; left: 30%; top: -2.1rem; cursor: pointer; color: #7E7E7E"><i class="fa fa-eye icon"></i></span>
 
         <br>

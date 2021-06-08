@@ -5,7 +5,7 @@
     </a>
 
     <h5 style="color: white" class="mt-5">
-      Email Anda telah didaftarkan. Periksa email Anda untuk melakukan verifikasi agar dapat melanjutkan registrasi!
+      Terima kasih telah berdonasi ke Panti Asuhan Puteri Aisyiyah. Semoga kemurahan hati Anda terberkahi.
     </h5>
   </div>
 </body>

@@ -44,7 +44,7 @@
 
         <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
           <div class="col-lg-9">
-            <input type="text" name="nomorhp_user" id="nomorhp_user" placeholder="Nomor Handphone" class="form-control phone mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
+            <input type="text" name="nomorhp_user" id="nomorhp_user" placeholder="Nomor Handphone" class="form-control mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
           </div>
 
           <div class="col-lg-3">

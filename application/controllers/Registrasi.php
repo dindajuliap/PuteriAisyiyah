@@ -23,16 +23,52 @@
         $email_user = strtolower($this->input->post('email_user'));
         $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
 
+        $this->db->select('*');
+        $this->db->from('tabel_akun');
+        $tabel_akun = $this->db->get()->result();
+
+        if(!$tabel_akun){
+          $id_akun = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_akun');
+          $this->db->order_by('id_user', 'DESC');
+          $this->db->limit(1);
+          $akun_terakhir = $this->db->get()->row_array();
+
+          $id_akun = $akun_terakhir['id_user'] + 1;
+        }
+
         $data = [
+          'id_user'      => $id_akun,
           'email_user'   => strtolower($this->input->post('email_user')),
           'password'     => sha1($this->input->post('password')),
         ];
         $this->db->insert('tabel_akun', $data);
 
-        $token = base64_encode(random_bytes(32));
+        $token = md5(random_bytes(32));
         date_default_timezone_set('Asia/Jakarta');
 
+        $this->db->select('*');
+        $this->db->from('user_token');
+        $tabel_token = $this->db->get()->result();
+
+        if(!$tabel_token){
+          $id_token = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('user_token');
+          $this->db->order_by('id_token', 'DESC');
+          $this->db->limit(1);
+          $token_terakhir = $this->db->get()->row_array();
+
+          $id_token = $token_terakhir['id_token'] + 1;
+        }
+
         $user_token = [
+          'id_token'       => $id_token,
           'email_user'     => $this->input->post('email_user', true),
           'token'          => $token,
           'tanggal_daftar' => date("Y-m-d")
@@ -73,7 +109,7 @@
         Anda telah memasukkan email ini sebagai alamat email akun Anda. Jika benar Anda yang memasukkan email ini, mohon verifikasi email Anda dengan menekan tombol di bawah untuk melanjutkan pendaftaran akun Anda.<br><br>
         Salam,<br>
         Panti Asuhan Puteri Aisyiyah<br><br><br>
-        <a href="'.base_url() . 'Registrasi/DataDiri?email_user='.$user['email_user'].'&token='.$token.'">
+        <a href="'.base_url() . 'Registrasi/DataDiri?token='.$token.'&email_user='.$user['email_user'].'">
         <button style="background: #030153; color: white; border-radius: 10px; height: 45px; width: 20%">Verifikasi Akun</button>
         </a>
       ');
@@ -89,9 +125,9 @@
     public function DataDiri(){
       $token      = $this->input->get('token');
       $email_user = $this->input->get('email_user');
-      $user_token = $this->db->get_where('user_token', ['email_user' => $email_user])->row_array();
+      $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
 
-      if($token == $user_token['token']){
+      if($user_token){
         $data['judul'] = 'Data Diri';
         $user = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
 
@@ -113,6 +149,36 @@
         }
         else{
           $nama = strtolower($this->input->post('nama_user'));
+
+          $this->db->select('*');
+          $this->db->from('log_akun');
+          $log_akun = $this->db->get()->result();
+
+          if(!$log_akun){
+            $id_log = 1;
+          }
+          else{
+            $this->db->select('*');
+            $this->db->from('log_akun');
+            $this->db->order_by('id_log', 'DESC');
+            $this->db->limit(1);
+            $log_terakhir = $this->db->get()->row_array();
+
+            $id_log = $log_terakhir['id_log'] + 1;
+          }
+
+          $log = [
+            'id_log'         => $id_log,
+            'nama_user'      => ucwords($nama),
+            'email_user'     => $user['email_user'],
+            'nomorhp_user'   => $this->input->post('nomorhp_user'),
+            'password'       => $user['password'],
+            'alamat_user'    => $this->input->post('alamat_user'),
+            'jk_user'        => $this->input->post('jk_user'),
+            'status_user'    => 'Terdaftar',
+            'waktu_log_akun' => date("Y-m-d G:i:s")
+          ];
+          $this->db->insert('log_akun', $log);
 
           $data = [
             'nama_user'           => ucwords($nama),

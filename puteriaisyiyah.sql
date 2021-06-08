@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2021 at 01:32 PM
+-- Generation Time: Jun 08, 2021 at 06:57 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -20,6 +20,39 @@ SET time_zone = "+00:00";
 --
 -- Database: `puteriaisyiyah`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_akun`
+--
+
+CREATE TABLE `log_akun` (
+  `id_log` int(11) NOT NULL,
+  `nama_user` varchar(100) NOT NULL,
+  `email_user` varchar(100) NOT NULL,
+  `nomorhp_user` varchar(13) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `alamat_user` text NOT NULL,
+  `jk_user` enum('L','P') NOT NULL,
+  `status_user` varchar(20) NOT NULL,
+  `waktu_log_akun` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_inventaris`
+--
+
+CREATE TABLE `log_inventaris` (
+  `id_log` int(11) NOT NULL,
+  `id_inventaris` int(11) NOT NULL,
+  `nama_inventaris` varchar(100) NOT NULL,
+  `inventaris_lantai` int(1) NOT NULL,
+  `jumlah_inventaris` int(3) NOT NULL,
+  `status_inventaris` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -48,6 +81,15 @@ CREATE TABLE `tabel_akun` (
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
 (1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
 
+--
+-- Triggers `tabel_akun`
+--
+DELIMITER $$
+CREATE TRIGGER `trigger_hapus_akun` BEFORE DELETE ON `tabel_akun` FOR EACH ROW INSERT INTO log_akun SET
+nama_user = old.nama_user, email_user = old.email_user, nomorhp_user = old.nomorhp_user, password = old.password, alamat_user = old.alamat_user, jk_user = old.jk_user, status_user = "Dihapus", waktu_log_akun = now()
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +100,14 @@ CREATE TABLE `tabel_album` (
   `id_album` int(11) NOT NULL,
   `nama_album` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `tabel_album`
+--
+DELIMITER $$
+CREATE TRIGGER `trigger_hapus_album` AFTER DELETE ON `tabel_album` FOR EACH ROW DELETE FROM tabel_foto WHERE id_album = old.id_album
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -83,6 +133,18 @@ CREATE TABLE `tabel_anak` (
   `status_ortu` varchar(100) DEFAULT NULL,
   `status_anak` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `tabel_anak`
+--
+DELIMITER $$
+CREATE TRIGGER `trigger_hapus_kesehatan` AFTER DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_kesehatan WHERE id_anak = old.id_anak
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trigger_hapus_ortu` AFTER DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_ortu WHERE id_anak = old.id_anak
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -137,6 +199,25 @@ CREATE TABLE `tabel_inventaris` (
   `inventaris_lantai` int(1) NOT NULL,
   `jumlah_inventaris` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `tabel_inventaris`
+--
+DELIMITER $$
+CREATE TRIGGER `trigger_hapus_inventaris` BEFORE DELETE ON `tabel_inventaris` FOR EACH ROW UPDATE log_inventaris SET
+status_inventaris = "Tidak Tersedia Lagi" WHERE id_inventaris = old.id_inventaris
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trigger_tambah_inventaris` AFTER INSERT ON `tabel_inventaris` FOR EACH ROW INSERT INTO log_inventaris SET
+nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris, status_inventaris = "Tersedia"
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trigger_ubah_inventaris` AFTER UPDATE ON `tabel_inventaris` FOR EACH ROW UPDATE log_inventaris SET
+nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris WHERE id_inventaris = old.id_inventaris
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -215,12 +296,25 @@ CREATE TABLE `user_token` (
   `id_token` int(11) NOT NULL,
   `email_user` varchar(100) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `tanggal_daftar` datetime NOT NULL
+  `tanggal_daftar` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `log_akun`
+--
+ALTER TABLE `log_akun`
+  ADD PRIMARY KEY (`id_log`);
+
+--
+-- Indexes for table `log_inventaris`
+--
+ALTER TABLE `log_inventaris`
+  ADD PRIMARY KEY (`id_log`),
+  ADD KEY `id_inventaris` (`id_inventaris`);
 
 --
 -- Indexes for table `tabel_akun`
@@ -302,10 +396,22 @@ ALTER TABLE `user_token`
 --
 
 --
+-- AUTO_INCREMENT for table `log_akun`
+--
+ALTER TABLE `log_akun`
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `log_inventaris`
+--
+ALTER TABLE `log_inventaris`
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tabel_album`
@@ -329,7 +435,7 @@ ALTER TABLE `tabel_berita`
 -- AUTO_INCREMENT for table `tabel_donasi`
 --
 ALTER TABLE `tabel_donasi`
-  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabel_foto`
@@ -376,6 +482,12 @@ ALTER TABLE `user_token`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `log_inventaris`
+--
+ALTER TABLE `log_inventaris`
+  ADD CONSTRAINT `id_inventaris` FOREIGN KEY (`id_inventaris`) REFERENCES `tabel_inventaris` (`id_inventaris`);
 
 --
 -- Constraints for table `tabel_foto`
