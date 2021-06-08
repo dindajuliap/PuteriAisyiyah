@@ -148,7 +148,9 @@
           $this->load->view('templates/foot');
         }
         else{
-          $nama = strtolower($this->input->post('nama_user'));
+          $nama_user       = strtolower($this->input->post('nama_user'));
+          $tmpt_lahir_user = strtolower($this->input->post('tmpt_lahir_user'));
+          $alamat_user     = strtolower($this->input->post('alamat_user'));
 
           $this->db->select('*');
           $this->db->from('log_akun');
@@ -169,11 +171,11 @@
 
           $log = [
             'id_log'         => $id_log,
-            'nama_user'      => ucwords($nama),
+            'nama_user'      => ucwords($nama_user),
             'email_user'     => $user['email_user'],
             'nomorhp_user'   => $this->input->post('nomorhp_user'),
             'password'       => $user['password'],
-            'alamat_user'    => $this->input->post('alamat_user'),
+            'alamat_user'    => ucwords($alamat_user),
             'jk_user'        => $this->input->post('jk_user'),
             'status_user'    => 'Terdaftar',
             'waktu_log_akun' => date("Y-m-d G:i:s")
@@ -181,13 +183,13 @@
           $this->db->insert('log_akun', $log);
 
           $data = [
-            'nama_user'           => ucwords($nama),
-            'tmpt_lahir_user'     => $this->input->post('tmpt_lahir_user'),
-            'tgl_lahir_user'      => $this->input->post('tgl_lahir_user'),
-            'nomorhp_user'        => $this->input->post('nomorhp_user'),
-            'alamat_user'         => $this->input->post('alamat_user'),
-            'jk_user'             => $this->input->post('jk_user'),
-            'role_id'             => 2
+            'nama_user'       => ucwords($nama_user),
+            'tmpt_lahir_user' => ucwords($tmpt_lahir_user),
+            'tgl_lahir_user'  => $this->input->post('tgl_lahir_user'),
+            'nomorhp_user'    => $this->input->post('nomorhp_user'),
+            'alamat_user'     => ucwords($alamat_user),
+            'jk_user'         => $this->input->post('jk_user'),
+            'role_id'         => 2
           ];
           $this->db->where('email_user', $user['email_user']);
           $this->db->update('tabel_akun', $data);

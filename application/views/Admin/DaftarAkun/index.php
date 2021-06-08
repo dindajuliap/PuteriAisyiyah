@@ -14,7 +14,7 @@
 							</button>
 						</a>
 					</div>
-					
+
 					<?php if(!$user) : ?>
 						<div class="card-body">
 							<table id="example1" class="table table-bordered table-striped">

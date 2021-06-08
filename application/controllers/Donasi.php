@@ -114,19 +114,19 @@
           redirect('Donasi/FormDonasi');
         }
         else{
-          $bukti_tf   = $this->upload->data();
-          $bukti_tf   = $bukti_tf['file_name'];
-          $keterangan = strtolower($this->input->post('ket_donasi'));
-          $nama       = $this->input->post('nama_donatur');
+          $bukti_tf     = $this->upload->data();
+          $bukti_tf     = $bukti_tf['file_name'];
+          $keterangan   = strtolower($this->input->post('ket_donasi'));
+          $nama_donatur = $this->input->post('nama_donatur');
 
           $data = [
-            'id_donasi'      => $id_donasi,
-            'nama_donatur'   => ucwords($nama),
-            'tgl_donasi'     => $this->input->post('tgl_donasi'),
-            'jumlah_donasi'  => $this->input->post('jumlah_donasi'),
-            'ket_donasi'     => ucwords($keterangan),
-            'bukti_tf'       => $bukti_tf,
-            'jenis_donasi'   => 'Uang'
+            'id_donasi'     => $id_donasi,
+            'nama_donatur'  => ucwords($nama_donatur),
+            'tgl_donasi'    => $this->input->post('tgl_donasi'),
+            'jumlah_donasi' => $this->input->post('jumlah_donasi'),
+            'ket_donasi'    => ucwords($keterangan),
+            'bukti_tf'      => $bukti_tf,
+            'jenis_donasi'  => 'Uang'
           ];
           $this->db->insert('tabel_donasi', $data);
 
