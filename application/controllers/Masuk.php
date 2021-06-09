@@ -44,7 +44,7 @@
                 $user_token = $this->db->get_where('user_token', ['email_user' => $user['email_user']])->row_array();
                 $hari_ini   = date("Y-m-d");
 
-                if($user_token['tanggal_daftar'] == $hari_ini){
+                if($user_token['tanggal_token'] == $hari_ini){
                   redirect('Registrasi/DataDiri?email_user='.$user['email_user'].'&token='.$user_token['token']);
                 }
                 else{
@@ -67,25 +67,9 @@
           }
         }
         else{
-          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Akun belum terdaftar.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Akun tidak terdaftar.</div>');
           redirect('Masuk');
         }
       }
-    }
-
-    public function LupaKataSandi(){
-      $data['judul'] = 'Lupa Kata Sandi';
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Masuk/LupaKataSandi');
-      $this->load->view('Templates/foot');
-    }
-
-    public function AturKataSandi(){
-      $data['judul'] = 'Atur Kata Sandi';
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Masuk/AturKataSandi');
-      $this->load->view('Templates/foot');
     }
   }

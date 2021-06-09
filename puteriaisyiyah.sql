@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2021 at 06:57 PM
+-- Generation Time: Jun 09, 2021 at 05:05 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -38,6 +38,13 @@ CREATE TABLE `log_akun` (
   `status_user` varchar(20) NOT NULL,
   `waktu_log_akun` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `log_akun`
+--
+
+INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
+(1, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'cc6d038e6d2df91c6855fa257b691ebb05772d8a', 'Jl. Belibis 9 No. 127', 'P', 'Terdaftar', '2021-06-08 19:04:16');
 
 -- --------------------------------------------------------
 
@@ -79,7 +86,8 @@ CREATE TABLE `tabel_akun` (
 --
 
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1),
+(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'cc6d038e6d2df91c6855fa257b691ebb05772d8a', 'Jl. Belibis 9 No. 127', 'Banda Aceh', '2001-07-30', 'P', 2, 1);
 
 --
 -- Triggers `tabel_akun`
@@ -174,6 +182,13 @@ CREATE TABLE `tabel_donasi` (
   `bukti_tf` varchar(100) DEFAULT NULL,
   `tgl_donasi` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_donasi`
+--
+
+INSERT INTO `tabel_donasi` (`id_donasi`, `nama_donatur`, `jumlah_donasi`, `jenis_donasi`, `ket_donasi`, `bukti_tf`, `tgl_donasi`) VALUES
+(1, 'Dinda Julia Putri', 200000, 'Uang', 'Lainnya', 'PicsArt_03-20-12_23_04.jpg', '2021-06-09');
 
 -- --------------------------------------------------------
 
@@ -296,7 +311,7 @@ CREATE TABLE `user_token` (
   `id_token` int(11) NOT NULL,
   `email_user` varchar(100) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `tanggal_daftar` date NOT NULL
+  `tanggal_token` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -399,7 +414,7 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `log_inventaris`
@@ -477,7 +492,7 @@ ALTER TABLE `tabel_pengurus`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

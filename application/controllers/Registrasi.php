@@ -47,7 +47,19 @@
         ];
         $this->db->insert('tabel_akun', $data);
 
-        $token = md5(random_bytes(32));
+        function randomString($length = 20) {
+          $str = "";
+          $characters = array_merge(range('0','9'), range('A', 'Z'), range('a', 'z'));
+          $max = count($characters) - 1;
+
+          for ($i = 0; $i < $length; $i++) {
+              $rand = mt_rand(0, $max);
+              $str .= $characters[$rand];
+          }
+          return $str;
+        }
+
+        $token = randomString();
         date_default_timezone_set('Asia/Jakarta');
 
         $this->db->select('*');
@@ -68,16 +80,16 @@
         }
 
         $user_token = [
-          'id_token'       => $id_token,
-          'email_user'     => $this->input->post('email_user', true),
-          'token'          => $token,
-          'tanggal_daftar' => date("Y-m-d")
+          'id_token'      => $id_token,
+          'email_user'    => $email_user,
+          'token'         => $token,
+          'tanggal_token' => date("Y-m-d")
         ];
         $this->db->insert('user_token', $user_token);
 
         $this->_sendEmail($token);
 
-        redirect('VerifikasiEmail/Registrasi');
+        redirect('Registrasi/VerifikasiEmail');
       }
     }
 
@@ -201,5 +213,13 @@
       else{
         redirect('Registrasi');
       }
+    }
+
+    public function VerifikasiEmail(){
+      $data['judul'] = 'Verifikasi Email';
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Registrasi/VerifikasiEmail');
+      $this->load->view('Templates/foot');
     }
   }

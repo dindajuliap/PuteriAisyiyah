@@ -3,7 +3,7 @@
     <div class="row" style="margin: 0px; padding: 0px">
       <div class="siderbar-col col-lg-6 d-none d-md-block" style="background: linear-gradient(to left, #010020, #030153)" align="center">
         <a href="<?= base_url() ?>">
-          <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 70%; margin-top: 15.3%; margin-bottom: 15.3%">
+          <img src="<?= base_url() ?>assets/img/Logo.png" style="width: 70%; margin-top: 14.6%; margin-bottom: 14.6%">
         </a>
       </div>
 
@@ -28,7 +28,7 @@
         </p>
 
         <p style="color: #030153; margin-top: 6rem" align="center">
-          <a href="<?= base_url('Masuk/LupaKataSandi') ?>" style="color: #7E7E7E">Lupa kata sandi?</a>
+          <a href="<?= base_url('LupaKataSandi') ?>" style="color: #7E7E7E">Lupa kata sandi?</a>
         </p>
       </div>
     </div>
