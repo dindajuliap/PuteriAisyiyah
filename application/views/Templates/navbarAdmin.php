@@ -19,7 +19,7 @@
     <div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
       <div class="modal-body">
         <span>
-          <p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 30px"></p>
+          <p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 10px"></p>
           <p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 196px">!</p>
         </span>
 
