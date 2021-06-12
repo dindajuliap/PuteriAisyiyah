@@ -54,7 +54,7 @@
 											<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal2<?= $val->id_user ?>">
 												<i class="fas fa-eye"></i>
 											</button>
-											<a href="<?= site_url('Admin/UbahDataAkun/'.$val->id_user)?>" class="btn btn-warning btn-sm">
+											<a href="<?= base_url('Admin/UbahDataAkun/'.$val->id_user)?>" class="btn btn-warning btn-sm">
 												<i class="fas fa-edit"></i>
 											</a>
 											<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusModal<?= $val->id_user ?>" style="color: white" type="submit">

@@ -2,6 +2,12 @@
   defined('BASEPATH') or exit('No direct script access allowed');
 
   class Admin extends CI_Controller{
+
+    public function __construct(){
+      parent::__construct();
+      $this->load->library('form_validation');
+    }
+
     public function index(){
       $data['judul'] = 'Admin Panel';
 
@@ -28,6 +34,7 @@
       $this->load->view('Templates/foot');
     }
 
+
 		public function HapusDataAkun($id_user){
 			$this->db->where('id_user', $id_user);
 			$this->db->delete('tabel_akun');
@@ -37,6 +44,49 @@
 				redirect('Admin/DaftarAkun');
 			}
 		}
+
+    public function UbahDataAkun($id_user){
+      $data['judul'] = 'Admin Panel - Ubah Data Akun';
+      $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+      $this->form_validation->set_rules('nama_user', 'Nama Lengkap', 'required|trim');
+      $this->form_validation->set_rules('tmpt_lahir_user', 'Tempat Lahir', 'required|trim');
+      $this->form_validation->set_rules('tgl_lahir_user', 'Tanggal Lahir', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_user', 'Nomor Handphone', 'required|trim|numeric[tabel_akun.nomorhp_user]|greater_than[0]|min_length[11]|max_length[13]', ['greater_than' => 'tidak valid.','min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
+      $this->form_validation->set_rules('jk_user', 'Jenis Kelamin', 'required|trim');
+      $this->form_validation->set_rules('alamat_user', 'Alamat', 'required|trim');
+      $this->form_validation->set_rules('email_user', 'Email', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAkun/UbahDataAkun', $data);
+        $this->load->view('Templates/foot');
+      }  else {
+            $nama_user        = $this->input->post('nama_user');
+            $tmpt_lahir_user  = $this->input->post('tmpt_lahir_user');
+            $tgl_lahir_user   = $this->input->post('tgl_lahir_user');
+            $nomorhp_user     = $this->input->post('nomorhp_user');
+            $jk_user          = $this->input->post('jk_user');
+            $alamat_user      = $this->input->post('alamat_user');
+            $email_user       = $this->input->post('email_user');
+
+            $data = [ 'nama_user'         => $nama_user,
+                      'tmpt_lahir_user'   => $tmpt_lahir_user,
+                      'tgl_lahir_user'    => $tgl_lahir_user,
+                      'nomorhp_user'      => $nomorhp_user,
+                      'jk_user'           => $jk_user,
+                      'alamat_user'       => $alamat_user,
+                      'email_user'        => $email_user
+                    ];
+
+          $this->db->where('id_user', $this->session->userdata('id_user'));
+          $this->db->update('tabel_akun', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Data akun berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+          redirect('Admin/DaftarAkun');
+        }
+    }
+
 
     public function DaftarAnak(){
       $data['judul'] = 'Admin Panel - Daftar Anak';
