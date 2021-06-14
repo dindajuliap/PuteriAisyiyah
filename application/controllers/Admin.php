@@ -47,7 +47,10 @@
 
     public function UbahDataAkun($id_user){
       $data['judul'] = 'Admin Panel - Ubah Data Akun';
-      $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+      $this->db->where('id_user', $id_user);
+      $recordUser = $this->db->get('tabel_akun')->row();
+      $DATA	      = array('tabel_akun' => $recordUser);
 
       $this->form_validation->set_rules('nama_user', 'Nama Lengkap', 'required|trim');
       $this->form_validation->set_rules('tmpt_lahir_user', 'Tempat Lahir', 'required|trim');
@@ -60,7 +63,7 @@
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarAkun/UbahDataAkun', $data);
+        $this->load->view('Admin/DaftarAkun/UbahDataAkun', $DATA);
         $this->load->view('Templates/foot');
       }  else {
             $nama_user        = $this->input->post('nama_user');
@@ -80,7 +83,7 @@
                       'email_user'        => $email_user
                     ];
 
-          $this->db->where('id_user', $this->session->userdata('id_user'));
+          $this->db->where('id_user', $id_user);
           $this->db->update('tabel_akun', $data);
           $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Data akun berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
           redirect('Admin/DaftarAkun');
