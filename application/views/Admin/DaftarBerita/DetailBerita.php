@@ -4,27 +4,23 @@
 			<div class="col-12">
 				<div class="card" style="padding: 2%;">
 					<h1 class="mt-1" style="text-align: center; color: #030153;"><b>DETAIL DATA</b></h1>
-					<?= $this->session->flashdata('message') ?>
+					<hr>
 
 					<?php foreach($detail_berita as $val) : ?>
 						<div class="card-body">
 							<div class="col-lg-12">
 								<div class="row">
-									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left;"><b>Judul Berita</b></h6>
-										<input type="text" name="judul_berita" id="judul_berita" value="<?= $val->judul_berita ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
+									<div class="col-lg-12 mt-2">
+										<h1 style="text-align: center;"><?= $val->judul_berita ?></h1>
 									</div>
-									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Tanggal Berita</b></h6>
-										<input type="text" name="tanggal_berita" id="tanggal_berita" value="<?= date('d M Y', strtotime($val->tanggal_berita)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
+									<div class="col-lg-12 mt-3">
+										<img src="<?= base_url('assets/img/foto_berita/') . $val->cover_berita ?>" style="max-width: 500px; margin: 20px auto 30px auto; display: block;">
 									</div>
-									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Isi Berita</b></h6>
-										<textarea name="isi_berita" id="isi_berita"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 130px; width: 92%;" readonly><?= $val->isi_berita ?></textarea>
+									<div class="col-lg-12 mt-4">
+										<?= $val->isi_berita ?>
 									</div>
-									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Cover</b></h6>
-										<img src="<?= base_url('assets/img/foto_berita/') . $val->cover_berita ?>" style="max-width: 200px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); float: left; margin-left: 8.3%">
+									<div class="col-lg-12 mt-4">
+										<p>Diposting tanggal : <?= date("d F Y", strtotime($val->tanggal_berita)) ?></p>
 									</div>
 								</div>
 
@@ -56,15 +52,15 @@
 						</span>
 
 						<h3 class="modal-title" id="exampleModalLabel" align="center">
-							<b style="font-family: Arial; color: #595959">Hapus Data Berita</b>
+							<b style="font-family: Arial; color: #595959">Hapus Berita</b>
 						</h3>
 
-						<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus data berita ini?</h5>
+						<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus berita ini?</h5>
 
 						<br>
 
 						<div class="row mb-2">
-							<a class="btn" href="<?= base_url('Admin/HapusDataBerita/') . $val->id_berita ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
+							<a class="btn" href="<?= base_url('Admin/HapusBerita/') . $val->id_berita ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
 							<button class="btn" type="button" data-dismiss="modal" style="background: grey; color: white; margin-right: auto; margin-left: 10px; width: 105px; padding: 10px">Tidak</button>
 						</div>
 					</div>

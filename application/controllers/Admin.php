@@ -404,7 +404,7 @@
     }
 
 		public function DetailBerita($id_Berita){
-      $data['judul'] = 'Admin Panel - Detail Data Berita';
+      $data['judul'] = 'Admin Panel - Detail Berita';
 
       $this->db->select('*');
       $this->db->from('tabel_berita');
@@ -414,7 +414,7 @@
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarBerita/DetailDataBerita', $data);
+      $this->load->view('Admin/DaftarBerita/DetailBerita', $data);
       $this->load->view('Templates/foot');
     }
 
