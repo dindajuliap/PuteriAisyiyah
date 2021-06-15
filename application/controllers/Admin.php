@@ -64,6 +64,21 @@
       $this->load->view('Templates/foot');
     }
 
+		public function DetailDataAkun($id_user){
+      $data['judul'] = 'Admin Panel - Detail Data Akun';
+
+      $this->db->select('*');
+      $this->db->from('tabel_akun');
+      $this->db->where('id_user', $id_user);
+      $data['detail_akun'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAkun/DetailDataAkun', $data);
+      $this->load->view('Templates/foot');
+    }
+
     public function HapusDataAkun($id_user){
       $this->db->where('id_user', $id_user);
       $this->db->delete('tabel_akun');
@@ -166,6 +181,21 @@
       $this->load->view('Templates/foot');
     }
 
+		public function DetailDataAnak($id_anak){
+      $data['judul'] = 'Admin Panel - Detail Data Anak';
+
+      $this->db->select('*');
+      $this->db->from('tabel_anak');
+      $this->db->where('id_anak', $id_anak);
+      $data['detail_anak'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAnak/DetailDataAnak', $data);
+      $this->load->view('Templates/foot');
+    }
+
     public function HapusDataAnak($id_anak){
       $this->db->where('id_anak', $id_anak);
       $this->db->delete('tabel_anak');
@@ -218,6 +248,21 @@
       $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarPengurus/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+		public function DetailDataPengurus($id_pengurus){
+      $data['judul'] = 'Admin Panel - Detail Data Pengurus';
+
+      $this->db->select('*');
+      $this->db->from('tabel_pengurus');
+      $this->db->where('id_pengurus', $id_pengurus);
+      $data['detail_pengurus'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarPengurus/DetailDataPengurus', $data);
       $this->load->view('Templates/foot');
     }
 
@@ -275,6 +320,21 @@
       $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarDonasi/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+		public function DetailDataDonasi($id_donasi){
+      $data['judul'] = 'Admin Panel - Detail Data Donasi';
+
+      $this->db->select('*');
+      $this->db->from('tabel_donasi');
+      $this->db->where('id_donasi', $id_donasi);
+      $data['detail_donasi'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarDonasi/DetailDataDonasi', $data);
       $this->load->view('Templates/foot');
     }
 
@@ -341,6 +401,21 @@
         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil dihapus.</div>');
         redirect('Admin/DaftarBerita');
       }
+    }
+
+		public function DetailBerita($id_Berita){
+      $data['judul'] = 'Admin Panel - Detail Data Berita';
+
+      $this->db->select('*');
+      $this->db->from('tabel_berita');
+      $this->db->where('id_berita', $id_Berita);
+      $data['detail_berita'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarBerita/DetailDataBerita', $data);
+      $this->load->view('Templates/foot');
     }
 
     public function DaftarInventaris(){

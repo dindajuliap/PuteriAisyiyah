@@ -16,7 +16,7 @@
 									</div>
 									<div class="col-lg-6 mt-4">
 										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Tanggal Masuk Panti</b></h6>
-										<input type="text" name="tgl_masuk_anak" id="tgl_masuk_anak" value="<?= $val->tgl_masuk_anak ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
+										<input type="text" name="tgl_masuk_anak" id="tgl_masuk_anak" value="<?= date('d M Y', strtotime($val->tgl_masuk_anak)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
 										<h6 style="color: #030153; text-align: left;"><b>Tempat dan Tanggal Lahir</b></h6>

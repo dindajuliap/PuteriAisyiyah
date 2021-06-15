@@ -6,7 +6,7 @@
 					<h1 class="mt-1" style="text-align: center; color: #030153;"><b>DETAIL DATA</b></h1>
 					<?= $this->session->flashdata('message') ?>
 
-					<?php foreach($detail_petugas as $val) : ?>
+					<?php foreach($detail_pengurus as $val) : ?>
 						<div class="card-body">
 							<div class="col-lg-12">
 								<div class="row">
@@ -53,7 +53,7 @@
 										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_pengurus ?>" style="border-radius: 10px; width: 25%; margin-left: 10px; float: right; background: red; color: white">Hapus Data</button>
 									</div>
 									<div class="col-lg-6">
-										<a href="<?= base_url('Admin/UbahDataPetugas/'.$val->id_pengurus) ?>" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white">Ubah Data</a>
+										<a href="<?= base_url('Admin/UbahDataPengurus/'.$val->id_pengurus) ?>" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white">Ubah Data</a>
 									</div>
 								</div>
 							</div>
@@ -63,9 +63,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> 
 
-	<?php foreach($detail_petugas as $val) : ?>
+	<?php foreach($detail_pengurus as $val) : ?>
 		<div class="modal fade" id="hapusModal<?= $val->id_pengurus ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content" style="border-radius: 5px">
@@ -76,15 +76,15 @@
 						</span>
 
 						<h3 class="modal-title" id="exampleModalLabel" align="center">
-							<b style="font-family: Arial; color: #595959">Hapus Data Petugas</b>
+							<b style="font-family: Arial; color: #595959">Hapus Data Pengurus</b>
 						</h3>
 
-						<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus data petugas ini?</h5>
+						<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus data pengurus ini?</h5>
 
 						<br>
 
 						<div class="row mb-2">
-							<a class="btn" href="<?= base_url('Admin/HapusDataPetugas/') . $val->id_pengurus ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
+							<a class="btn" href="<?= base_url('Admin/HapusDataPengurus/') . $val->id_pengurus ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
 							<button class="btn" type="button" data-dismiss="modal" style="background: grey; color: white; margin-right: auto; margin-left: 10px; width: 105px; padding: 10px">Tidak</button>
 						</div>
 					</div>
