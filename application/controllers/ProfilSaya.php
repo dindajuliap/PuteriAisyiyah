@@ -66,7 +66,7 @@
     }
     
     public function UbahKataSandi() {
-        $data['judul'] = 'Profil Saya';
+        $data['judul'] = 'Ubah Kata Sandi';
         $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
         $this->form_validation->set_rules('password2', 'Kata sandi', 
@@ -111,9 +111,6 @@
                   $this->db->where('email_user', $user['email_user']);
                   $this->db->update('log_akun', $data);
 
-                  $this->db->where('email_user', $user['email_user']);
-                  $this->db->delete('user_token');
-
                   $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Kata sandi Anda berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 
                   redirect('ProfilSaya');
@@ -123,18 +120,45 @@
     }
 
     public function UbahEmail() {
-        $data['judul'] = 'Profil Saya';
+        $data['judul'] = 'Ubah Email';
         $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
-        $this->form_validation->set_rules('email_user', 'Email', 
+        $this->form_validation->set_rules('email_baru', 'Email', 
             'required|trim|valid_email|is_unique[tabel_akun.email_user]',
             ['is_unique'    => 'Gagal diperbarui! Email sudah terdaftar.', 
             'valid_email'   => 'Gagal diperbarui! Email tidak valid.']);
+
+        if($this->form_validation->run() == false){
+          $this->load->view('Templates/head', $data);
+          $this->load->view('Templates/navbar');
+          $this->load->view('ProfilSaya/UbahEmail', $data);
+          $this->load->view('Templates/foot');
+        }
+
+        else {
+          if(isset($_POST['ubah_Email'])){
+            
+            $user       = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
+            $email_user   = $this->input->post('email_baru');
+
+            $data = [
+              'email_user' => $email_user
+            ];
+
+            $this->db->where('id_user',  $user['id_user']);
+            $this->db->update('tabel_akun', $data);
+
+            $this->db->where('nomorhp_user', $user['nomorhp_user']);
+            $this->db->update('log_akun', $data);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Email Anda berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+
+            redirect('ProfilSaya');
+
+          }
+        }
+
   
-        $this->load->view('Templates/head', $data);
-        $this->load->view('Templates/navbar');
-        $this->load->view('ProfilSaya/UbahEmail', $data);
-        $this->load->view('Templates/foot');
 
     }
 
