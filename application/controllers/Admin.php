@@ -318,7 +318,7 @@
       else{
         $config['total_rows'] = $this->admin->countBerita();
         $data['total_rows']   = $config['total_rows'];
-        $config['per_page']   = 8;
+        $config['per_page']   = 5;
 
         $this->pagination->initialize($config);
 
