@@ -79,7 +79,7 @@
 				<div class="modal-content" >
 					<div class="modal-header">
 						<h3 class="modal-title" id="exampleModalLabel" style="color: #030153;">Detail Data Akun</h3>&nbsp;
-						<a href="#" style="padding: 2%;">[Ubah Data]</a>
+						<a href="<?= base_url('Admin/UbahDataAkun/'.$val->id_user)?>" style="padding: 2%;">[Ubah Data]</a>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
