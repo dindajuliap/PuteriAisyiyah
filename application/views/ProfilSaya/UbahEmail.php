@@ -4,9 +4,9 @@
 
         <?= $this->session->flashdata('message'); ?>
 
-        <?php if(form_error('email_user')) : ?>
+        <?php if(form_error('email_baru')) : ?>
           <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%; height: 50px; margin: 25px 0px; text-align: left;">
-            <?= form_error('email_user'); ?>
+            <?= form_error('email_baru'); ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -23,7 +23,7 @@
             <b>Email Lama</b>
         </h6>
 
-        <input disabled type="text" name="email_user" id="email_user" value="<?= $tabel_akun['email_user']; ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+        <input disabled type="text" name="email_lama" id="email_lama" value="<?= $tabel_akun['email_user']; ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
     </div>
 
     <div style="padding-top: 20px;">
@@ -31,7 +31,7 @@
             <b>Email Baru</b>
         </h6>
 
-        <input type="text" name="email_user" id="email_user" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+        <input type="text" name="email_baru" id="email_baru" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
     </div>
 
     <div>
