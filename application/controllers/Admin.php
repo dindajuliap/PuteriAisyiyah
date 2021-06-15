@@ -115,19 +115,99 @@
 			}
 		}
 
+    public function UbahDataAnak($id_anak){
+      $data['judul'] = 'Admin Panel - Ubah Data Anak';
+
+      $this->db->where('id_anak', $id_anak);
+      $recordAnak = $this->db->get('tabel_anak')->row();
+      $DATA1	      = array('tabel_anak' => $recordAnak);
+
+      $this->form_validation->set_rules('nama_anak', 'Nama Lengkap', 'required|trim');
+      $this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal Masuk', 'required|trim');
+      $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal Lahir', 'required|trim');
+      $this->form_validation->set_rules('jk_anak', 'Jenis Kelamin', 'required|trim');
+      $this->form_validation->set_rules('status_anak', 'Status Anak', 'required|trim');
+      $this->form_validation->set_rules('agama_anak', 'Agama', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/UbahDataAnak', $DATA1);
+        $this->load->view('Templates/foot');
+      }  else {
+            $nama_anak        = $this->input->post('nama_anak');
+            $tgl_masuk_anak   = $this->input->post('tgl_masuk_anak');
+            $tgl_lahir_anak   = $this->input->post('tgl_lahir_anak');
+            $jk_anak          = $this->input->post('jk_anak');
+            $status_anak      = $this->input->post('status_anak');
+            $agama_anak       = $this->input->post('agama_anak');
+
+            $data = [ 'nama_anak'         => $nama_anak,
+                      'tgl_masuk_anak'   => $tgl_masuk_anak,
+                      'tgl_lahir_anak'    => $tgl_lahir_anak,
+                      'jk_anak'           => $jk_anak,
+                      'status_anak'      => $status_anak,
+                      'agama_anak'       => $agama_anak
+                    ];
+
+          $this->db->where('id_anak', $id_anak);
+          $this->db->update('tabel_anak', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Data anak berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+          redirect('Admin/DaftarAnak');
+        }
+    }
+
     public function DaftarPetugas(){
       $data['judul'] = 'Admin Panel - Daftar Petugas';
 
       $this->db->select('*');
       $this->db->from('tabel_pengurus');
-      $this->db->where('status_pengurus', 1);
       $data['petugas'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarPetugas/index');
+      $this->load->view('Admin/DaftarPetugas/index', $data);
       $this->load->view('Templates/foot');
+    }
+
+    public function UbahDataPetugas($id_pengurus){
+      $data['judul'] = 'Admin Panel - Ubah Data Anak';
+
+      $this->db->where('id_pengurus', $id_pengurus);
+      $recordPengurus = $this->db->get('tabel_pengurus')->row();
+      $DATA2	      = array('tabel_pengurus' => $recordPengurus);
+
+      $this->form_validation->set_rules('nama_pengurus', 'Nama Lengkap', 'required|trim');
+      $this->form_validation->set_rules('jk_pengurus', 'Jenis Kelamin', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_pengurus', 'Nomor Handphone', 'required|trim|numeric[tabel_akun.nomorhp_pengurus]|greater_than[0]|min_length[11]|max_length[13]', ['greater_than' => 'tidak valid.','min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
+      $this->form_validation->set_rules('status_pengurus', 'Status Pengurus', 'required|trim');
+      $this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarPetugas/UbahDataPetugas', $DATA2);
+        $this->load->view('Templates/foot');
+      }  else {
+            $nama_pengurus        = $this->input->post('nama_pengurus');
+            $jk_pengurus          = $this->input->post('jk_pengurus');
+            $nomorhp_pengurus     = $this->input->post('nomorhp_pengurus');
+            $status_pengurus      = $this->input->post('status_pengurus');
+            $alamat_pengurus      = $this->input->post('alamat_pengurus');
+
+            $data = [ 'nama_pengurus'         => $nama_pengurus,
+                      'jk_pengurus'           => $jk_pengurus,
+                      'nomorhp_pengurus'           => $nomorhp_pengurus,
+                      'status_pengurus'       => $status_pengurus,
+                      'alamat_pengurus'       => $alamat_pengurus
+                    ];
+
+          $this->db->where('id_pengurus', $id_pengurus);
+          $this->db->update('tabel_pengurus', $data);
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 100%; margin-right: auto; margin-left: auto; text-align: left">Data petugas berhasil diperbarui.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+          redirect('Admin/DaftarPetugas');
+        }
     }
 
     public function DaftarDonasi(){

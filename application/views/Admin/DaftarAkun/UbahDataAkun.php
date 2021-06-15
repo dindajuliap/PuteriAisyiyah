@@ -36,7 +36,11 @@
 				</div>
 				<div class="col-lg-6 mt-4">
 					<h6 style="color: #030153; text-align: left;"><b>Jenis Kelamin</b></h6>
-					<input type="text" name="jk_user" id="jk_user" value="<?= $tabel_akun->jk_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+					<input type="text" name="jk_user" id="jk_user" value="<?php if($tabel_akun->jk_user == '') : ?>-
+																																<?php elseif($tabel_akun->jk_user == 'L') : ?>Laki-Laki
+																																<?php elseif($tabel_akun->jk_user == 'P') : ?>Perempuan
+                                                                <?php endif ?>"
+					class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
 					<small class="form-text text-danger"><?= form_error('jk_user') ?></small>
 				</div>
 				<div class="col-lg-6 mt-4">
