@@ -24,18 +24,16 @@
 									</div>
 									<div class="col-lg-6 mt-4">
 										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Keterangan</b></h6>
-										<input type="text" name="ket_donasi" id="ket_donasi" value="<?= $val->ket_donasi ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
+										<input type="text" name="ket_donasi" id="ket_donasi" value="<?php if($val->ket_donasi == '') : ?>-<?php else : ?><?= $val->ket_donasi ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
 										<h6 style="color: #030153; text-align: left;"><b>Donasi</b></h6>
 										<input type="text" name="jumlah_donasi" id="jumlah_donasi" value="Rp<?= number_format($val->jumlah_donasi,2,',','.') ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
-									<?php if($val->bukti_tf ) : ?>
 									<div class="col-lg-6 mt-4">
 										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Bukti Transfer</b></h6>
 										<img src="<?= base_url('assets/img/bukti_tf/') . $val->bukti_tf ?>" style="max-width: 200px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); float: left; margin-left: 8.3%">
 									</div>
-									<?php endif ?>
 								</div>
 
 								<div class="row mt-5">
