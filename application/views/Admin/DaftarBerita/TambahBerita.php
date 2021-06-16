@@ -1,5 +1,5 @@
 <body style="color: #030153; font-family: Arial;">
-	<div style="width: 40%; margin: auto; text-align: center; margin-top: 50px;">
+	<div class="col-lg-12" style="width: 90%; margin: auto; text-align: center; margin-top: 50px;">
 		<?= $this->session->flashdata('message'); ?>
 		<h2><b>TAMBAH DATA</b></h2>
 	</div>
@@ -21,7 +21,7 @@
 
         <div class="col-lg-6 mt-4">
           <h6 style="color: #030153; text-align: left;"><b>Isi Berita</b></h6>
-          <textarea name="isi_berita" id="isi_berita" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; width: 92%; background: #ECECEC;"></textarea>
+          <textarea name="isi_berita" id="isi_berita" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; width: 92%; background: #ECECEC;"><?= set_value('isi_berita') ?></textarea>
           <small class="form-text text-danger"><?= form_error('isi_berita') ?></small>
         </div>
 

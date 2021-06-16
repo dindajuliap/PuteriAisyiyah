@@ -506,7 +506,6 @@
 			$data['tabel_akun']	= $this->db->get_where('tabel_akun', ['email_user' => $this->session->userdata('email_user')])->row_array();
 
 			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required');
-			$this->form_validation->set_rules('cover_berita', 'Sampul berita', 'required');
 			$this->form_validation->set_rules('isi_berita', 'Isi berita', 'required');
 			$this->form_validation->set_rules('tanggal_berita', 'Tanggal posting', 'required');
 			$this->form_validation->set_message('required', '%s tidak boleh kosong');
@@ -519,23 +518,22 @@
 			}
 			else{
 				$judul_berita		= $this->input->post('judul_berita');
-				$cover_berita		= $this->input->post('cover_berita');
 				$isi_berita			= $this->input->post('isi_berita');
 				$tanggal_berita	= $this->input->post('tanggal_berita');
 
-				$config['upload_path']	 = './assets/img/foto_berita';
+				$config['upload_path']	 = './assets/img/cover_berita';
 				$config['allowed_types'] = 'gif|jpg|png|jpeg';
 				$config['max_size']      = '2048';
 
 				$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload('foto_berita')) {
+				if (!$this->upload->do_upload('cover_berita')) {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Sampul berita harus diisi dengan sesuai</div>');
 					redirect('Admin/TambahBerita');
 				}
 				else {
-					$foto_berita = $this->upload->data();
-					$foto_berita = $foto_berita['file_name'];
+					$cover_berita = $this->upload->data();
+					$cover_berita = $cover_berita['file_name'];
 
 					$data = [
 						'judul_berita'		=> $judul_berita,
