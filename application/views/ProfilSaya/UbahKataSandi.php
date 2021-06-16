@@ -1,56 +1,38 @@
-<body style="color: #030153; font-family: Arial;">
+<body style="color: #030153; font-family: Arial">
+  <div style="width: 40%; margin: auto; padding: 40px 0px">
+    <h3 style="color: #030153; font-weight: 700" align="center">UBAH KATA SANDI</h3>
 
-  <div style="width: 40%; margin: auto; text-align: center; padding: 40px 0px">
-
-    <?= $this->session->flashdata('message'); ?>
-
-    <?php if(form_error('password2')) : ?>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%; height: 50px; margin: 25px 0px; text-align: left;">
-        <?= form_error('password2'); ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <?php endif; ?>
-
-    <h2>
-      <b>Ubah Kata Sandi</b>
-    </h2>
+    <div class="row mt-3">
+			<?= $this->session->flashdata('message') ?>
+		</div>
 
     <form action="" method="post">
+      <label style="color: #030153">Kata Sandi Lama</label>
+			<input type="password" name="password1" id="password1" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
+      <span id="show1" onclick="show1()" style="position: relative; z-index: 1; top: -32px; left: 92%; cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
+			<small class="form-text text-danger" align="left" style="margin-bottom: 3%; margin-top: -4%"><?= form_error('password1') ?></small>
 
-      <div style="padding-top: 20px;">
-          <h6 style="color: #030153; text-align: left;"><b>Kata Sandi Lama</b></h6>
-          <input type="password" name="password1" id="password1" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
-          <span id="show1" onclick="show1()" style="position: relative; z-index: 1; top: -32px; left: 230px;
-            cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
-      </div>
+      <label style="color: #030153">Kata Sandi Baru</label>
+      <input type="password" name="password2" id="password2" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
+      <span id="show2" onclick="show2()" style="position: relative; z-index: 1; top: -32px; left: 92%; cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
+			<small class="form-text text-danger" align="left" style="margin-bottom: 3%; margin-top: -4%"><?= form_error('password2') ?></small>
 
-      <div style="padding-top: 0px;">
-          <h6 style="color: #030153; text-align: left;"><b>Kata Sandi Baru</b></h6>
-          <input type="password" name="password2" id="password2" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
-          <span id="show2" onclick="show2()" style="position: relative; z-index: 1; top: -32px; left: 230px;
-            cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
-      </div>
+      <label style="color: #030153">Kata Sandi Baru</label>
+      <input type="password" name="password3" id="password3" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
+      <span id="show3" onclick="show3()" style="position: relative; z-index: 1; top: -32px; left: 92%; cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
 
-      <div style="padding-top: 0px;">
-          <h6 style="color: #030153; text-align: left;"><b>Konfirmasi Kata Sandi Baru</b></h6>
-          <div>
-            <input type="password" name="password3" id="password3" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
-            <span id="showkonf" onclick="showkonf()" style="position: relative; z-index: 1; top: -32px; left: 230px;
-            cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
-          </div>
-      </div>
+      <div class="row mt-4">
+				<div class="col-lg-6">
+					<a href="<?= base_url('ProfilSaya') ?>" class="btn btn-secondary ml-5" style="border-radius: 10px; width: 75%; float: left">Batal</a>
+				</div>
 
-      <div>
-        <a href="<?= base_url('ProfilSaya') ?>" class="btn btn-secondary" style="border-radius: 10px; width: 45%; height: 46px; margin: 25px 0px; padding-top: 10px; float: left;">Batal</a>
-
-        <button type="submit" name="ubah_KataSandi" class="btn" style="border-radius: 10px; width: 45%; height: 46px; margin: 25px 0px; padding-top: 10px; float: right; background: #030153; color: white">Simpan</button>
-      </div>
+				<div class="col-lg-6">
+					<button type="submit" class="btn mr-5" style="border-radius: 10px; width: 75%; float: right; background: #030153; color: white">Simpan</button>
+				</div>
+			</div>
     </form>
-
   </div>
-
+</body>
 
 <script type="text/javascript">
   function show1(){
@@ -79,18 +61,16 @@
     }
   }
 
-  function showkonf(){
+  function show3(){
     var x = document.getElementById('password3').type;
 
     if (x == 'password'){
       document.getElementById('password3').type = 'text';
-      document.getElementById('showkonf').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
+      document.getElementById('show3').innerHTML = '<i class="fa fa-eye-slash icon"></i>';
     }
     else{
       document.getElementById('password3').type = 'password';
-      document.getElementById('showkonf').innerHTML = '<i class="fa fa-eye icon"></i>';
+      document.getElementById('show3').innerHTML = '<i class="fa fa-eye icon"></i>';
     }
   }
 </script>
-
-</body>
