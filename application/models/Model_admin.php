@@ -118,4 +118,19 @@
     public function countBiodata(){
       return $this->db->get('tabel_panti')->num_rows();
     }
+
+		public function getAlbum1($search){
+      if($search){
+        $this->db->like('nama_album', $search);
+      }
+      return $this->db->get('tabel_album')->result();
+    }
+
+    public function getAlbum2($limit, $start){
+      return $this->db->get('tabel_album', $limit, $start)->result();
+    }
+
+    public function countAlbum(){
+      return $this->db->get('tabel_album')->num_rows();
+    }
   }

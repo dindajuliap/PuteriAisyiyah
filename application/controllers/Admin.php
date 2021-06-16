@@ -612,4 +612,74 @@
         redirect('Admin/BiodataPanti');
       }
     }
+
+		public function DaftarAlbum(){
+      $data['judul']      = 'Daftar Album';
+      $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAlbum/index';
+
+      if($this->input->post('submit')){
+        if($this->input->post('search')){
+          $data['search'] = $this->input->post('search');
+
+          $this->db->like('nama_album', $data['search']);
+          $this->db->from('tabel_album');
+          $config['total_rows'] = $this->db->count_all_results();
+          $data['total_rows']   = $config['total_rows'];
+
+          $data['start']   = 0;
+          $data['album'] = $this->admin->getAlbum1($data['search']);
+        }
+        else{
+          $config['total_rows'] = $this->admin->countAlbum();
+          $data['total_rows']   = $config['total_rows'];
+          $config['per_page']   = 8;
+
+          $this->pagination->initialize($config);
+
+          $data['start']   = $this->uri->segment(4);
+          $data['album'] = $this->admin->getAlbum2($config['per_page'], $data['start']);
+        }
+      }
+      else{
+        $config['total_rows'] = $this->admin->countAlbum();
+        $data['total_rows']   = $config['total_rows'];
+        $config['per_page']   = 8;
+
+        $this->pagination->initialize($config);
+
+        $data['start']   = $this->uri->segment(4);
+        $data['album'] = $this->admin->getAlbum2($config['per_page'], $data['start']);
+      }
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAlbum/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+		public function DetailAlbum($id_album){
+      $data['judul'] = 'Detail Album';
+
+			$this->db->select('*');
+      $this->db->from('tabel_album');
+      $this->db->join('tabel_foto', 'tabel_foto.id_album = tabel_album.id_album');
+      $data['detail_album'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAlbum/DetailAlbum', $data);
+      $this->load->view('Templates/foot');
+    }
+
+		public function HapusFoto($id_foto){
+      $this->db->where('id_foto', $id_foto);
+      $this->db->delete('tabel_foto');
+
+      if($this->db->affected_rows() > 0) {
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Foto berhasil dihapus.</div>');
+        redirect('Admin/DaftarAlbum');
+      }
+    }
   }
