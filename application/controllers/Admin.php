@@ -192,7 +192,6 @@
       $this->form_validation->set_rules('nama_anak', 'Nama Lengkap', 'required|trim');
       $this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal Masuk', 'required|trim');
       $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal Lahir', 'required|trim');
-      $this->form_validation->set_rules('jk_anak', 'Jenis Kelamin', 'required|trim');
       $this->form_validation->set_rules('status_anak', 'Status', 'required|trim');
       $this->form_validation->set_rules('agama_anak', 'Agama', 'required|trim');
 
@@ -206,7 +205,6 @@
         $nama_anak       = $this->input->post('nama_anak');
         $tgl_masuk_anak  = $this->input->post('tgl_masuk_anak');
         $tgl_lahir_anak  = $this->input->post('tgl_lahir_anak');
-        $jk_anak         = $this->input->post('jk_anak');
         $status_anak     = $this->input->post('status_anak');
         $agama_anak      = $this->input->post('agama_anak');
 
@@ -214,7 +212,6 @@
           'nama_anak'      => $nama_anak,
           'tgl_masuk_anak' => $tgl_masuk_anak,
           'tgl_lahir_anak' => $tgl_lahir_anak,
-          'jk_anak'        => $jk_anak,
           'status_anak'    => $status_anak,
           'agama_anak'     => $agama_anak
         ];
@@ -311,6 +308,45 @@
       $this->load->view('Admin/DaftarPengurus/DetailDataPengurus', $data);
       $this->load->view('Templates/foot');
     }
+
+    public function UbahDataPengurus($id_pengurus){
+      $data['judul'] = 'Ubah Data Pengurus';
+
+      $this->db->where('id_pengurus', $id_pengurus);
+      $recordPengurus = $this->db->get('tabel_pengurus')->row();
+      $DATA       = array('tabel_pengurus' => $recordPengurus);
+
+      $this->form_validation->set_rules('nama_pengurus', 'Nama Lengkap', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_pengurus', 'Tanggal Masuk', 'required|trim');
+      $this->form_validation->set_rules('alamat_pengurus', 'Alamat Pengurus', 'required|trim');
+      $this->form_validation->set_rules('status_pengurus', 'Status', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarPengurus/UbahDataPengurus', $DATA);
+        $this->load->view('Templates/foot');
+      }
+      else {
+        $nama_pengurus       = $this->input->post('nama_pengurus');
+        $nomorhp_pengurus  = $this->input->post('nomorhp_pengurus');
+        $alamat_pengurus  = $this->input->post('alamat_pengurus');
+        $status_pengurus     = $this->input->post('status_pengurus');
+
+        $data = [
+          'nama_pengurus'      => $nama_pengurus,
+          'nomorhp_pengurus' => $nomorhp_pengurus,
+          'alamat_pengurus' => $alamat_pengurus,
+          'status_pengurus'    => $status_pengurus
+        ];
+        $this->db->where('id_pengurus', $id_pengurus);
+        $this->db->update('tabel_pengurus', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Data pengurus berhasil diperbarui.</div>');
+        redirect('Admin/DaftarPengurus');
+      }
+    }
+
 
     public function HapusDataPengurus($id_pengurus){
       $this->db->where('id_pengurus', $id_pengurus);

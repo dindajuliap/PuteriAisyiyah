@@ -14,7 +14,7 @@
 					<input type="text" name="nama_anak" id="nama_anak" value="<?= $tabel_anak->nama_anak ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
 					<small class="form-text text-danger"><?= form_error('nama_anak') ?></small>
 				</div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 mt-4">
 					<h6 style="color: #030153; text-align: left;"><b>Tanggal Masuk</b></h6>
 					<input type="text" name="tgl_masuk_anak" id="tgl_masuk_anak" value="<?= $tabel_anak->tgl_masuk_anak ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
 					<small class="form-text text-danger"><?= form_error('tgl_masuk_anak') ?></small>
@@ -23,15 +23,6 @@
           <h6 style="color: #030153; text-align: left;"><b>Tanggal Lahir</b></h6>
           <input type="text" name="tgl_lahir_anak" id="tgl_lahir_anak" value="<?= $tabel_anak->tgl_lahir_anak ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
           <small class="form-text text-danger"><?= form_error('tgl_lahir_anak') ?></small>
-        </div>
-        <div class="col-lg-6 mt-4">
-          <h6 style="color: #030153; text-align: left;"><b>Jenis Kelamin</b></h6>
-          <input type="text" name="jk_anak" id="jk_anak" value="<?php if($tabel_anak->jk_anak == '') : ?>-
-                                                                <?php elseif($tabel_anak->jk_anak == 'L') : ?>Laki-Laki
-                                                                <?php elseif($tabel_anak->jk_anak == 'P') : ?>Perempuan
-                                                                <?php endif ?>"
-           class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;" readonly>
-          <small class="form-text text-danger"><?= form_error('jk_anak') ?></small>
         </div>
 				<div class="col-lg-6 mt-4">
 					<h6 style="color: #030153; text-align: left;"><b>Status</b></h6>
