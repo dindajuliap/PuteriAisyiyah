@@ -3,15 +3,17 @@
 	  <div class="carousel-inner">
 	    <div class="carousel-item active">
 	      <a href="<?= base_url('ProfilPanti') ?>">
-	      	<img class="d-block w-100" src="<?= base_url() ?>assets/img/depan.jpeg" alt="First slide" style="height: 300px">
+	      	<img class="d-block w-100" src="<?= base_url() ?>assets/img/header-awal.jpg" alt="First slide" style="height: 298px">
 	      </a>
 	    </div>
 
 	    <div class="carousel-item">
-	      <div class="d-block w-100" alt="Second slide" style="background: url('<?= base_url() ?>assets/img/bg-abu-biru.jpg') no-repeat bottom; background-size: cover; height: 300px; text-align: center">
-		      <h1 style="padding-top: 50px">Hello, world!</h1>
-			  	<p>This is a simple hero unit.</p>
-			  	<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+	      <div alt="Second slide" style="background: url('<?= base_url() ?>assets/img/header-2.jpg'); height: 298px; text-align: center">
+		      <p style="color: white; font-size: 25px; padding-top: 30px">Uluran tangan Anda mungkin tidak bisa menghapus air mata dan kesedihan yang dialami.</p>
+					<p style="color: white; font-size: 25px; margin-top: -20px">Namun, sedikit dari Anda akan menjadi sangat berarti untuk meringankan beban kami.</p>
+					<p style="color: white; font-size: 25px; margin-top: -20px">Berapapun nilai yang Anda berikan akan sangat berarti.</p>
+					<p style="color: white; font-size: 25px; margin-top: 30px"><b>TERIMA KASIH ORANG BAIK!</b></p>
+
 			  	<a class="btn btn-lg" href="<?= base_url('Donasi') ?>" style="background: #030153; color: white">Donasi Sekarang</a>
 	      </div>
 	    </div>
