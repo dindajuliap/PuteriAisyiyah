@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2021 at 08:05 PM
+-- Generation Time: Jun 16, 2021 at 09:27 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -327,7 +327,8 @@ INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (2, 'Email', 'puteriaisyiyah@gmail.com'),
 (3, 'Telepon ', '(061) 7863466'),
 (4, 'Ketua ', 'Zulbaidah, BA'),
-(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah');
+(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
+(7, 'Foto Panti', 'profil.jpeg');
 
 -- --------------------------------------------------------
 
@@ -603,7 +604,7 @@ ALTER TABLE `tabel_ortu`
 -- AUTO_INCREMENT for table `tabel_panti`
 --
 ALTER TABLE `tabel_panti`
-  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tabel_pengurus`
@@ -615,7 +616,7 @@ ALTER TABLE `tabel_pengurus`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

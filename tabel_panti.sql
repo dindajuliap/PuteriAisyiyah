@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2021 at 04:24 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: Jun 16, 2021 at 09:25 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,10 +39,11 @@ CREATE TABLE `tabel_panti` (
 
 INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (1, 'Alamat', 'Jl. Santun No. 17, Sudirejo I, Kec. Medan Kota, Kota Medan, Sumatera Utara 20218'),
-(2, 'E-mail', 'puteriaisyiyah@gmail.com'),
-(3, 'Telepon ', '061-7863466'),
-(4, 'Ketua ', 'Zulbaidah,BA'),
-(5, 'PANTI ASUHAN', 'PUTERI AISYIYAH');
+(2, 'Email', 'puteriaisyiyah@gmail.com'),
+(3, 'Telepon ', '(061) 7863466'),
+(4, 'Ketua ', 'Zulbaidah, BA'),
+(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
+(7, 'Foto Panti', 'profil.jpeg');
 
 --
 -- Indexes for dumped tables
@@ -62,7 +63,7 @@ ALTER TABLE `tabel_panti`
 -- AUTO_INCREMENT for table `tabel_panti`
 --
 ALTER TABLE `tabel_panti`
-  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
