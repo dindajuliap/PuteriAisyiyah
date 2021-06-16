@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2021 at 05:05 PM
+-- Generation Time: Jun 16, 2021 at 08:05 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -21,6 +21,57 @@ SET time_zone = "+00:00";
 -- Database: `puteriaisyiyah`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_akun` (`id_user` INT(11))  begin
+delete from tabel_akun where id_user = id_user;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_album` (`id_album` INT(11))  begin
+delete from tabel_album where id_album = id_album;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_anak` (`id_anak` INT(11))  begin
+delete from tabel_anak where id_anak = id_anak;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_berita` (`id_berita` INT(11))  begin
+delete from tabel_berita where id_berita = id_berita;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_donasi` (`id_donasi` INT(11))  begin
+delete from tabel_donasi where id_donasi = id_donasi;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_foto` (`id_foto` INT(11))  delete from tabel_donasi where id_foto = id_foto;$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_inventaris` (`id_inventaris` INT(11))  begin
+delete from tabel_inventaris where id_inventaris = id_inventaris;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_pengurus` (`id_pengurus` INT(11))  begin
+delete from tabel_pengurus where id_pengurus = id_pengurus;
+end$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_anak` (`status_anak` INT(1)) RETURNS INT(11) begin
+declare jumlah_anak int;
+select count(*) into jumlah_anak from tabel_anak where status_anak = status_anak;
+return jumlah_anak;
+end$$
+
+CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_pengurus` (`status_pengurus` INT(1)) RETURNS INT(11) begin
+declare jumlah_pengurus int;
+select count(*) into jumlah_pengurus from tabel_pengurus where status_pengurus = status_pengurus;
+return jumlah_pengurus;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -29,22 +80,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `log_akun` (
   `id_log` int(11) NOT NULL,
-  `nama_user` varchar(100) NOT NULL,
+  `nama_user` varchar(100) DEFAULT NULL,
   `email_user` varchar(100) NOT NULL,
-  `nomorhp_user` varchar(13) NOT NULL,
+  `nomorhp_user` varchar(13) DEFAULT NULL,
   `password` varchar(100) NOT NULL,
-  `alamat_user` text NOT NULL,
-  `jk_user` enum('L','P') NOT NULL,
+  `alamat_user` text DEFAULT NULL,
+  `jk_user` enum('L','P') DEFAULT NULL,
   `status_user` varchar(20) NOT NULL,
   `waktu_log_akun` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `log_akun`
---
-
-INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
-(1, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'cc6d038e6d2df91c6855fa257b691ebb05772d8a', 'Jl. Belibis 9 No. 127', 'P', 'Terdaftar', '2021-06-08 19:04:16');
 
 -- --------------------------------------------------------
 
@@ -86,8 +130,7 @@ CREATE TABLE `tabel_akun` (
 --
 
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1),
-(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'cc6d038e6d2df91c6855fa257b691ebb05772d8a', 'Jl. Belibis 9 No. 127', 'Banda Aceh', '2001-07-30', 'P', 2, 1);
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
 
 --
 -- Triggers `tabel_akun`
@@ -162,6 +205,7 @@ DELIMITER ;
 
 CREATE TABLE `tabel_berita` (
   `id_berita` int(11) NOT NULL,
+  `tanggal_berita` date NOT NULL,
   `judul_berita` varchar(100) NOT NULL,
   `cover_berita` varchar(100) NOT NULL,
   `isi_berita` text NOT NULL
@@ -176,19 +220,12 @@ CREATE TABLE `tabel_berita` (
 CREATE TABLE `tabel_donasi` (
   `id_donasi` int(11) NOT NULL,
   `nama_donatur` varchar(100) NOT NULL,
-  `jumlah_donasi` int(11) NOT NULL,
+  `jumlah_donasi` varchar(50) NOT NULL,
   `jenis_donasi` varchar(50) NOT NULL,
   `ket_donasi` text NOT NULL,
   `bukti_tf` varchar(100) DEFAULT NULL,
   `tgl_donasi` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tabel_donasi`
---
-
-INSERT INTO `tabel_donasi` (`id_donasi`, `nama_donatur`, `jumlah_donasi`, `jenis_donasi`, `ket_donasi`, `bukti_tf`, `tgl_donasi`) VALUES
-(1, 'Dinda Julia Putri', 200000, 'Uang', 'Lainnya', 'PicsArt_03-20-12_23_04.jpg', '2021-06-09');
 
 -- --------------------------------------------------------
 
@@ -225,7 +262,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `trigger_tambah_inventaris` AFTER INSERT ON `tabel_inventaris` FOR EACH ROW INSERT INTO log_inventaris SET
-nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris, status_inventaris = "Tersedia"
+id_inventaris = new.id_inventaris, nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris, status_inventaris = "Tersedia"
 $$
 DELIMITER ;
 DELIMITER $$
@@ -281,6 +318,17 @@ CREATE TABLE `tabel_panti` (
   `isi_biodata` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tabel_panti`
+--
+
+INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
+(1, 'Alamat', 'Jl. Santun No. 17, Sudirejo I, Kec. Medan Kota, Kota Medan, Sumatera Utara 20218'),
+(2, 'Email', 'puteriaisyiyah@gmail.com'),
+(3, 'Telepon ', '(061) 7863466'),
+(4, 'Ketua ', 'Zulbaidah, BA'),
+(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah');
+
 -- --------------------------------------------------------
 
 --
@@ -314,6 +362,80 @@ CREATE TABLE `user_token` (
   `tanggal_token` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_akun`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_akun` (
+`id_user` int(11)
+,`nama_user` varchar(100)
+,`email_user` varchar(100)
+,`alamat_user` text
+,`tmpt_lahir_user` varchar(100)
+,`tgl_lahir_user` date
+,`jk_user` enum('L','P')
+,`waktu_log_akun` datetime
+,`status_user` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_anak`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_anak` (
+`nama_anak` varchar(100)
+,`asal_anak` varchar(100)
+,`id_anak` int(11)
+,`tgl_lahir_anak` date
+,`jk_anak` enum('L','P')
+,`pendidikan_anak` varchar(50)
+,`tgl_masuk_anak` date
+,`agama_anak` varchar(100)
+,`kewarganegaraan_anak` varchar(100)
+,`alamat_anak` text
+,`anak_ke` int(2)
+,`jlh_saudara_pr` int(2)
+,`jlh_saudara_lk` int(2)
+,`jlh_saudara_tiri` int(2)
+,`status_ortu` varchar(100)
+,`status_anak` int(1)
+,`bb_anak` int(3)
+,`tb_anak` int(3)
+,`goldar_anak` enum('O','A','B','AB')
+,`penyakit_bawaan` text
+,`nama_ayah` varchar(100)
+,`umur_ayah` int(3)
+,`nama_ibu` varchar(100)
+,`umur_ibu` int(3)
+,`pekerjaan_ayah` varchar(100)
+,`pekerjaan_ibu` varchar(100)
+,`pendidikan_ayah` varchar(100)
+,`pendidikan_ibu` varchar(100)
+,`alamat_ortu` text
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_akun`
+--
+DROP TABLE IF EXISTS `view_akun`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`puteriaisyiyah`@`localhost` SQL SECURITY DEFINER VIEW `view_akun`  AS SELECT `a`.`id_user` AS `id_user`, `a`.`nama_user` AS `nama_user`, `a`.`email_user` AS `email_user`, `a`.`alamat_user` AS `alamat_user`, `a`.`tmpt_lahir_user` AS `tmpt_lahir_user`, `a`.`tgl_lahir_user` AS `tgl_lahir_user`, `a`.`jk_user` AS `jk_user`, `l`.`waktu_log_akun` AS `waktu_log_akun`, `l`.`status_user` AS `status_user` FROM (`tabel_akun` `a` join `log_akun` `l` on(`a`.`email_user` = `l`.`email_user`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_anak`
+--
+DROP TABLE IF EXISTS `view_anak`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`puteriaisyiyah`@`localhost` SQL SECURITY DEFINER VIEW `view_anak`  AS SELECT `a`.`nama_anak` AS `nama_anak`, `a`.`asal_anak` AS `asal_anak`, `a`.`id_anak` AS `id_anak`, `a`.`tgl_lahir_anak` AS `tgl_lahir_anak`, `a`.`jk_anak` AS `jk_anak`, `a`.`pendidikan_anak` AS `pendidikan_anak`, `a`.`tgl_masuk_anak` AS `tgl_masuk_anak`, `a`.`agama_anak` AS `agama_anak`, `a`.`kewarganegaraan_anak` AS `kewarganegaraan_anak`, `a`.`alamat_anak` AS `alamat_anak`, `a`.`anak_ke` AS `anak_ke`, `a`.`jlh_saudara_pr` AS `jlh_saudara_pr`, `a`.`jlh_saudara_lk` AS `jlh_saudara_lk`, `a`.`jlh_saudara_tiri` AS `jlh_saudara_tiri`, `a`.`status_ortu` AS `status_ortu`, `a`.`status_anak` AS `status_anak`, `k`.`bb_anak` AS `bb_anak`, `k`.`tb_anak` AS `tb_anak`, `k`.`goldar_anak` AS `goldar_anak`, `k`.`penyakit_bawaan` AS `penyakit_bawaan`, `o`.`nama_ayah` AS `nama_ayah`, `o`.`umur_ayah` AS `umur_ayah`, `o`.`nama_ibu` AS `nama_ibu`, `o`.`umur_ibu` AS `umur_ibu`, `o`.`pekerjaan_ayah` AS `pekerjaan_ayah`, `o`.`pekerjaan_ibu` AS `pekerjaan_ibu`, `o`.`pendidikan_ayah` AS `pendidikan_ayah`, `o`.`pendidikan_ibu` AS `pendidikan_ibu`, `o`.`alamat_ortu` AS `alamat_ortu` FROM ((`tabel_anak` `a` join `tabel_kesehatan` `k` on(`a`.`id_anak` = `k`.`id_anak`)) join `tabel_ortu` `o` on(`a`.`id_anak` = `o`.`id_anak`)) ;
+
 --
 -- Indexes for dumped tables
 --
@@ -322,20 +444,21 @@ CREATE TABLE `user_token` (
 -- Indexes for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  ADD PRIMARY KEY (`id_log`);
+  ADD PRIMARY KEY (`id_log`),
+  ADD UNIQUE KEY `email_user` (`email_user`,`nomorhp_user`);
 
 --
 -- Indexes for table `log_inventaris`
 --
 ALTER TABLE `log_inventaris`
-  ADD PRIMARY KEY (`id_log`),
-  ADD KEY `id_inventaris` (`id_inventaris`);
+  ADD PRIMARY KEY (`id_log`);
 
 --
 -- Indexes for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `email_user` (`email_user`,`nomorhp_user`);
 
 --
 -- Indexes for table `tabel_album`
@@ -414,7 +537,7 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `log_inventaris`
@@ -426,7 +549,7 @@ ALTER TABLE `log_inventaris`
 -- AUTO_INCREMENT for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabel_album`
@@ -438,7 +561,7 @@ ALTER TABLE `tabel_album`
 -- AUTO_INCREMENT for table `tabel_anak`
 --
 ALTER TABLE `tabel_anak`
-  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabel_berita`
@@ -450,7 +573,7 @@ ALTER TABLE `tabel_berita`
 -- AUTO_INCREMENT for table `tabel_donasi`
 --
 ALTER TABLE `tabel_donasi`
-  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_foto`
@@ -462,7 +585,7 @@ ALTER TABLE `tabel_foto`
 -- AUTO_INCREMENT for table `tabel_inventaris`
 --
 ALTER TABLE `tabel_inventaris`
-  MODIFY `id_inventaris` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inventaris` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_kesehatan`
@@ -480,29 +603,23 @@ ALTER TABLE `tabel_ortu`
 -- AUTO_INCREMENT for table `tabel_panti`
 --
 ALTER TABLE `tabel_panti`
-  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tabel_pengurus`
 --
 ALTER TABLE `tabel_pengurus`
-  MODIFY `id_pengurus` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengurus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `log_inventaris`
---
-ALTER TABLE `log_inventaris`
-  ADD CONSTRAINT `id_inventaris` FOREIGN KEY (`id_inventaris`) REFERENCES `tabel_inventaris` (`id_inventaris`);
 
 --
 -- Constraints for table `tabel_foto`
