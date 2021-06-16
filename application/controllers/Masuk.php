@@ -21,10 +21,11 @@
       else{
         $email_user = strtolower($this->input->post('email_user'));
         $password   = sha1($this->input->post('password'));
-        $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+        $user1      = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+        $user2      = $this->db->get_where('log_akun', ['email_user' => $email_user])->row_array();
 
-        if($user){
-          if($user['status_user'] == 1){
+        if($user1){
+          if($user1['status_user'] == 1){
             if($password == $user['password']){
               if($user['nama_user']){
                 $data = [
@@ -63,6 +64,12 @@
           }
           else{
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Verifikasi email Anda terlebih dahulu.</div>');
+            redirect('Masuk');
+          }
+        }
+        elseif($user2){
+          if($user2['status_user'] == 'Dihapus'){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Akun telah dihapus. Silahkan daftar kembali.</div>');
             redirect('Masuk');
           }
         }
