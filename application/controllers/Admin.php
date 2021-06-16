@@ -502,51 +502,65 @@
 
 		public function TambahBerita(){
 			$data['judul'] 			= 'Tambah Berita';
-			$data['berita']			= $this->db->get('tabel_berita')->result();
-			$data['tabel_akun']	= $this->db->get_where('tabel_akun', ['email_user' => $this->session->userdata('email_user')])->row_array();
-
+			
 			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required');
 			$this->form_validation->set_rules('isi_berita', 'Isi berita', 'required');
-			$this->form_validation->set_rules('tanggal_berita', 'Tanggal posting', 'required');
 			$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
-			if($this->form_validation->run() == FALSE){
-				$this->load->view('Templates/head', $data);
-				$this->load->view('Templates/navbarAdmin');
-				$this->load->view('Admin/DaftarBerita/TambahBerita', $data);
-				$this->load->view('Templates/foot');
-			}
-			else{
-				$judul_berita		= $this->input->post('judul_berita');
-				$isi_berita			= $this->input->post('isi_berita');
-				$tanggal_berita	= $this->input->post('tanggal_berita');
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarBerita/TambahBerita', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_berita');
+        $tabel_berita = $this->db->get()->result();
 
-				$config['upload_path']	 = './assets/img/cover_berita';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				$config['max_size']      = '2048';
+        if(!$tabel_berita){
+          $id_berita = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_berita');
+          $this->db->order_by('id_berita', 'DESC');
+          $this->db->limit(1);
+          $berita_terakhir = $this->db->get()->row_array();
 
-				$this->load->library('upload', $config);
+          $id_berita = $berita_terakhir['id_berita'] + 1;
+        }
 
-				if (!$this->upload->do_upload('cover_berita')) {
-					$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Sampul berita harus diisi dengan sesuai</div>');
-					redirect('Admin/TambahBerita');
-				}
-				else {
-					$cover_berita = $this->upload->data();
-					$cover_berita = $cover_berita['file_name'];
+        $config['upload_path']   = './assets/img/foto_berita';
+        $config['allowed_types'] = 'pdf|jpg|jpeg|png';
+        $config['max_size']      = '5000';
 
-					$data = [
-						'judul_berita'		=> $judul_berita,
-						'cover_berita'		=> $cover_berita,
-						'isi_berita'			=> $isi_berita,
-						'isi_berita'			=> $isi_berita
-					];
-					$this->db->insert('tabel_berita', $data);
+        $this->load->library('upload', $config);
+
+        if(!$this->upload->do_upload('cover_berita')){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Bukti transfer tidak valid.</div>');
+          redirect('Admin/TambahBerita');
+        }
+        else{
+          $cover_berita 		= $this->upload->data();
+          $cover_berita 		= $cover_berita['file_name'];
+					$judul_berita			= $this->input->post('judul_berita');
+					$isi_berita				= $this->input->post('isi_berita');
+					$tanggal_berita		= $this->input->post('tanggal_berita');
+
+          $data = [
+            'id_berita'     	=> $id_berita,
+            'judul_berita'  	=> $judul_berita,
+            'isi_berita'  		=> $isi_berita,
+            'tanggal_berita'  => $tanggal_berita,
+            'cover_berita'    => $cover_berita
+          ];
+          $this->db->insert('tabel_berita', $data);
 
 					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Berita berhasil ditambahkan</div>');
-					redirect('Admin/DaftarBerita');
-				}
-			}
+          redirect('Admin/DaftarBerita');
+        }
+      }
 		}
 
     public function DaftarInventaris(){

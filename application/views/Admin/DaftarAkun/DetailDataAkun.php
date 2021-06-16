@@ -1,9 +1,9 @@
 <body style="color: #030153; font-family: Arial;">
-	<div class="container-fluid" style="padding: 3%; margin-top: -3%;">
+	<div class="container-fluid" style="padding: 3%; margin-top: -3%; color: #030153;">
 		<div class="row">
 			<div class="col-12">
 				<div class="card" style="padding: 2%;">
-					<h1 class="mt-1" style="text-align: center; color: #030153;"><b>DETAIL DATA</b></h1>
+					<h1 class="mt-1" style="text-align: center;"><b>DETAIL DATA</b></h1>
 					<?= $this->session->flashdata('message') ?>
 
 					<?php foreach($detail_akun as $val) : ?>
@@ -11,31 +11,31 @@
 							<div class="col-lg-12">
 								<div class="row">
 									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left;"><b>Nama Lengkap</b></h6>
+										<label>Nama Lengkap</label>
 										<input type="text" name="nama_user" id="nama_user" value="<?php if($val->nama_user == '') : ?>-<?php else : ?><?= $val->nama_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Email</b></h6>
+										<label style="margin-left: 8%;">Email</label>
 										<input type="text" name="email_user" id="email_user" value="<?= $val->email_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Tempat dan Tanggal Lahir</b></h6>
+										<label>Tempat dan Tanggal Lahir</label>
 										<input type="text" name="tmpt_tgl_lahir_user" id="tmpt_tgl_lahir_user" value="<?php if($val->tmpt_lahir_user == '') : ?>-<?php else : ?><?= $val->tmpt_lahir_user ?>, <?= date('d M Y', strtotime($val->tgl_lahir_user)) ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Nomor Handphone</b></h6>
+										<label style="margin-left: 8%;">Nomor Handphone</label>
 										<input type="text" name="nomorhp_user" id="nomorhp_user" value="<?php if($val->nomorhp_user == '') : ?>-<?php else : ?><?= $val->nomorhp_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Jenis Kelamin</b></h6>
+										<label>Jenis Kelamin</label>
 										<input type="text" name="jk_user" id="jk_user" value="<?php if($val->jk_user == '') : ?>-<?php elseif($val->jk_user == 'L') : ?>Laki-Laki<?php elseif($val->jk_user == 'P') : ?>Perempuan<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Status Akun</b></h6>
+										<label style="margin-left: 8%;">Status Akun</label>
 										<input type="text" name="status_user" id="status_user" value="<?php if($val->status_user == 0) : ?>Tidak Aktif<?php elseif($val->status_user == 1) : ?>Aktif<?php else : ?>-<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Alamat</b></h6>
+										<label>Alamat</label>
 										<textarea name="alamat_user" id="alamat_user"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 90px; resize: none; width: 92%;" readonly><?php if($val->alamat_user == '') : ?>-<?php else : ?><?= $val->alamat_user ?><?php endif ?></textarea>
 									</div>
 								</div>

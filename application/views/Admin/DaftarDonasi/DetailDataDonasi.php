@@ -1,9 +1,9 @@
 <body style="color: #030153; font-family: Arial;">
-	<div class="container-fluid" style="padding: 3%; margin-top: -3%;">
+	<div class="container-fluid" style="padding: 3%; margin-top: -3%; color: #030153;">
 		<div class="row">
 			<div class="col-12">
 				<div class="card" style="padding: 2%;">
-					<h1 class="mt-1" style="text-align: center; color: #030153;"><b>DETAIL DATA</b</h1>
+					<h1 class="mt-1" style="text-align: center;"><b>DETAIL DATA</b></h1>
 					<?= $this->session->flashdata('message') ?>
 
 					<?php foreach($detail_donasi as $val) : ?>
@@ -11,34 +11,34 @@
 							<div class="col-lg-12">
 								<div class="row">
 									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left;"><b>Nama Lengkap</b></h6>
+										<label>Nama Lengkap</label>
 										<input type="text" name="nama_donasi" id="nama_donasi" value="<?= $val->nama_donatur ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-3">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Tanggal Donasi</b></h6>
+										<label style="margin-left: 8%;">Tanggal Donasi</label>
 										<input type="text" name="tgl_donasi" id="tgl_donasi" value="<?= date('d M Y', strtotime($val->tgl_donasi)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Jenis</b></h6>
+										<label>Jenis</label>
 										<input type="text" name="jenis_donasi" id="jenis_donasi" value="<?= $val->jenis_donasi ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Keterangan</b></h6>
+										<label style="margin-left: 8%;">Keterangan</label>
 										<input type="text" name="ket_donasi" id="ket_donasi" value="<?php if($val->ket_donasi == '') : ?>-<?php else : ?><?= $val->ket_donasi ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%; float: right;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left;"><b>Donasi</b></h6>
+										<label>Donasi</label>
 										<input type="text" name="jumlah_donasi" id="jumlah_donasi" value="Rp<?= number_format($val->jumlah_donasi,2,',','.') ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 92%;" readonly>
 									</div>
 									<div class="col-lg-6 mt-4">
-										<h6 style="color: #030153; text-align: left; margin-left: 8%;"><b>Bukti Transfer</b></h6>
+										<label style="margin-left: 8%;">Bukti Transfer</label><br>
 										<img src="<?= base_url('assets/img/bukti_tf/') . $val->bukti_tf ?>" style="max-width: 200px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); float: left; margin-left: 8.3%">
 									</div>
 								</div>
 
 								<div class="row mt-5">
-									<div class="col-lg-12">
-										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_donasi ?>" style="border-radius: 10px; width: 13%; margin-left: 10px; background: red; color: white">Hapus Data</button>
+									<div class="col-lg-12" style="text-align: center;">
+										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_donasi ?>" style="border-radius: 10px; width: 13%; background: red; color: white">Hapus Data</button>
 									</div>
 								</div>
 							</div>
