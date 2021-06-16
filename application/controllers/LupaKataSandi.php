@@ -104,7 +104,7 @@
       $this->email->subject('Kode Verifikasi');
       $this->email->message('
         Hai '.$user['email_user'].',<br><br>
-        Anda telah melakukan permintaan untuk mengatur ulang kata sandi. Silahkan masukkan kode '.$token.' untuk melanjutkan proses pengaturan ulang kata sandi. Kode ini bersifat <b>RAHASIA</b>. Jangan informasikan kode ini kepada siapa pun.<br><br>
+        Anda telah melakukan permintaan untuk mengatur ulang kata sandi. Silahkan masukkan kode <b>'.$token.'</b> untuk melanjutkan proses pengaturan ulang kata sandi. Kode ini bersifat <b>RAHASIA</b>. Jangan informasikan kode ini kepada siapa pun.<br><br>
         Salam,<br>
         Panti Asuhan Puteri Aisyiyah
       ');
@@ -133,11 +133,11 @@
         $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
 
         if($email_user == $user_token['email_user']){
-          redirect('ResetKataSandi?email_user='.$email_user);
+          redirect('ResetKataSandi?token='.$token.'&email_user='.$email_user);
         }
         else{
           $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Kode yang dimasukkan salah.</div>');
-          redirect('LupaKataSandi/VerifikasiKode');
+          redirect('LupaKataSandi/VerifikasiKode?email_user='.$email_user);
         }
       }
     }

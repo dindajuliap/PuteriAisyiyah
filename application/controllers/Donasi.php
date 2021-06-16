@@ -76,8 +76,7 @@
 
       $this->form_validation->set_rules('nama_donatur', 'Nama', 'required|trim');
       $this->form_validation->set_rules('tgl_donasi', 'Tanggal donasi', 'required|trim');
-      $this->form_validation->set_rules('jumlah_donasi', 'Jumlah donasi', 'required|trim|numeric|greater_than[10000]', ['greater_than' => 'Jumlah donasi minimal Rp. 10.000,00.', 'numeric' => 'Jumlah donasi harus berupa uang.']);
-      //$this->form_validation->set_rules('bukti_tf', 'Bukti transfer', 'required|trim', ['required' => 'Bukti transfer harus diupload.']);
+      $this->form_validation->set_rules('jumlah_donasi', 'Jumlah donasi', 'required|trim');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -104,7 +103,7 @@
         }
 
         $config['upload_path']   = './assets/img/bukti_tf';
-        $config['allowed_types'] = 'pdf|jpg|jpeg';
+        $config['allowed_types'] = 'pdf|jpg|jpeg|png';
         $config['max_size']      = '5000';
 
         $this->load->library('upload', $config);

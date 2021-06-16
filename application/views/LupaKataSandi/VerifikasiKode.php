@@ -14,7 +14,7 @@
 
         <?= $this->session->flashdata('message') ?>
 
-        <input type="text" name="token" id="token" placeholder="Kode Verifikasi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <input type="text" autocomplete="off" name="token" id="token" placeholder="Kode Verifikasi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <small class="form-text text-danger" align="left" style="margin-left: 15%; margin-bottom: 2.5%"><?= form_error('token') ?></small>
 
         <button type="submit" class="form-control btn" style="background: #030153; color: white; border-radius: 10px; width: 70%; height: 45px">Kirim</button>

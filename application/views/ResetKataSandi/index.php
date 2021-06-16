@@ -14,7 +14,7 @@
 
         <?= $this->session->flashdata('message') ?>
 
-        <input type="text" name="email_user" id="email_user" value="<?= $email_user ?>" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%" readonly>
+        <input type="text" autocomplete="off" name="email_user" id="email_user" value="<?= $email_user ?>" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%" readonly>
 
         <input type="password" name="password" id="password" placeholder="Kata Sandi Baru" class="form-control mt-4" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <span id="show1" onclick="show1()" style="position: relative; z-index: 1; left: 30%; top: -2.1rem; cursor: pointer; color: #7E7E7E"><i class="fa fa-eye icon"></i></span>

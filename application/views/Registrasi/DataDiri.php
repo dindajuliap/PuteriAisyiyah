@@ -14,7 +14,7 @@
 
         <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
           <div class="col-lg-9">
-            <input type="text" name="nama_user" id="nama_user" placeholder="Nama Lengkap" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
+            <input type="text" autocomplete="off" name="nama_user" id="nama_user" placeholder="Nama Lengkap" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
           </div>
 
           <div class="col-lg-3">
@@ -24,7 +24,7 @@
 
         <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
           <div class="col-lg-9">
-            <input type="text" name="tmpt_lahir_user" id="tmpt_lahir_user" placeholder="Tempat Lahir" class="form-control mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
+            <input type="text" autocomplete="off" name="tmpt_lahir_user" id="tmpt_lahir_user" placeholder="Tempat Lahir" class="form-control mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
           </div>
 
           <div class="col-lg-3">
@@ -34,7 +34,7 @@
 
         <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
           <div class="col-lg-9">
-            <input type="text" name="tgl_lahir_user" id="tgl_lahir_user" placeholder="Tanggal Lahir" class="textbox-n form-control mt-3" onfocus="(this.type='date')" onblur="(this.type='text')" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
+            <input type="text" autocomplete="off" name="tgl_lahir_user" id="tgl_lahir_user" placeholder="Tanggal Lahir" class="textbox-n form-control mt-3" onfocus="(this.type='date')" onblur="(this.type='text')" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
           </div>
 
           <div class="col-lg-3">
@@ -44,7 +44,7 @@
 
         <div class="row" style="width: 100%; margin-left: auto; margin-right: auto">
           <div class="col-lg-9">
-            <input type="text" name="nomorhp_user" id="nomorhp_user" placeholder="Nomor Handphone" class="form-control mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
+            <input type="text" autocomplete="off" name="nomorhp_user" id="nomorhp_user" placeholder="Nomor Handphone" class="form-control mt-3" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 95%; margin-left: 19%">
           </div>
 
           <div class="col-lg-3">
