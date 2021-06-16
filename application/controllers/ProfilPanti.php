@@ -11,7 +11,7 @@
 
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbar');
-      $this->load->view('Profil/index',$data);
+      $this->load->view('ProfilPanti/index',$data);
       $this->load->view('Templates/foot');
     }
   }
