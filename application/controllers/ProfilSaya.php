@@ -157,4 +157,14 @@
         }
       }
     }
+
+    public function HapusAkun($id_user){
+      $this->db->where('id_user', $id_user);
+      $this->db->delete('tabel_akun');
+
+      if($this->db->affected_rows() > 0) {
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%; margin-left: 1%" align="left">Akun Anda berhasil dihapus.</div>');
+        redirect('Masuk');
+      }
+    }
   }

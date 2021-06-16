@@ -26,15 +26,15 @@
 
         if($user1){
           if($user1['status_user'] == 1){
-            if($password == $user['password']){
-              if($user['nama_user']){
+            if($password == $user1['password']){
+              if($user1['nama_user']){
                 $data = [
-                  'id_user' => $user['id_user'],
-                  'role_id' => $user['role_id']
+                  'id_user' => $user1['id_user'],
+                  'role_id' => $user1['role_id']
                 ];
                 $this->session->set_userdata($data);
 
-                if($user['role_id'] == 1){
+                if($user1['role_id'] == 1){
                   redirect('Admin');
                 }
                 else{
@@ -42,15 +42,15 @@
                 }
               }
               else{
-                $user_token = $this->db->get_where('user_token', ['email_user' => $user['email_user']])->row_array();
+                $user_token = $this->db->get_where('user_token', ['email_user' => $user1['email_user']])->row_array();
                 $hari_ini   = date("Y-m-d");
 
                 if($user_token['tanggal_token'] == $hari_ini){
-                  redirect('Registrasi/DataDiri?email_user='.$user['email_user'].'&token='.$user_token['token']);
+                  redirect('Registrasi/DataDiri?email_user='.$user1['email_user'].'&token='.$user_token['token']);
                 }
                 else{
-                  $this->db->delete('tabel_akun', ['email_user' => $user['email_user']]);
-                  $this->db->delete('user_token', ['email_user' => $user['email_user']]);
+                  $this->db->delete('tabel_akun', ['email_user' => $user1['email_user']]);
+                  $this->db->delete('user_token', ['email_user' => $user1['email_user']]);
 
                   $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Token Kadaluwarsa. Registrasi Ulang!</div>');
                   redirect('Masuk');

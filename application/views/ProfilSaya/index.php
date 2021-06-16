@@ -35,6 +35,10 @@
 					<label style="color: #030153" class="mt-3">Kata Sandi</label>
 					<a href="<?= base_url('ProfilSaya/UbahKataSandi') ?>" class="badge badge-secondary" style="width: 45px; height: 20px; font-size: 13px; color: black; background: #A1A1A1; margin-left: 15px; margin-top: 16px">Ubah</a>
 					<input disabled type="password" name="password" id="password" value="passwordakun" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
+
+					<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusModal<?= $tabel_akun['id_user'] ?>" style="color: white; margin-top: 50px; width: 120px; padding: 7px; border-radius: 10px; margin-left: 39%" type="submit">
+						Hapus Akun
+					</a>
 				</div>
 			</div>
 		</div>
@@ -44,3 +48,29 @@
 		</div>
 	</div>
 </body>
+
+<div class="modal fade" id="hapusModal<?= $tabel_akun['id_user'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
+			<div class="modal-body">
+				<span>
+					<p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 10px"></p>
+					<p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 196px">!</p>
+				</span>
+
+				<h3 class="modal-title mt-3" id="exampleModalLabel" align="center">
+					<b style="font-family: Arial; color: #595959">Hapus Akun</b>
+				</h3>
+
+				<div class="row mb-3">
+					<h5 style="margin-left: auto; margin-right: auto">Anda yakin ingin menghapus akun?</h5>
+				</div>
+
+				<div class="row">
+					<a class="btn btn-primary text-center" href="<?= base_url('ProfilSaya/HapusAkun/') . $tabel_akun['id_user'] ?>" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Yakin</a>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
