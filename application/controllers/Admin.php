@@ -19,13 +19,13 @@
     }
 
     public function DaftarAkun(){
-      $data['judul'] = 'Daftar Akun';
-
+      $data['judul']      = 'Daftar Akun';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAkun/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('nama_user', $data['search']);
           $this->db->or_like('email_user', $data['search']);
           $this->db->from('tabel_akun');
@@ -65,7 +65,7 @@
     }
 
 		public function DetailDataAkun($id_user){
-      $data['judul'] = 'Admin Panel - Detail Data Akun';
+      $data['judul'] = 'Detail Data Akun';
 
       $this->db->select('*');
       $this->db->from('tabel_akun');
@@ -111,13 +111,13 @@
         $this->load->view('Templates/foot');
       }
       else {
-        $nama_user        = $this->input->post('nama_user');
-        $tmpt_lahir_user  = $this->input->post('tmpt_lahir_user');
-        $tgl_lahir_user   = $this->input->post('tgl_lahir_user');
-        $nomorhp_user     = $this->input->post('nomorhp_user');
-        $jk_user          = $this->input->post('jk_user');
-        $alamat_user      = $this->input->post('alamat_user');
-        $email_user       = $this->input->post('email_user');
+        $nama_user       = $this->input->post('nama_user');
+        $tmpt_lahir_user = $this->input->post('tmpt_lahir_user');
+        $tgl_lahir_user  = $this->input->post('tgl_lahir_user');
+        $nomorhp_user    = $this->input->post('nomorhp_user');
+        $jk_user         = $this->input->post('jk_user');
+        $alamat_user     = $this->input->post('alamat_user');
+        $email_user      = $this->input->post('email_user');
 
         $data = [
           'nama_user'       => $nama_user,
@@ -137,13 +137,13 @@
     }
 
     public function DaftarAnak(){
-      $data['judul'] = 'Daftar Anak';
-
+      $data['judul']      = 'Daftar Anak';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAnak/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('nama_anak', $data['search']);
           $this->db->from('tabel_anak');
           $config['total_rows'] = $this->db->count_all_results();
@@ -182,7 +182,7 @@
     }
 
 		public function DetailDataAnak($id_anak){
-      $data['judul'] = 'Admin Panel - Detail Data Anak';
+      $data['judul'] = 'Detail Data Anak';
 
       $this->db->select('*');
       $this->db->from('tabel_anak');
@@ -207,20 +207,20 @@
     }
 
     public function DaftarPengurus(){
-      $data['judul'] = 'Daftar Pengurus';
-
+      $data['judul']      = 'Daftar Pengurus';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarPengurus/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('nama_pengurus', $data['search']);
           $this->db->from('tabel_pengurus');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
 
-          $data['start'] = 0;
-          $data['pengurus']  = $this->admin->getPengurus1($data['search']);
+          $data['start']    = 0;
+          $data['pengurus'] = $this->admin->getPengurus1($data['search']);
         }
         else{
           $config['total_rows'] = $this->admin->countPengurus();
@@ -229,8 +229,8 @@
 
           $this->pagination->initialize($config);
 
-          $data['start'] = $this->uri->segment(4);
-          $data['pengurus']  = $this->admin->getPengurus2($config['per_page'], $data['start']);
+          $data['start']    = $this->uri->segment(4);
+          $data['pengurus'] = $this->admin->getPengurus2($config['per_page'], $data['start']);
         }
       }
       else{
@@ -240,8 +240,8 @@
 
         $this->pagination->initialize($config);
 
-        $data['start'] = $this->uri->segment(4);
-        $data['pengurus']  = $this->admin->getPengurus2($config['per_page'], $data['start']);
+        $data['start']    = $this->uri->segment(4);
+        $data['pengurus'] = $this->admin->getPengurus2($config['per_page'], $data['start']);
       }
 
       $this->load->view('Templates/head', $data);
@@ -252,7 +252,7 @@
     }
 
 		public function DetailDataPengurus($id_pengurus){
-      $data['judul'] = 'Admin Panel - Detail Data Pengurus';
+      $data['judul'] = 'Detail Data Pengurus';
 
       $this->db->select('*');
       $this->db->from('tabel_pengurus');
@@ -277,13 +277,13 @@
     }
 
     public function DaftarDonasi(){
-      $data['judul'] = 'Daftar Donasi';
-
+      $data['judul']      = 'Daftar Donasi';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarDonasi/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('nama_donatur', $data['search']);
           $this->db->or_like('tgl_donasi', $data['search']);
           $this->db->or_like('jenis_donasi', $data['search']);
@@ -291,8 +291,8 @@
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
 
-          $data['start'] = 0;
-          $data['donasi']  = $this->admin->getDonasi1($data['search']);
+          $data['start']  = 0;
+          $data['donasi'] = $this->admin->getDonasi1($data['search']);
         }
         else{
           $config['total_rows'] = $this->admin->countDonasi();
@@ -301,8 +301,8 @@
 
           $this->pagination->initialize($config);
 
-          $data['start'] = $this->uri->segment(4);
-          $data['donasi']  = $this->admin->getDonasi2($config['per_page'], $data['start']);
+          $data['start']  = $this->uri->segment(4);
+          $data['donasi'] = $this->admin->getDonasi2($config['per_page'], $data['start']);
         }
       }
       else{
@@ -312,8 +312,8 @@
 
         $this->pagination->initialize($config);
 
-        $data['start'] = $this->uri->segment(4);
-        $data['donasi']  = $this->admin->getDonasi2($config['per_page'], $data['start']);
+        $data['start']  = $this->uri->segment(4);
+        $data['donasi'] = $this->admin->getDonasi2($config['per_page'], $data['start']);
       }
 
       $this->load->view('Templates/head', $data);
@@ -324,7 +324,7 @@
     }
 
 		public function DetailDataDonasi($id_donasi){
-      $data['judul'] = 'Admin Panel - Detail Data Donasi';
+      $data['judul'] = 'Detail Data Donasi';
 
       $this->db->select('*');
       $this->db->from('tabel_donasi');
@@ -349,20 +349,20 @@
     }
 
     public function DaftarBerita(){
-      $data['judul'] = 'Daftar Berita';
-
+      $data['judul']      = 'Daftar Berita';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarBerita/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('judul_berita', $data['search']);
           $this->db->from('tabel_berita');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
 
-          $data['start'] = 0;
-          $data['berita']  = $this->admin->getBerita1($data['search']);
+          $data['start']  = 0;
+          $data['berita'] = $this->admin->getBerita1($data['search']);
         }
         else{
           $config['total_rows'] = $this->admin->countBerita();
@@ -371,8 +371,8 @@
 
           $this->pagination->initialize($config);
 
-          $data['start'] = $this->uri->segment(4);
-          $data['berita']  = $this->admin->getBerita2($config['per_page'], $data['start']);
+          $data['start']  = $this->uri->segment(4);
+          $data['berita'] = $this->admin->getBerita2($config['per_page'], $data['start']);
         }
       }
       else{
@@ -382,8 +382,8 @@
 
         $this->pagination->initialize($config);
 
-        $data['start'] = $this->uri->segment(4);
-        $data['berita']  = $this->admin->getBerita2($config['per_page'], $data['start']);
+        $data['start']  = $this->uri->segment(4);
+        $data['berita'] = $this->admin->getBerita2($config['per_page'], $data['start']);
       }
 
       $this->load->view('Templates/head', $data);
@@ -404,7 +404,7 @@
     }
 
 		public function DetailBerita($id_Berita){
-      $data['judul'] = 'Admin Panel - Detail Berita';
+      $data['judul'] = 'Detail Berita';
 
       $this->db->select('*');
       $this->db->from('tabel_berita');
@@ -419,13 +419,13 @@
     }
 
     public function DaftarInventaris(){
-      $data['judul'] = 'Daftar Inventaris';
-
+      $data['judul']      = 'Daftar Inventaris';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarInventaris/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('nama_inventaris', $data['search']);
           $this->db->or_like('inventaris_lantai', $data['search']);
           $this->db->or_like('jumlah_inventaris', $data['search']);
@@ -433,8 +433,8 @@
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
 
-          $data['start'] = 0;
-          $data['inventaris']  = $this->admin->getInventaris1($data['search']);
+          $data['start']      = 0;
+          $data['inventaris'] = $this->admin->getInventaris1($data['search']);
         }
         else{
           $config['total_rows'] = $this->admin->countInventaris();
@@ -443,8 +443,8 @@
 
           $this->pagination->initialize($config);
 
-          $data['start'] = $this->uri->segment(4);
-          $data['inventaris']  = $this->admin->getInventaris2($config['per_page'], $data['start']);
+          $data['start']      = $this->uri->segment(4);
+          $data['inventaris'] = $this->admin->getInventaris2($config['per_page'], $data['start']);
         }
       }
       else{
@@ -454,8 +454,8 @@
 
         $this->pagination->initialize($config);
 
-        $data['start'] = $this->uri->segment(4);
-        $data['inventaris']  = $this->admin->getInventaris2($config['per_page'], $data['start']);
+        $data['start']      = $this->uri->segment(4);
+        $data['inventaris'] = $this->admin->getInventaris2($config['per_page'], $data['start']);
       }
 
       $this->load->view('Templates/head', $data);
@@ -476,21 +476,21 @@
     }
 
     public function BiodataPanti(){
-      $data['judul'] = 'Biodata Panti';
-
+      $data['judul']      = 'Biodata Panti';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/BiodataPanti/index';
 
       if($this->input->post('submit')){
         if($this->input->post('search')){
           $data['search'] = $this->input->post('search');
+
           $this->db->like('jenis_biodata', $data['search']);
           $this->db->or_like('isi_biodata', $data['search']);
           $this->db->from('tabel_panti');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
 
-          $data['start'] = 0;
-          $data['biodata']  = $this->admin->getBiodata1($data['search']);
+          $data['start']   = 0;
+          $data['biodata'] = $this->admin->getBiodata1($data['search']);
         }
         else{
           $config['total_rows'] = $this->admin->countBiodata();
@@ -499,8 +499,8 @@
 
           $this->pagination->initialize($config);
 
-          $data['start'] = $this->uri->segment(4);
-          $data['biodata']  = $this->admin->getBiodata2($config['per_page'], $data['start']);
+          $data['start']   = $this->uri->segment(4);
+          $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
         }
       }
       else{
@@ -510,8 +510,8 @@
 
         $this->pagination->initialize($config);
 
-        $data['start'] = $this->uri->segment(4);
-        $data['biodata']  = $this->admin->getBiodata2($config['per_page'], $data['start']);
+        $data['start']   = $this->uri->segment(4);
+        $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
       }
 
       $this->load->view('Templates/head', $data);

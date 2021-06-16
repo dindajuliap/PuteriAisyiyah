@@ -63,6 +63,14 @@
       return $this->db->get('tabel_donasi')->num_rows();
     }
 
+    public function getBerita($search){
+      if($search){
+        $this->db->like('judul_berita', $search);
+        $this->db->or_like('tanggal_berita', $search);
+      }
+      return $this->db->get('tabel_berita')->result();
+    }
+
     public function getBerita1($search){
       if($search){
         $this->db->like('judul_berita', $search);

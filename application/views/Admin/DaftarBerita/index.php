@@ -20,7 +20,7 @@
 	          <div class="col-lg-6">
 							<form action="" method="post" style="width: 45%; margin-left: 53%; margin-top: 1%">
 								<div class="input-group">
-								  <input type="text" name="search" class="form-control" placeholder="Cari data berita" autocomplete="off">
+								  <input type="text" name="search" class="form-control" placeholder="Cari berita" autocomplete="off">
 									<div class="input-group-append">
 										<input class="btn" type="submit" name="submit" value="Cari" style="background-color: #030153; color: white">
 									</div>
