@@ -30,12 +30,18 @@
                                                                 <?php elseif($tabel_anak->jk_anak == 'L') : ?>Laki-Laki
                                                                 <?php elseif($tabel_anak->jk_anak == 'P') : ?>Perempuan
                                                                 <?php endif ?>"
-           class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+           class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;" readonly>
           <small class="form-text text-danger"><?= form_error('jk_anak') ?></small>
         </div>
 				<div class="col-lg-6 mt-4">
 					<h6 style="color: #030153; text-align: left;"><b>Status</b></h6>
-					<input type="text" name="status_anak" id="status_anak" value="<?= $tabel_anak->status_anak ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+					<input type="hidden" name="id_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;"
+					value="<?= $tabel_anak->id_anak ?>">
+					<select name="status_anak" class="form-control" >
+					<?php $status_anak = $this->input->post('status_anak') ? $this->input->post('status_anak') : $tabel_anak->status_anak ?>
+					<option value="1" <?=$status_anak == "1" ? 'selected' : null ?> >Belum diadopsi</option>
+					<option value="0" <?=$status_anak == "2" ? 'selected' : null ?> >Telah diadopsi</option>
+				</select>
 					<small class="form-text text-danger"><?= form_error('status_anak') ?></small>
 				</div>
         <div class="col-lg-6 mt-4">

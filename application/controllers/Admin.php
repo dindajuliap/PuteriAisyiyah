@@ -181,6 +181,52 @@
       $this->load->view('Templates/foot');
     }
 
+
+    public function UbahDataAnak($id_anak){
+      $data['judul'] = 'Ubah Data Anak';
+
+      $this->db->where('id_anak', $id_anak);
+      $recordAnak = $this->db->get('tabel_anak')->row();
+      $DATA       = array('tabel_anak' => $recordAnak);
+
+      $this->form_validation->set_rules('nama_anak', 'Nama Lengkap', 'required|trim');
+      $this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal Masuk', 'required|trim');
+      $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal Lahir', 'required|trim');
+      $this->form_validation->set_rules('jk_anak', 'Jenis Kelamin', 'required|trim');
+      $this->form_validation->set_rules('status_anak', 'Status', 'required|trim');
+      $this->form_validation->set_rules('agama_anak', 'Agama', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/UbahDataAnak', $DATA);
+        $this->load->view('Templates/foot');
+      }
+      else {
+        $nama_anak       = $this->input->post('nama_anak');
+        $tgl_masuk_anak  = $this->input->post('tgl_masuk_anak');
+        $tgl_lahir_anak  = $this->input->post('tgl_lahir_anak');
+        $jk_anak         = $this->input->post('jk_anak');
+        $status_anak     = $this->input->post('status_anak');
+        $agama_anak      = $this->input->post('agama_anak');
+
+        $data = [
+          'nama_anak'      => $nama_anak,
+          'tgl_masuk_anak' => $tgl_masuk_anak,
+          'tgl_lahir_anak' => $tgl_lahir_anak,
+          'jk_anak'        => $jk_anak,
+          'status_anak'    => $status_anak,
+          'agama_anak'     => $agama_anak
+        ];
+        $this->db->where('id_anak', $id_anak);
+        $this->db->update('tabel_anak', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Data anak berhasil diperbarui.</div>');
+        redirect('Admin/DaftarAnak');
+      }
+    }
+
+
 		public function DetailDataAnak($id_anak){
       $data['judul'] = 'Detail Data Anak';
 

@@ -40,7 +40,7 @@
 																																<?php elseif($tabel_akun->jk_user == 'L') : ?>Laki-Laki
 																																<?php elseif($tabel_akun->jk_user == 'P') : ?>Perempuan
                                                                 <?php endif ?>"
-					class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;">
+					class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC;" readonly>
 					<small class="form-text text-danger"><?= form_error('jk_user') ?></small>
 				</div>
 				<div class="col-lg-6 mt-4">
