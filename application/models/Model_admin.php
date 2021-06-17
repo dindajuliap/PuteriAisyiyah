@@ -5,10 +5,12 @@
         $this->db->like('nama_user', $search);
         $this->db->or_like('email_user', $search);
       }
+      $this->db->order_by('status_user', 'DESC');
       return $this->db->get('view_akun')->result();
     }
 
     public function getUser2($limit, $start){
+      $this->db->order_by('status_user', 'DESC');
       return $this->db->get('view_akun', $limit, $start)->result();
     }
 
