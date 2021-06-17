@@ -294,6 +294,77 @@
       $this->load->view('Templates/foot');
     }
 
+		public function TambahDataPengurus(){
+			$data['judul'] 			= 'Tambah Data Pengurus';
+			
+			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required');
+			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required');
+			$this->form_validation->set_rules('tgl_lahir_pengurus', 'Tanggal lahir', 'required');
+			$this->form_validation->set_rules('jk_pengurus', 'Jenis kelamin', 'required');
+			$this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir', 'required');
+			$this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required');
+			$this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'required');
+			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required');
+			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required');
+			$this->form_validation->set_rules('status_pengurus', 'Status', 'required');
+			
+			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarPengurus/TambahDataPengurus', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_pengurus');
+        $tabel_pengurus = $this->db->get()->result();
+
+        if(!$tabel_pengurus){
+          $id_pengurus = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_pengurus');
+          $this->db->order_by('id_pengurus', 'DESC');
+          $this->db->limit(1);
+          $pengurus_terakhir = $this->db->get()->row_array();
+
+          $id_pengurus = $pengurus_terakhir['id_pengurus'] + 1;
+        }
+
+				$nama_pengurus				= $this->input->post('nama_pengurus');
+				$tmpt_lahir_pengurus	= $this->input->post('tmpt_lahir_pengurus');
+				$tgl_lahir_pengurus		= $this->input->post('tgl_lahir_pengurus');
+				$jk_pengurus					= $this->input->post('jk_pengurus');
+				$pendidikan_pengurus	= $this->input->post('pendidikan_pengurus');
+				$alamat_pengurus			= $this->input->post('alamat_pengurus');
+				$nomorhp_pengurus			= $this->input->post('nomorhp_pengurus');
+				$jabatan_pengurus			= $this->input->post('jabatan_pengurus');
+				$periode_kepengurusan	= $this->input->post('periode_kepengurusan');
+				$status_pengurus			= $this->input->post('status_pengurus');
+
+				$data = [
+					'id_pengurus'     			=> $id_pengurus,
+					'nama_pengurus'  				=> $nama_pengurus,
+					'tmpt_lahir_pengurus' 	=> $tmpt_lahir_pengurus,
+					'tgl_lahir_pengurus'  	=> $tgl_lahir_pengurus,
+					'jk_pengurus'  					=> $jk_pengurus,
+					'pendidikan_pengurus' 	=> $pendidikan_pengurus,
+					'alamat_pengurus'  			=> $alamat_pengurus,
+					'nomorhp_pengurus'  		=> $nomorhp_pengurus,
+					'jabatan_pengurus'  		=> $jabatan_pengurus,
+					'periode_kepengurusan'	=> $periode_kepengurusan,
+					'status_pengurus'				=> $status_pengurus
+				];
+				$this->db->insert('tabel_pengurus', $data);
+
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data pengurus berhasil ditambahkan</div>');
+				redirect('Admin/DaftarPengurus');
+      }
+		}
+
 		public function DetailDataPengurus($id_pengurus){
       $data['judul'] = 'Detail Data Pengurus';
 
@@ -403,6 +474,69 @@
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarDonasi/index', $data);
       $this->load->view('Templates/foot');
+    }
+
+		public function TambahDataDonasi(){
+      $data['judul'] = 'Tambah Data Donasi';
+
+      $this->form_validation->set_rules('nama_donatur', 'Nama', 'required|trim');
+      $this->form_validation->set_rules('tgl_donasi', 'Tanggal donasi', 'required|trim');
+      $this->form_validation->set_rules('jumlah_donasi', 'Jumlah donasi', 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarDonasi/TambahDataDonasi');
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_donasi');
+        $tabel_donasi = $this->db->get()->result();
+
+        if(!$tabel_donasi){
+          $id_donasi = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_donasi');
+          $this->db->order_by('id_donasi', 'DESC');
+          $this->db->limit(1);
+          $donasi_terakhir = $this->db->get()->row_array();
+
+          $id_donasi = $donasi_terakhir['id_donasi'] + 1;
+        }
+
+        $config['upload_path']   = './assets/img/bukti_tf';
+        $config['allowed_types'] = 'pdf|jpg|jpeg|png';
+        $config['max_size']      = '5000';
+
+        $this->load->library('upload', $config);
+
+        if(!$this->upload->do_upload('bukti_tf')){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Bukti transfer tidak valid.</div>');
+          redirect('Donasi/TambahDataDonasi');
+        }
+        else{
+          $bukti_tf     = $this->upload->data();
+          $bukti_tf     = $bukti_tf['file_name'];
+          $keterangan   = strtolower($this->input->post('ket_donasi'));
+          $nama_donatur = $this->input->post('nama_donatur');
+
+          $data = [
+            'id_donasi'     => $id_donasi,
+            'nama_donatur'  => ucwords($nama_donatur),
+            'tgl_donasi'    => $this->input->post('tgl_donasi'),
+            'jumlah_donasi' => $this->input->post('jumlah_donasi'),
+            'ket_donasi'    => ucwords($keterangan),
+            'bukti_tf'      => $bukti_tf,
+            'jenis_donasi'  => 'Uang'
+          ];
+          $this->db->insert('tabel_donasi', $data);
+
+          redirect('Admin/DaftarDonasi');
+        }
+      }
     }
 
 		public function DetailDataDonasi($id_donasi){
@@ -666,6 +800,53 @@
       $this->load->view('Templates/foot');
     }
 
+		public function TambahBiodataPanti(){
+			$data['judul'] 			= 'Tambah Biodata Panti';
+			
+			$this->form_validation->set_rules('jenis_biodata', 'Nama', 'required');
+			
+			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/BiodataPanti/TambahBiodataPanti', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_panti');
+        $tabel_panti = $this->db->get()->result();
+
+        if(!$tabel_panti){
+          $id_biodata = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_panti');
+          $this->db->order_by('id_biodata', 'DESC');
+          $this->db->limit(1);
+          $biodata_terakhir = $this->db->get()->row_array();
+
+          $id_biodata = $biodata_terakhir['id_biodata'] + 1;
+        }
+
+				$jenis_biodata	= $this->input->post('jenis_biodata');
+				$isi_biodata		= $this->input->post('isi_biodata');
+
+				$data = [
+					'id_biodata'     	=> $id_biodata,
+					'jenis_biodata'  	=> $jenis_biodata,
+					'isi_biodata'  		=> $isi_biodata
+				];
+				$this->db->insert('tabel_panti', $data);
+
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Biodata panti berhasil ditambahkan</div>');
+				redirect('Admin/BiodataPanti');
+			
+      }
+		}
+
     public function HapusBiodataPanti($id_biodata){
       $this->db->where('id_biodata', $id_biodata);
       $this->db->delete('tabel_panti');
@@ -720,6 +901,51 @@
       $this->load->view('Admin/DaftarAlbum/index', $data);
       $this->load->view('Templates/foot');
     }
+
+		public function TambahAlbum(){
+			$data['judul'] 			= 'Tambah Album';
+			
+			$this->form_validation->set_rules('nama_album', 'Nama album', 'required');
+			
+			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAlbum/TambahAlbum', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_album');
+        $tabel_album = $this->db->get()->result();
+
+        if(!$tabel_album){
+          $id_album = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_album');
+          $this->db->order_by('id_album', 'DESC');
+          $this->db->limit(1);
+          $album_terakhir = $this->db->get()->row_array();
+
+          $id_album = $album_terakhir['id_album'] + 1;
+        }
+
+				$nama_album	= $this->input->post('nama_album');
+
+				$data = [
+					'id_album'     	=> $id_album,
+					'nama_album'  	=> $nama_album
+				];
+				$this->db->insert('tabel_album', $data);
+
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Album berhasil ditambahkan</div>');
+				redirect('Admin/DaftarAlbum');
+			
+      }
+		}
 
 		public function DetailAlbum($id_album){
       $data['judul'] = 'Detail Album';
