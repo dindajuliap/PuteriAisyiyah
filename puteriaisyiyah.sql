@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2021 at 07:00 AM
+-- Generation Time: Jun 17, 2021 at 10:27 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -25,10 +25,6 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_akun` (`id_user` INT(11))  begin
-delete from tabel_akun where id_user = id_user;
-end$$
-
 CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_album` (`id_album` INT(11))  begin
 delete from tabel_album where id_album = id_album;
 end$$
@@ -95,7 +91,8 @@ CREATE TABLE `log_akun` (
 --
 
 INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, 'Terdaftar', '0000-00-00 00:00:00');
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, 'Terdaftar', '0000-00-00 00:00:00'),
+(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'a3f184733ccecf3b36fdeb97588778f0ee2a6a49', 'Jl. Belibis 9 No. 127', 'P', 'Dihapus', '2021-06-17 15:00:13');
 
 -- --------------------------------------------------------
 
@@ -137,16 +134,8 @@ CREATE TABLE `tabel_akun` (
 --
 
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
-
---
--- Triggers `tabel_akun`
---
-DELIMITER $$
-CREATE TRIGGER `trigger_hapus_akun` BEFORE DELETE ON `tabel_akun` FOR EACH ROW INSERT INTO log_akun SET
-nama_user = old.nama_user, email_user = old.email_user, nomorhp_user = old.nomorhp_user, password = old.password, alamat_user = old.alamat_user, jk_user = old.jk_user, status_user = "Dihapus", waktu_log_akun = now()
-$$
-DELIMITER ;
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1),
+(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'a3f184733ccecf3b36fdeb97588778f0ee2a6a49', 'Jl. Belibis 9 No. 127', 'Banda Aceh', '2001-07-30', 'P', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -333,7 +322,7 @@ INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (1, 'Alamat', 'Jl. Santun No. 17, Sudirejo I, Kec. Medan Kota, Kota Medan, Sumatera Utara 20218'),
 (2, 'Email', 'puteriaisyiyah@gmail.com'),
 (3, 'Telepon ', '(061) 7863466'),
-(4, 'Ketua ', 'Zulbaidah, BA'),
+(4, 'Ketua ', 'Zulbaidah, BA.'),
 (5, 'Foto Panti', 'profil.jpeg');
 
 -- --------------------------------------------------------
@@ -379,10 +368,12 @@ CREATE TABLE `view_akun` (
 `id_user` int(11)
 ,`nama_user` varchar(100)
 ,`email_user` varchar(100)
+,`nomorhp_user` varchar(13)
 ,`alamat_user` text
 ,`tmpt_lahir_user` varchar(100)
 ,`tgl_lahir_user` date
 ,`jk_user` enum('L','P')
+,`role_id` int(1)
 ,`waktu_log_akun` datetime
 ,`status_user` varchar(20)
 );
@@ -432,7 +423,7 @@ CREATE TABLE `view_anak` (
 --
 DROP TABLE IF EXISTS `view_akun`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`puteriaisyiyah`@`localhost` SQL SECURITY DEFINER VIEW `view_akun`  AS SELECT `a`.`id_user` AS `id_user`, `a`.`nama_user` AS `nama_user`, `a`.`email_user` AS `email_user`, `a`.`alamat_user` AS `alamat_user`, `a`.`tmpt_lahir_user` AS `tmpt_lahir_user`, `a`.`tgl_lahir_user` AS `tgl_lahir_user`, `a`.`jk_user` AS `jk_user`, `l`.`waktu_log_akun` AS `waktu_log_akun`, `l`.`status_user` AS `status_user` FROM (`tabel_akun` `a` join `log_akun` `l` on(`a`.`email_user` = `l`.`email_user`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`puteriaisyiyah`@`localhost` SQL SECURITY DEFINER VIEW `view_akun`  AS SELECT `a`.`id_user` AS `id_user`, `a`.`nama_user` AS `nama_user`, `a`.`email_user` AS `email_user`, `a`.`nomorhp_user` AS `nomorhp_user`, `a`.`alamat_user` AS `alamat_user`, `a`.`tmpt_lahir_user` AS `tmpt_lahir_user`, `a`.`tgl_lahir_user` AS `tgl_lahir_user`, `a`.`jk_user` AS `jk_user`, `a`.`role_id` AS `role_id`, `l`.`waktu_log_akun` AS `waktu_log_akun`, `l`.`status_user` AS `status_user` FROM (`tabel_akun` `a` join `log_akun` `l` on(`a`.`email_user` = `l`.`email_user`)) ;
 
 -- --------------------------------------------------------
 
@@ -544,7 +535,7 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `log_inventaris`
@@ -556,7 +547,7 @@ ALTER TABLE `log_inventaris`
 -- AUTO_INCREMENT for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_album`
