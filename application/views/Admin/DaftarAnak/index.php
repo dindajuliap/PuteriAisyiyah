@@ -104,6 +104,42 @@
 									<p align="right">Menampilkan <?= $total_rows ?> data</p>
 								</div>
 							</div>
+
+              <?php
+                $ci1 =& get_instance();
+                $query1 = $ci1->db->query('select function_jumlah_anak(0) as diadopsi');
+                $diadopsi = $query1->row()->diadopsi;
+
+                $ci2 =& get_instance();
+                $query2 = $ci2->db->query('select function_jumlah_anak(1) as blm_diadopsi');
+                $blm_diadopsi = $query2->row()->blm_diadopsi;
+              ?>
+              
+              <table>
+                <tr>
+                  <td>Anak yang telah diadopsi</td>
+                  <td align="center" width="30px">:</td>
+                  <td>
+                    <?php if($diadopsi == 0) : ?>
+                      Tidak Ada
+                    <?php else : ?>
+                      <?= $diadopsi ?>&nbsp;anak
+                    <?php endif ?>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Anak yang belum diadopsi</td>
+                  <td align="center" width="30px">:</td>
+                  <td>
+                    <?php if($blm_diadopsi == 0) : ?>
+                      Tidak Ada
+                    <?php else : ?>
+                      <?= $blm_diadopsi ?>&nbsp;anak
+                    <?php endif ?>
+                  </td>
+                </tr>
+              </table>
             </div>
           <?php endif ?>
         </div>

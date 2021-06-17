@@ -104,6 +104,42 @@
 									<p align="right">Menampilkan <?= $total_rows ?> data</p>
 								</div>
 							</div>
+
+              <?php
+                $ci1 =& get_instance();
+                $query1 = $ci1->db->query('select function_jumlah_pengurus(0) as tdk_aktif');
+                $tdk_aktif = $query1->row()->tdk_aktif;
+
+                $ci2 =& get_instance();
+                $query2 = $ci2->db->query('select function_jumlah_pengurus(1) as aktif');
+                $aktif = $query2->row()->aktif;
+              ?>
+
+              <table>
+                <tr>
+                  <td>Pengurus Aktif</td>
+                  <td align="center" width="30px">:</td>
+                  <td>
+                    <?php if($aktif == 0) : ?>
+                      Tidak Ada
+                    <?php else : ?>
+                      <?= $aktif ?>&nbsp;pengurus
+                    <?php endif ?>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Pengurus Tidak Aktif</td>
+                  <td align="center" width="30px">:</td>
+                  <td>
+                    <?php if($tdk_aktif == 0) : ?>
+                      Tidak Ada
+                    <?php else : ?>
+                      <?= $tdk_aktif ?>&nbsp;pengurus
+                    <?php endif ?>
+                  </td>
+                </tr>
+              </table>
             </div>
           <?php endif ?>
         </div>
