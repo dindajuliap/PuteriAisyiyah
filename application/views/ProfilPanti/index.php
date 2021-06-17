@@ -1,6 +1,6 @@
 <body style="color: #030153; font-family: Arial">
   <div class="container mt-4 mb-5">
-    <h3 style="font-weight: 700" align="center">PROFIL <?= strtoupper($nama_panti['isi_biodata']) ?></h3>
+    <h3 style="font-weight: 700" align="center">PROFIL PANTI ASUHAN PUTERI AISYIYAH</h3>
 
     <div class="row mt-5 mb-5">
       <div class="col-lg-6 mt-4">

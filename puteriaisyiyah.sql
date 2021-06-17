@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2021 at 09:27 PM
+-- Generation Time: Jun 17, 2021 at 07:00 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -87,8 +87,15 @@ CREATE TABLE `log_akun` (
   `alamat_user` text DEFAULT NULL,
   `jk_user` enum('L','P') DEFAULT NULL,
   `status_user` varchar(20) NOT NULL,
-  `waktu_log_akun` datetime NOT NULL
+  `waktu_log_akun` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `log_akun`
+--
+
+INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, 'Terdaftar', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -156,7 +163,7 @@ CREATE TABLE `tabel_album` (
 -- Triggers `tabel_album`
 --
 DELIMITER $$
-CREATE TRIGGER `trigger_hapus_album` AFTER DELETE ON `tabel_album` FOR EACH ROW DELETE FROM tabel_foto WHERE id_album = old.id_album
+CREATE TRIGGER `trigger_hapus_album` BEFORE DELETE ON `tabel_album` FOR EACH ROW DELETE FROM tabel_foto WHERE id_album = old.id_album
 $$
 DELIMITER ;
 
@@ -327,8 +334,7 @@ INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (2, 'Email', 'puteriaisyiyah@gmail.com'),
 (3, 'Telepon ', '(061) 7863466'),
 (4, 'Ketua ', 'Zulbaidah, BA'),
-(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
-(7, 'Foto Panti', 'profil.jpeg');
+(5, 'Foto Panti', 'profil.jpeg');
 
 -- --------------------------------------------------------
 
@@ -538,7 +544,7 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `log_inventaris`

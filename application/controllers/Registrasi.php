@@ -100,8 +100,9 @@
     }
 
     private function _sendEmail($token){
-      $email_user = strtolower($this->input->post('email_user'));
-      $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+      $email_user  = strtolower($this->input->post('email_user'));
+      $user        = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
+      $email_panti = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
 
       $config = [
         'protocol'  => 'smtp',
@@ -117,7 +118,7 @@
       $this->load->library('email', $config);
       $this->email->initialize($config);
 
-      $this->email->from('puteriaisyiyah@gmail.com', 'Panti Asuhan Puteri Aisyiyah');
+      $this->email->from($email_panti, 'Panti Asuhan Puteri Aisyiyah');
       $this->email->to($user['email_user']);
 
       $this->email->subject('Verifikasi Akun');

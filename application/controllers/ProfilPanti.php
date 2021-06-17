@@ -6,7 +6,6 @@
       $data['judul']         = 'Profil Panti';
       $data['tabel_akun']    = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
-      $data['nama_panti']    = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Nama Panti'])->row_array();
       $data['alamat_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Alamat'])->row_array();
       $data['email_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
       $data['telepon_panti'] = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Telepon'])->row_array();
