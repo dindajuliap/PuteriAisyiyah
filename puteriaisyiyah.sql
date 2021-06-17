@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2021 at 07:23 PM
+-- Generation Time: Jun 17, 2021 at 09:41 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -25,30 +25,30 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_album` (`id_album` INT(11))  begin
-delete from tabel_album where id_album = id_album;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_album` (IN `id` INT(11))  begin
+delete from tabel_album where id_album = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_anak` (`id_anak` INT(11))  begin
-delete from tabel_anak where id_anak = id_anak;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_anak` (IN `id` INT(11))  begin
+delete from tabel_anak where id_anak = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_berita` (`id_berita` INT(11))  begin
-delete from tabel_berita where id_berita = id_berita;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_berita` (IN `id` INT(11))  begin
+delete from tabel_berita where id_berita = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_donasi` (`id_donasi` INT(11))  begin
-delete from tabel_donasi where id_donasi = id_donasi;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_donasi` (IN `id` INT(11))  begin
+delete from tabel_donasi where id_donasi = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_foto` (`id_foto` INT(11))  delete from tabel_donasi where id_foto = id_foto;$$
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_foto` (IN `id` INT(11))  delete from tabel_donasi where id_foto = id$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_inventaris` (`id_inventaris` INT(11))  begin
-delete from tabel_inventaris where id_inventaris = id_inventaris;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_inventaris` (IN `id` INT(11))  begin
+delete from tabel_inventaris where id_inventaris = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_pengurus` (`id_pengurus` INT(11))  begin
-delete from tabel_pengurus where id_pengurus = id_pengurus;
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_pengurus` (IN `id` INT(11))  begin
+delete from tabel_pengurus where id_pengurus = id;
 end$$
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `tabel_anak` (
 --
 
 INSERT INTO `tabel_anak` (`id_anak`, `nama_anak`, `asal_anak`, `tgl_lahir_anak`, `jk_anak`, `pendidikan_anak`, `tgl_masuk_anak`, `agama_anak`, `kewarganegaraan_anak`, `alamat_anak`, `anak_ke`, `jlh_saudara_pr`, `jlh_saudara_lk`, `jlh_saudara_tiri`, `status_ortu`, `status_anak`) VALUES
-(1, 'Pije', '', '2021-06-10', 'P', 'Tidak Sekolah', '2021-06-11', '', NULL, '', NULL, NULL, NULL, NULL, NULL, 1);
+(2, 'Oiuyghfc', '', '0000-00-00', 'P', 'Nvadsads', '5443-02-23', '', NULL, '', NULL, NULL, NULL, NULL, NULL, 1);
 
 --
 -- Triggers `tabel_anak`
@@ -294,7 +294,7 @@ CREATE TABLE `tabel_kesehatan` (
 --
 
 INSERT INTO `tabel_kesehatan` (`id_kesehatan`, `id_anak`, `bb_anak`, `tb_anak`, `goldar_anak`, `penyakit_bawaan`) VALUES
-(1, 1, 71, 100, 'B', '');
+(2, 2, 443, 23, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -321,7 +321,7 @@ CREATE TABLE `tabel_ortu` (
 --
 
 INSERT INTO `tabel_ortu` (`id_ortu`, `id_anak`, `nama_ayah`, `umur_ayah`, `nama_ibu`, `umur_ibu`, `pekerjaan_ayah`, `pendidikan_ayah`, `pekerjaan_ibu`, `pendidikan_ibu`, `alamat_ortu`) VALUES
-(1, 1, '', 0, '', 0, '', '', '', '', NULL);
+(2, 2, '', 0, '', 0, '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -580,7 +580,7 @@ ALTER TABLE `tabel_album`
 -- AUTO_INCREMENT for table `tabel_anak`
 --
 ALTER TABLE `tabel_anak`
-  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tabel_berita`
@@ -610,13 +610,13 @@ ALTER TABLE `tabel_inventaris`
 -- AUTO_INCREMENT for table `tabel_kesehatan`
 --
 ALTER TABLE `tabel_kesehatan`
-  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tabel_ortu`
 --
 ALTER TABLE `tabel_ortu`
-  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tabel_panti`

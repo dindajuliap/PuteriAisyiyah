@@ -687,8 +687,7 @@
 		}
 
     public function HapusDataAnak($id_anak){
-      $stored_procedure = "CALL procedure_hapus_anak(?)";
-      $result = $this->db->query($stored_procedure, ['id_anak' => $id_anak]);
+      $this->db->query('call procedure_hapus_anak('.$id_anak.')');
 
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil dihapus.</div>');
       redirect('Admin/DaftarAnak');
