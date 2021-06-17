@@ -10,41 +10,49 @@
 							<div class="row mt-3">
 								<div class="col-lg-6">
 									<label>Nama Lengkap</label>
-									<input type="text" name="nama_user" id="nama_user" value="<?php if($val->nama_user == '') : ?>-<?php else : ?><?= $val->nama_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<input type="text" name="nama_user" id="nama_user" value="<?php if($val->nama_user == '') : ?>-<?php else : ?><?= $val->nama_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 									<label class="mt-3">Tempat dan Tanggal Lahir</label>
-									<input type="text" name="tmpt_tgl_lahir_user" id="tmpt_tgl_lahir_user" value="<?php if($val->tmpt_lahir_user == '') : ?>-<?php else : ?><?= $val->tmpt_lahir_user ?>, <?= date('d M Y', strtotime($val->tgl_lahir_user)) ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<input type="text" name="tmpt_tgl_lahir_user" id="tmpt_tgl_lahir_user" value="<?php if($val->tmpt_lahir_user == '') : ?>-<?php else : ?><?= $val->tmpt_lahir_user ?>, <?= date('d M Y', strtotime($val->tgl_lahir_user)) ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 									<label class="mt-3">Jenis Kelamin</label>
-									<input type="text" name="jk_user" id="jk_user" value="<?php if($val->jk_user == '') : ?>-<?php elseif($val->jk_user == 'L') : ?>Laki-Laki<?php elseif($val->jk_user == 'P') : ?>Perempuan<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<input type="text" name="jk_user" id="jk_user" value="<?php if($val->jk_user == '') : ?>-<?php elseif($val->jk_user == 'L') : ?>Laki-Laki<?php elseif($val->jk_user == 'P') : ?>Perempuan<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 									<label class="mt-3">Alamat</label>
-									<textarea name="alamat_user" id="alamat_user"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 90px; resize: none; width: 100%" readonly><?php if($val->alamat_user == '') : ?>-<?php else : ?><?= $val->alamat_user ?><?php endif ?></textarea>
+									<textarea name="alamat_user" id="alamat_user"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 90px; resize: none; width: 97%" readonly><?php if($val->alamat_user == '') : ?>-<?php else : ?><?= $val->alamat_user ?><?php endif ?></textarea>
 								</div>
 
 								<div class="col-lg-6">
-									<label>Email</label>
-									<input type="text" name="email_user" id="email_user" value="<?= $val->email_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<label style="margin-left: 3%">Email</label>
+									<input type="text" name="email_user" id="email_user" value="<?= $val->email_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
 
-									<label class="mt-3">Nomor Handphone</label>
-									<input type="text" name="nomorhp_user" id="nomorhp_user" value="<?php if($val->nomorhp_user == '') : ?>-<?php else : ?><?= $val->nomorhp_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<label style="margin-left: 3%" class="mt-3">Nomor Handphone</label>
+									<input type="text" name="nomorhp_user" id="nomorhp_user" value="<?php if($val->nomorhp_user == '') : ?>-<?php else : ?><?= $val->nomorhp_user ?><?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
 
-									<label class="mt-3">Status Akun</label>
-									<input type="text" name="status_user" id="status_user" value="<?= $val->status_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%" readonly>
+									<label style="margin-left: 3%" class="mt-3">Status Akun</label>
+									<input type="text" name="status_user" id="status_user" value="<?= $val->status_user ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
 
 									<?php if($val->status_user == 'Terdaftar') : ?>
+												<label style="margin-left: 3%" class="mt-3">Tanggal Daftar</label>
+												<input type="text" name="status_user" id="status_user" value="<?= date('d M Y G:i:s', strtotime($val->waktu_log_akun)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
+											</div>
+										</div>
+
 										<div class="row mt-5">
 											<div class="col-lg-6">
-												<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal<?= $val->id_user ?>" style="border-radius: 10px; width: 50%; margin-left: 10px; float: right">Hapus Data</button>
+												<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#hapusModal<?= $val->id_user ?>" style="border-radius: 10px; width: 25%; margin-left: 10px; float: right; margin-right: 3%">Hapus Data</button>
 											</div>
 
 											<div class="col-lg-6">
-												<a href="<?= base_url('Admin/UbahDataAkun/'.$val->id_user) ?>" class="btn" style="border-radius: 10px; width: 50%; float: left; background: #030153; color: white">Ubah Data</a>
+												<a href="<?= base_url('Admin/UbahDataAkun/'.$val->id_user) ?>" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white; margin-left: 3%">Ubah Data</a>
+											</div>
+										</div>
+									<?php else : ?>
+												<label style="margin-left: 3%" class="mt-3">Tanggal Dihapus</label>
+												<input type="text" name="status_user" id="status_user" value="<?= date('d M Y G:i:s', strtotime($val->waktu_log_akun)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
 											</div>
 										</div>
 									<?php endif ?>
-								</div>
-							</div>
 						</div>
 					<?php endforeach ?>
 				</div>
