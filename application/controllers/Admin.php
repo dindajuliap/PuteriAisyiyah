@@ -755,6 +755,77 @@
       }
     }
 
+    public function TambahDataInventaris(){
+      $data['judul']      = 'Tambah Data Inventaris';
+      
+      $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
+      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required', 
+        ['numeric' => 'Letak inventaris harus berupa angka']);
+      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
+        ['numeric' => 'Jumlah inventaris harus berupa angka']);
+      $this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarInventaris/TambahDataInventaris', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+
+        $nama_inventaris     = $this->input->post('nama_inventaris');
+        $letak_inventaris    = $this->input->post('letak_inventaris');
+        $jumlah_inventaris   = $this->input->post('jumlah_inventaris');
+
+        $data = [
+          'nama_inventaris'     => $nama_inventaris,
+          'inventaris_lantai'   => $letak_inventaris,
+          'jumlah_inventaris'   => $jumlah_inventaris
+        ];
+
+        $this->db->insert('tabel_inventaris', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data inventaris berhasil ditambahkan</div>');
+        redirect('Admin/DaftarInventaris');
+      }
+    }
+
+    public function UbahDataInventaris($id_inventaris){
+      $data['judul']      = 'Ubah Data Inventaris';
+      $data['inventaris'] = $this->db->get_where('tabel_inventaris', ['id_inventaris' => $id_inventaris])->row_array();
+      
+      $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
+      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required', 
+        ['numeric' => 'Letak inventaris harus berupa angka']);
+      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
+        ['numeric' => 'Jumlah inventaris harus berupa angka']);
+      $this->form_validation->set_message('required', '%s tidak boleh kosong');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarInventaris/UbahDataInventaris', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $nama_inventaris    = $this->input->post('nama_inventaris');
+        $letak_inventaris   = $this->input->post('letak_inventaris');
+        $jumlah_inventaris  = $this->input->post('jumlah_inventaris');
+
+        $data = [
+          'nama_inventaris'     => $nama_inventaris,
+          'inventaris_lantai'   => $letak_inventaris,
+          'jumlah_inventaris'   => $jumlah_inventaris
+        ];
+
+        $this->db->where('id_inventaris', $id_inventaris);
+        $this->db->update('tabel_inventaris', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data inventaris berhasil diubah</div>');
+        redirect('Admin/DaftarInventaris');
+      }
+    }
+
     public function BiodataPanti(){
       $data['judul']      = 'Biodata Panti';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/BiodataPanti/index';
