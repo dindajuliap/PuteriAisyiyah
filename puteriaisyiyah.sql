@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2021 at 10:27 AM
+-- Generation Time: Jun 17, 2021 at 07:23 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -166,30 +166,37 @@ CREATE TABLE `tabel_anak` (
   `id_anak` int(11) NOT NULL,
   `nama_anak` varchar(100) NOT NULL,
   `asal_anak` varchar(100) DEFAULT NULL,
-  `tgl_lahir_anak` date DEFAULT NULL,
+  `tgl_lahir_anak` date NOT NULL,
   `jk_anak` enum('L','P') NOT NULL,
-  `pendidikan_anak` varchar(50) DEFAULT NULL,
+  `pendidikan_anak` varchar(50) NOT NULL,
   `tgl_masuk_anak` date NOT NULL,
   `agama_anak` varchar(100) DEFAULT NULL,
   `kewarganegaraan_anak` varchar(100) DEFAULT NULL,
   `alamat_anak` text DEFAULT NULL,
-  `anak_ke` int(2) NOT NULL,
+  `anak_ke` int(2) DEFAULT NULL,
   `jlh_saudara_pr` int(2) DEFAULT NULL,
   `jlh_saudara_lk` int(2) DEFAULT NULL,
   `jlh_saudara_tiri` int(2) DEFAULT NULL,
-  `status_ortu` varchar(100) DEFAULT NULL,
+  `status_ortu` enum('Yatim','Piatu','Yatim Piatu','Ekonomi Lemah') DEFAULT NULL,
   `status_anak` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_anak`
+--
+
+INSERT INTO `tabel_anak` (`id_anak`, `nama_anak`, `asal_anak`, `tgl_lahir_anak`, `jk_anak`, `pendidikan_anak`, `tgl_masuk_anak`, `agama_anak`, `kewarganegaraan_anak`, `alamat_anak`, `anak_ke`, `jlh_saudara_pr`, `jlh_saudara_lk`, `jlh_saudara_tiri`, `status_ortu`, `status_anak`) VALUES
+(1, 'Pije', '', '2021-06-10', 'P', 'Tidak Sekolah', '2021-06-11', '', NULL, '', NULL, NULL, NULL, NULL, NULL, 1);
 
 --
 -- Triggers `tabel_anak`
 --
 DELIMITER $$
-CREATE TRIGGER `trigger_hapus_kesehatan` AFTER DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_kesehatan WHERE id_anak = old.id_anak
+CREATE TRIGGER `trigger_hapus_kesehatan` BEFORE DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_kesehatan WHERE id_anak = old.id_anak
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `trigger_hapus_ortu` AFTER DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_ortu WHERE id_anak = old.id_anak
+CREATE TRIGGER `trigger_hapus_ortu` BEFORE DELETE ON `tabel_anak` FOR EACH ROW DELETE FROM tabel_ortu WHERE id_anak = old.id_anak
 $$
 DELIMITER ;
 
@@ -278,9 +285,16 @@ CREATE TABLE `tabel_kesehatan` (
   `id_anak` int(11) NOT NULL,
   `bb_anak` int(3) NOT NULL,
   `tb_anak` int(3) NOT NULL,
-  `goldar_anak` enum('O','A','B','AB') NOT NULL,
-  `penyakit_bawaan` text NOT NULL
+  `goldar_anak` enum('O','A','B','AB') DEFAULT NULL,
+  `penyakit_bawaan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_kesehatan`
+--
+
+INSERT INTO `tabel_kesehatan` (`id_kesehatan`, `id_anak`, `bb_anak`, `tb_anak`, `goldar_anak`, `penyakit_bawaan`) VALUES
+(1, 1, 71, 100, 'B', '');
 
 -- --------------------------------------------------------
 
@@ -291,16 +305,23 @@ CREATE TABLE `tabel_kesehatan` (
 CREATE TABLE `tabel_ortu` (
   `id_ortu` int(11) NOT NULL,
   `id_anak` int(11) NOT NULL,
-  `nama_ayah` varchar(100) NOT NULL,
-  `umur_ayah` int(3) NOT NULL,
-  `nama_ibu` varchar(100) NOT NULL,
-  `umur_ibu` int(3) NOT NULL,
-  `pekerjaan_ayah` varchar(100) NOT NULL,
-  `pendidikan_ayah` varchar(100) NOT NULL,
-  `pekerjaan_ibu` varchar(100) NOT NULL,
-  `pendidikan_ibu` varchar(100) NOT NULL,
-  `alamat_ortu` text NOT NULL
+  `nama_ayah` varchar(100) DEFAULT NULL,
+  `umur_ayah` int(3) DEFAULT NULL,
+  `nama_ibu` varchar(100) DEFAULT NULL,
+  `umur_ibu` int(3) DEFAULT NULL,
+  `pekerjaan_ayah` varchar(100) DEFAULT NULL,
+  `pendidikan_ayah` varchar(100) DEFAULT NULL,
+  `pekerjaan_ibu` varchar(100) DEFAULT NULL,
+  `pendidikan_ibu` varchar(100) DEFAULT NULL,
+  `alamat_ortu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_ortu`
+--
+
+INSERT INTO `tabel_ortu` (`id_ortu`, `id_anak`, `nama_ayah`, `umur_ayah`, `nama_ibu`, `umur_ibu`, `pekerjaan_ayah`, `pendidikan_ayah`, `pekerjaan_ibu`, `pendidikan_ibu`, `alamat_ortu`) VALUES
+(1, 1, '', 0, '', 0, '', '', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -399,7 +420,7 @@ CREATE TABLE `view_anak` (
 ,`jlh_saudara_pr` int(2)
 ,`jlh_saudara_lk` int(2)
 ,`jlh_saudara_tiri` int(2)
-,`status_ortu` varchar(100)
+,`status_ortu` enum('Yatim','Piatu','Yatim Piatu','Ekonomi Lemah')
 ,`status_anak` int(1)
 ,`bb_anak` int(3)
 ,`tb_anak` int(3)
@@ -559,7 +580,7 @@ ALTER TABLE `tabel_album`
 -- AUTO_INCREMENT for table `tabel_anak`
 --
 ALTER TABLE `tabel_anak`
-  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_berita`
@@ -589,13 +610,13 @@ ALTER TABLE `tabel_inventaris`
 -- AUTO_INCREMENT for table `tabel_kesehatan`
 --
 ALTER TABLE `tabel_kesehatan`
-  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_ortu`
 --
 ALTER TABLE `tabel_ortu`
-  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_panti`
