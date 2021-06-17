@@ -12,6 +12,7 @@
   <script src="<?= base_url('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
   <script src="<?= base_url('assets/js/adminlte.min.js') ?>"></script>
   <script src="<?= base_url('assets/js/demo.js') ?>"></script>
+  <script type="text/javascript" src="<?= base_url('assets/js/ckeditor/ckeditor.js') ?>"></script>
 
 	<script>
 		$(function () {
