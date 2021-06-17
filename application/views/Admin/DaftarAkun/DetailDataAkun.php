@@ -16,7 +16,7 @@
 									<input type="text" name="tmpt_tgl_lahir_user" id="tmpt_tgl_lahir_user" value="<?= $val->tmpt_lahir_user ?>, <?= date('d M Y', strtotime($val->tgl_lahir_user)) ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 									<label class="mt-3">Jenis Kelamin</label>
-									<input type="text" name="jk_user" id="jk_user" value="<?php if($val->jk_user == 'L') : ?>Laki-Laki<?php elseif($val->jk_user == 'P') : ?>Perempuan<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
+									<input type="text" name="jk_user" id="jk_user" value="<?php if($val->jk_user == 'L') : ?>Pria<?php elseif($val->jk_user == 'P') : ?>Wanita<?php endif ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 									<label class="mt-3">Alamat</label>
 									<textarea name="alamat_user" id="alamat_user"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 90px; resize: none; width: 97%" readonly><?= $val->alamat_user ?></textarea>

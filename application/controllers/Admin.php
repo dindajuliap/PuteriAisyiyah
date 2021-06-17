@@ -132,7 +132,7 @@
         foreach($hp as $nomor){
           if($nomorhp_user == $nomor->nomorhp_user){
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Nomor telah terdaftar.</div>');
-            redirect('Admin/UbahDataAkun');
+            redirect('Admin/UbahDataAkun/'.$id_user);
           }
         }
 
@@ -490,42 +490,54 @@
           }
         }
         elseif($status_ortu == null){
-          $data = [
-            'nama_anak'        => ucwords($nama),
-            'asal_anak'	       => ucwords($asal),
-            'pendidikan_anak'  => ucwords($pendidikan),
-            'agama_anak'       => ucwords($agama),
-            'alamat_anak'      => ucwords($alamat),
-            'anak_ke'          => $anak_ke,
-            'jlh_saudara_lk'   => $jlh_saudara_lk,
-            'jlh_saudara_pr'   => $jlh_saudara_pr,
-            'jlh_saudara_tiri' => $jlh_saudara_tiri,
-            'status_anak'      => $status_anak
-          ];
-          $this->db->where('id_anak', $id_anak);
-          $this->db->update('tabel_anak', $data);
+          if(ucwords($nama) == $data['anak']['nama_anak'] && ucwords($asal) == $data['anak']['asal_anak'] && ucwords($pendidikan) == $data['anak']['pendidikan_anak'] && ucwords($agama) == $data['anak']['agama_anak'] && ucwords($alamat) == $data['anak']['alamat_anak'] && $anak_ke == $data['anak']['anak_ke'] && $jlh_saudara_lk == $data['anak']['jlh_saudara_lk'] && $jlh_saudara_pr == $data['anak']['jlh_saudara_pr'] && $jlh_saudara_tiri == $data['anak']['jlh_saudara_tiri'] && $status_anak == $data['anak']['status_anak']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
+          else{
+            $data = [
+              'nama_anak'        => ucwords($nama),
+              'asal_anak'	       => ucwords($asal),
+              'pendidikan_anak'  => ucwords($pendidikan),
+              'agama_anak'       => ucwords($agama),
+              'alamat_anak'      => ucwords($alamat),
+              'anak_ke'          => $anak_ke,
+              'jlh_saudara_lk'   => $jlh_saudara_lk,
+              'jlh_saudara_pr'   => $jlh_saudara_pr,
+              'jlh_saudara_tiri' => $jlh_saudara_tiri,
+              'status_anak'      => $status_anak
+            ];
+            $this->db->where('id_anak', $id_anak);
+            $this->db->update('tabel_anak', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$id_anak);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
         }
         elseif($status_anak == null){
-          $data = [
-            'nama_anak'        => ucwords($nama),
-            'asal_anak'	       => ucwords($asal),
-            'pendidikan_anak'  => ucwords($pendidikan),
-            'agama_anak'       => ucwords($agama),
-            'alamat_anak'      => ucwords($alamat),
-            'anak_ke'          => $anak_ke,
-            'jlh_saudara_lk'   => $jlh_saudara_lk,
-            'jlh_saudara_pr'   => $jlh_saudara_pr,
-            'jlh_saudara_tiri' => $jlh_saudara_tiri,
-            'status_ortu'      => $status_ortu
-          ];
-          $this->db->where('id_anak', $id_anak);
-          $this->db->update('tabel_anak', $data);
+          if(ucwords($nama) == $data['anak']['nama_anak'] && ucwords($asal) == $data['anak']['asal_anak'] && ucwords($pendidikan) == $data['anak']['pendidikan_anak'] && ucwords($agama) == $data['anak']['agama_anak'] && ucwords($alamat) == $data['anak']['alamat_anak'] && $anak_ke == $data['anak']['anak_ke'] && $jlh_saudara_lk == $data['anak']['jlh_saudara_lk'] && $jlh_saudara_pr == $data['anak']['jlh_saudara_pr'] && $jlh_saudara_tiri == $data['anak']['jlh_saudara_tiri'] && $status_ortu == $data['anak']['status_ortu']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
+          else{
+            $data = [
+              'nama_anak'        => ucwords($nama),
+              'asal_anak'	       => ucwords($asal),
+              'pendidikan_anak'  => ucwords($pendidikan),
+              'agama_anak'       => ucwords($agama),
+              'alamat_anak'      => ucwords($alamat),
+              'anak_ke'          => $anak_ke,
+              'jlh_saudara_lk'   => $jlh_saudara_lk,
+              'jlh_saudara_pr'   => $jlh_saudara_pr,
+              'jlh_saudara_tiri' => $jlh_saudara_tiri,
+              'status_ortu'      => $status_ortu
+            ];
+            $this->db->where('id_anak', $id_anak);
+            $this->db->update('tabel_anak', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$id_anak);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
         }
         else{
           $data = [
@@ -588,17 +600,23 @@
           }
         }
         else{
-          $data = [
-  					'bb_anak'         => $bb_anak,
-            'penyakit_bawaan' => $penyakit_bawaan,
-            'tb_anak'         => $tb_anak,
-            'goldar_anak'     => $goldar_anak
-  				];
-          $this->db->where('id_anak', $id_anak);
-          $this->db->update('tabel_kesehatan', $data);
+          if($bb_anak == $data['anak']['bb_anak'] && $tb_anak == $data['anak']['tb_anak'] && $penyakit_bawaan == $data['anak']['penyakit_bawaan'] && $goldar_anak == $data['anak']['goldar_anak']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
+          else{
+            $data = [
+    					'bb_anak'         => $bb_anak,
+              'penyakit_bawaan' => $penyakit_bawaan,
+              'tb_anak'         => $tb_anak,
+              'goldar_anak'     => $goldar_anak
+    				];
+            $this->db->where('id_anak', $id_anak);
+            $this->db->update('tabel_kesehatan', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data kesehatan anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$id_anak);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data kesehatan anak berhasil diperbarui.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
         }
       }
 		}
@@ -740,19 +758,21 @@
       $this->load->view('Templates/foot');
     }
 
-		public function TambahDataPengurus(){
-			$data['judul'] 			= 'Tambah Data Pengurus';
+    public function TambahDataPengurus(){
+			$data['judul'] = 'Tambah Data Pengurus';
 
-			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required|trim');
-			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required|trim');
+			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required');
+			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required');
 			$this->form_validation->set_rules('tgl_lahir_pengurus', 'Tanggal lahir', 'required');
-			$this->form_validation->set_rules('jk_pengurus', 'Jenis kelamin', 'required|trim');
-			$this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir', 'required|trim');
-			$this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required|trim');
-      $this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'trim|numeric|greater_than[0]|required', ['numeric' => 'Gagal diperbarui! Nomor Handphone harus berupa angka.', 'greater_than' => 'Nomor handphone tidak valid']);
-			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required|trim');
-			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required|trim');
-			$this->form_validation->set_rules('status_pengurus', 'Status', 'required|trim');
+			$this->form_validation->set_rules('jk_pengurus', 'Jenis kelamin', 'required', ['required' => 'Jenis kelamin harus dipilih.']);
+			$this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir', 'required');
+			$this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required');
+			$this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'required');
+			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required');
+			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required');
+			$this->form_validation->set_rules('status_pengurus', 'Status', 'required', ['required' => 'Status harus dipilih.']);
+
+			$this->form_validation->set_message('required', '%s tidak boleh kosong.');
 
 			if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -778,27 +798,27 @@
           $id_pengurus = $pengurus_terakhir['id_pengurus'] + 1;
         }
 
-				$nama_pengurus				= $this->input->post('nama_pengurus');
-				$tmpt_lahir_pengurus	= $this->input->post('tmpt_lahir_pengurus');
+				$nama_pengurus				= strtolower($this->input->post('nama_pengurus'));
+				$tmpt_lahir_pengurus	= strtolower($this->input->post('tmpt_lahir_pengurus'));
 				$tgl_lahir_pengurus		= $this->input->post('tgl_lahir_pengurus');
 				$jk_pengurus					= $this->input->post('jk_pengurus');
 				$pendidikan_pengurus	= $this->input->post('pendidikan_pengurus');
-				$alamat_pengurus			= $this->input->post('alamat_pengurus');
+				$alamat_pengurus			= strtolower($this->input->post('alamat_pengurus'));
 				$nomorhp_pengurus			= $this->input->post('nomorhp_pengurus');
-				$jabatan_pengurus			= $this->input->post('jabatan_pengurus');
+				$jabatan_pengurus			= strtolower($this->input->post('jabatan_pengurus'));
 				$periode_kepengurusan	= $this->input->post('periode_kepengurusan');
 				$status_pengurus			= $this->input->post('status_pengurus');
 
 				$data = [
 					'id_pengurus'     			=> $id_pengurus,
-					'nama_pengurus'  				=> $nama_pengurus,
-					'tmpt_lahir_pengurus' 	=> $tmpt_lahir_pengurus,
+					'nama_pengurus'  				=> ucwords($nama_pengurus),
+					'tmpt_lahir_pengurus' 	=> ucwords($tmpt_lahir_pengurus),
 					'tgl_lahir_pengurus'  	=> $tgl_lahir_pengurus,
 					'jk_pengurus'  					=> $jk_pengurus,
 					'pendidikan_pengurus' 	=> $pendidikan_pengurus,
-					'alamat_pengurus'  			=> $alamat_pengurus,
+					'alamat_pengurus'  			=> ucwords($alamat_pengurus),
 					'nomorhp_pengurus'  		=> $nomorhp_pengurus,
-					'jabatan_pengurus'  		=> $jabatan_pengurus,
+					'jabatan_pengurus'  		=> ucwords($jabatan_pengurus),
 					'periode_kepengurusan'	=> $periode_kepengurusan,
 					'status_pengurus'				=> $status_pengurus
 				];
@@ -809,7 +829,7 @@
       }
 		}
 
-		public function DetailDataPengurus($id_pengurus){
+    public function DetailDataPengurus($id_pengurus){
       $data['judul'] = 'Detail Data Pengurus';
 
       $this->db->select('*');
@@ -825,52 +845,104 @@
     }
 
     public function UbahDataPengurus($id_pengurus){
-      $data['judul'] = 'Ubah Data Pengurus';
-
-      $this->db->where('id_pengurus', $id_pengurus);
-      $recordPengurus = $this->db->get('tabel_pengurus')->row();
-      $DATA       = array('tabel_pengurus' => $recordPengurus);
+      $data['judul']    = 'Ubah Data Pengurus';
+      $data['pengurus'] = $this->db->get_where('tabel_pengurus', ['id_pengurus' => $id_pengurus])->row_array();
 
       $this->form_validation->set_rules('nama_pengurus', 'Nama lengkap', 'required|trim');
-      $this->form_validation->set_rules('nomorhp_pengurus', 'Tanggal masuk', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'required|trim|numeric|greater_than[0]|min_length[11]|max_length[13]', ['greater_than' => 'Nomor handphone tidak valid.', 'min_length' => 'Nomor handphone tidak valid.', 'max_length' => 'Nomor handphone tidak valid.', 'numeric' => 'Nomor handphone tidak valid.']);
       $this->form_validation->set_rules('alamat_pengurus', 'Alamat pengurus', 'required|trim');
-      $this->form_validation->set_rules('status_pengurus', 'Status', 'required|trim');
+      $this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required|trim');
+      $this->form_validation->set_rules('tgl_lahir_pengurus', 'Tanggal lahir', 'required|trim');
+      $this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir pengurus', 'required|trim');
+      $this->form_validation->set_rules('jabatan_pengurus', 'Jabatan pengurus', 'required|trim');
+      $this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required|trim');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarPengurus/UbahDataPengurus', $DATA);
+        $this->load->view('Admin/DaftarPengurus/UbahDataPengurus', $data);
         $this->load->view('Templates/foot');
       }
-      else {
-        $nama_pengurus       = $this->input->post('nama_pengurus');
-        $nomorhp_pengurus  = $this->input->post('nomorhp_pengurus');
-        $alamat_pengurus  = $this->input->post('alamat_pengurus');
-        $status_pengurus     = $this->input->post('status_pengurus');
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_pengurus');
+        $this->db->where_not_in('id_pengurus', $id_pengurus);
+        $hp = $this->db->get()->result();
 
-        $data = [
-          'nama_pengurus'      => $nama_pengurus,
-          'nomorhp_pengurus' => $nomorhp_pengurus,
-          'alamat_pengurus' => $alamat_pengurus,
-          'status_pengurus'    => $status_pengurus
-        ];
-        $this->db->where('id_pengurus', $id_pengurus);
-        $this->db->update('tabel_pengurus', $data);
+        $nama_pengurus        = strtolower($this->input->post('nama_pengurus'));
+        $nama_pengurus        = ucwords($nama_pengurus);
+        $nomorhp_pengurus     = $this->input->post('nomorhp_pengurus');
+        $alamat_pengurus      = strtolower($this->input->post('alamat_pengurus'));
+        $alamat_pengurus      = ucwords($alamat_pengurus);
+        $status_pengurus      = $this->input->post('status_pengurus');
+        $tmpt_lahir_pengurus  = strtolower($this->input->post('tmpt_lahir_pengurus'));
+        $tmpt_lahir_pengurus  = ucwords($tmpt_lahir_pengurus);
+        $tgl_lahir_pengurus   = $this->input->post('tgl_lahir_pengurus');
+        $pendidikan_pengurus  = $this->input->post('pendidikan_pengurus');
+        $jabatan_pengurus     = strtolower($this->input->post('jabatan_pengurus'));
+        $jabatan_pengurus     = ucwords($jabatan_pengurus);
+        $periode_kepengurusan = $this->input->post('periode_kepengurusan');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Data pengurus berhasil diperbarui.</div>');
+        foreach($hp as $nomor){
+          if($nomorhp_pengurus == $nomor->nomorhp_pengurus){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Nomor telah terdaftar.</div>');
+            redirect('Admin/UbahDataPengurus/'.$id_pengurus);
+          }
+        }
+
+        if($status_pengurus == null){
+          if($nama_pengurus == $data['pengurus']['nama_pengurus'] && $nomorhp_pengurus == $data['pengurus']['nomorhp_pengurus'] && $alamat_pengurus == $data['pengurus']['alamat_pengurus'] && $tmpt_lahir_pengurus == $data['pengurus']['tmpt_lahir_pengurus'] && $tgl_lahir_pengurus == $data['pengurus']['tgl_lahir_pengurus'] && $pendidikan_pengurus == $data['pengurus']['pendidikan_pengurus'] && $jabatan_pengurus == $data['pengurus']['jabatan_pengurus'] && $periode_kepengurusan == $data['pengurus']['periode_kepengurusan']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DaftarPengurus');
+          }
+          else{
+            $data = [
+    					'nama_pengurus'  				=> $nama_pengurus,
+    					'tmpt_lahir_pengurus' 	=> $tmpt_lahir_pengurus,
+    					'tgl_lahir_pengurus'  	=> $tgl_lahir_pengurus,
+    					'pendidikan_pengurus' 	=> $pendidikan_pengurus,
+    					'alamat_pengurus'  			=> $alamat_pengurus,
+    					'nomorhp_pengurus'  		=> $nomorhp_pengurus,
+    					'jabatan_pengurus'  		=> $jabatan_pengurus,
+    					'periode_kepengurusan'	=> $periode_kepengurusan,
+    					'status_pengurus'				=> $status_pengurus
+    				];
+            $this->db->where('id_pengurus', $id_pengurus);
+    				$this->db->update('tabel_pengurus', $data);
+          }
+        }
+        else{
+          if($nama_pengurus == $data['pengurus']['nama_pengurus'] && $nomorhp_pengurus == $data['pengurus']['nomorhp_pengurus'] && $alamat_pengurus == $data['pengurus']['alamat_pengurus'] && $tmpt_lahir_pengurus == $data['pengurus']['tmpt_lahir_pengurus'] && $tgl_lahir_pengurus == $data['pengurus']['tgl_lahir_pengurus'] && $pendidikan_pengurus == $data['pengurus']['pendidikan_pengurus'] && $jabatan_pengurus == $data['pengurus']['jabatan_pengurus'] && $periode_kepengurusan == $data['pengurus']['periode_kepengurusan'] && $status_pengurus == $data['pengurus']['status_pengurus']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DaftarPengurus');
+          }
+          else{
+            $data = [
+              'nama_pengurus'  				=> $nama_pengurus,
+              'tmpt_lahir_pengurus' 	=> $tmpt_lahir_pengurus,
+              'tgl_lahir_pengurus'  	=> $tgl_lahir_pengurus,
+              'pendidikan_pengurus' 	=> $pendidikan_pengurus,
+              'alamat_pengurus'  			=> $alamat_pengurus,
+              'nomorhp_pengurus'  		=> $nomorhp_pengurus,
+              'jabatan_pengurus'  		=> $jabatan_pengurus,
+              'periode_kepengurusan'	=> $periode_kepengurusan,
+              'status_pengurus'				=> $status_pengurus
+            ];
+            $this->db->where('id_pengurus', $id_pengurus);
+            $this->db->update('tabel_pengurus', $data);
+          }
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data pengurus berhasil diperbarui.</div>');
         redirect('Admin/DaftarPengurus');
       }
     }
 
-
     public function HapusDataPengurus($id_pengurus){
-      $this->db->where('id_pengurus', $id_pengurus);
-      $this->db->delete('tabel_pengurus');
+      $this->db->query('call procedure_hapus_pengurus('.$id_pengurus.')');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data pengurus berhasil dihapus.</div>');
-        redirect('Admin/DaftarPengurus');
-      }
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data pengurus berhasil dihapus.</div>');
+      redirect('Admin/DaftarPengurus');
     }
 
     public function DaftarDonasi(){
@@ -1147,7 +1219,7 @@
 
       $this->form_validation->set_rules('judul_berita', 'Judul berita', 'required|trim');
       $this->form_validation->set_rules('isi_berita', 'Berita', 'required|trim');
-      
+
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
@@ -1273,7 +1345,7 @@
         ['numeric' => 'Letak inventaris harus berupa angka']);
       $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah inventaris', 'numeric|required|trim',
         ['numeric' => 'Jumlah inventaris harus berupa angka']);
-				
+
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
@@ -1595,7 +1667,7 @@
       $data['inventaris'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
 
       $this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
-      
+
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
