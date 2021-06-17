@@ -20,15 +20,15 @@
       if($search){
         $this->db->like('nama_anak', $search);
       }
-      return $this->db->get('tabel_anak')->result();
+      return $this->db->get('view_anak')->result();
     }
 
     public function getAnak2($limit, $start){
-      return $this->db->get('tabel_anak', $limit, $start)->result();
+      return $this->db->get('view_anak', $limit, $start)->result();
     }
 
     public function countAnak(){
-      return $this->db->get('tabel_anak')->num_rows();
+      return $this->db->get('view_anak')->num_rows();
     }
 
     public function getPengurus1($search){

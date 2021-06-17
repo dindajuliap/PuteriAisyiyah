@@ -215,6 +215,176 @@
       $this->load->view('Templates/foot');
     }
 
+    public function TambahDataAnak(){
+			$data['judul'] = 'Tambah Data Anak';
+
+			$this->form_validation->set_rules('nama_anak', 'Nama', 'required');
+			$this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal', 'required');
+			$this->form_validation->set_rules('jk_anak', 'Jenis kelamin', 'required', ['required' => 'Jenis kelamin anak harus dipilih.']);
+			$this->form_validation->set_rules('pendidikan_anak', 'Pendidikan anak', 'required');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/TambahDataAnak', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_anak');
+        $tabel_anak = $this->db->get()->result();
+
+        if(!$tabel_anak){
+          $id_anak = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_anak');
+          $this->db->order_by('id_anak', 'DESC');
+          $this->db->limit(1);
+          $anak_terakhir = $this->db->get()->row_array();
+
+          $id_anak = $anak_terakhir['id_anak'] + 1;
+        }
+
+				$nama	            = strtolower($this->input->post('nama_anak'));
+        $asal	            = strtolower($this->input->post('asal_anak'));
+        $tgl_lahir_anak   = $this->input->post('tgl_lahir_anak');
+        $pendidikan	      = strtolower($this->input->post('pendidikan_anak'));
+        $tgl_masuk_anak   = $this->input->post('tgl_masuk_anak');
+        $agama	          = strtolower($this->input->post('agama_anak'));
+        $jk_anak          = $this->input->post('jk_anak');
+        $alamat	          = strtolower($this->input->post('alamat_anak'));
+        $anak_ke          = $this->input->post('anak_ke');
+        $jlh_saudara_lk   = $this->input->post('jlh_saudara_lk');
+        $jlh_saudara_pr   = $this->input->post('jlh_saudara_pr');
+        $jlh_saudara_tiri = $this->input->post('jlh_saudara_tiri');
+        $status_ortu      = $this->input->post('status_ortu');
+
+				$data = [
+					'id_anak'     		 => $id_anak,
+          'nama_anak'        => ucwords($nama),
+          'asal_anak'	       => ucwords($asal),
+          'tgl_lahir_anak'   => $tgl_lahir_anak,
+          'pendidikan_anak'  => ucwords($pendidikan),
+          'tgl_masuk_anak'   => $tgl_masuk_anak,
+          'agama_anak'       => ucwords($agama),
+          'jk_anak'          => $jk_anak,
+          'alamat_anak'      => ucwords($alamat),
+          'anak_ke'          => $anak_ke,
+          'jlh_saudara_lk'   => $jlh_saudara_lk,
+          'jlh_saudara_pr'   => $jlh_saudara_pr,
+          'jlh_saudara_tiri' => $jlh_saudara_tiri,
+          'status_ortu'      => $status_ortu,
+          'status_anak'      => 1
+				];
+				$this->db->insert('tabel_anak', $data);
+
+        redirect('Admin/TambahDataKesehatanAnak/'.$id_anak);
+      }
+		}
+
+    public function TambahDataKesehatanAnak($id_anak){
+			$data['judul'] = 'Tambah Data Kesehatan Anak';
+
+			$this->form_validation->set_rules('bb_anak', 'Berat badan', 'required');
+			$this->form_validation->set_rules('tb_anak', 'Tinggi badan', 'required');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/TambahDataKesehatanAnak', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_kesehatan');
+        $tabel_kesehatan = $this->db->get()->result();
+
+        if(!$tabel_kesehatan){
+          $id_kesehatan = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_kesehatan');
+          $this->db->order_by('id_kesehatan', 'DESC');
+          $this->db->limit(1);
+          $kesehatan_terakhir = $this->db->get()->row_array();
+
+          $id_kesehatan = $kesehatan_terakhir['id_kesehatan'] + 1;
+        }
+
+				$bb_anak         = $this->input->post('bb_anak');
+        $tb_anak         = $this->input->post('tb_anak');
+        $penyakit_bawaan = $this->input->post('penyakit_bawaan');
+        $goldar_anak     = $this->input->post('goldar_anak');
+
+				$data = [
+					'id_kesehatan'    => $id_kesehatan,
+          'id_anak'     		=> $id_anak,
+          'bb_anak'         => $bb_anak,
+          'penyakit_bawaan' => $penyakit_bawaan,
+          'tb_anak'         => $tb_anak,
+          'goldar_anak'     => $goldar_anak
+				];
+				$this->db->insert('tabel_kesehatan', $data);
+
+        redirect('Admin/TambahDataOrangTua/'.$id_anak);
+      }
+		}
+
+    public function TambahDataOrangTua($id_anak){
+			$data['judul'] = 'Tambah Data Orang Tua';
+
+			$this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/DaftarAnak/TambahDataOrangTua', $data);
+      $this->load->view('Templates/foot');
+
+      $this->db->select('*');
+      $this->db->from('tabel_ortu');
+      $tabel_ortu = $this->db->get()->result();
+
+      if(!$tabel_ortu){
+        $id_ortu = 1;
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('tabel_ortu');
+        $this->db->order_by('id_ortu', 'DESC');
+        $this->db->limit(1);
+        $ortu_terakhir = $this->db->get()->row_array();
+
+        $id_ortu = $ortu_terakhir['id_ortu'] + 1;
+      }
+
+			$nama_ayah       = strtolower($this->input->post('nama_ayah'));
+      $umur_ayah       = $this->input->post('umur_ayah');
+      $nama_ibu        = strtolower($this->input->post('nama_ibu'));
+      $umur_ibu        = $this->input->post('umur_ibu');
+      $pekerjaan_ayah  = strtolower($this->input->post('pekerjaan_ayah'));
+      $pendidikan_ayah = $this->input->post('pendidikan_ayah');
+      $pekerjaan_ibu   = strtolower($this->input->post('pekerjaan_ibu'));
+      $pendidikan_ibu  = $this->input->post('pendidikan_ibu');
+      $alamat_ortu     = strtolower($this->input->post('alamat_ortu'));
+
+			$data = [
+				'id_ortu'         => $id_ortu,
+        'id_anak'     		=> $id_anak,
+        'nama_ayah'       => ucwords($nama_ayah),
+        'umur_ayah'       => $umur_ayah,
+        'pekerjaan_ayah'  => ucwords($pekerjaan_ayah),
+        'pendidikan_ayah' => $pendidikan_ayah,
+        'nama_ibu'        => ucwords($nama_ibu),
+        'umur_ibu'        => $umur_ibu,
+        'pekerjaan_ibu'   => ucwords($pekerjaan_ibu),
+        'pendidikan_ibu'  => $pendidikan_ibu
+			];
+			$this->db->insert('tabel_ortu', $data);
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil ditambahkan.</div>');
+      redirect('Admin/DaftarAnak');
+		}
 
     public function UbahDataAnak($id_anak){
       $data['judul'] = 'Ubah Data Anak';
