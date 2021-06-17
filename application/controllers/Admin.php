@@ -296,7 +296,7 @@
 
 		public function TambahDataPengurus(){
 			$data['judul'] 			= 'Tambah Data Pengurus';
-			
+
 			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required');
 			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required');
 			$this->form_validation->set_rules('tgl_lahir_pengurus', 'Tanggal lahir', 'required');
@@ -307,7 +307,7 @@
 			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required');
 			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required');
 			$this->form_validation->set_rules('status_pengurus', 'Status', 'required');
-			
+
 			$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
 			if($this->form_validation->run() == false){
@@ -637,7 +637,7 @@
 
 		public function TambahBerita(){
 			$data['judul'] 			= 'Tambah Berita';
-			
+
 			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required');
 			$this->form_validation->set_rules('isi_berita', 'Isi berita', 'required');
 			$this->form_validation->set_message('required', '%s tidak boleh kosong');
@@ -801,60 +801,110 @@
       $this->load->view('Templates/foot');
     }
 
-		public function TambahBiodataPanti(){
-			$data['judul'] 			= 'Tambah Biodata Panti';
-			
-			$this->form_validation->set_rules('jenis_biodata', 'Nama', 'required');
-			
-			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+    public function UbahBiodataPanti(){
+      $data['judul']         = 'Ubah Biodata Panti';
+      $data['alamat_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Alamat'])->row_array();
+      $data['email_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
+      $data['telepon_panti'] = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Telepon'])->row_array();
+      $data['ketua_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Ketua'])->row_array();
+      $data['profil_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Foto Panti'])->row_array();
 
-			if($this->form_validation->run() == false){
+      $this->form_validation->set_rules('alamat_panti', $data['alamat_panti']['jenis_biodata'], 'required|trim');
+      $this->form_validation->set_rules('email_panti', $data['email_panti']['jenis_biodata'], 'required|trim');
+      $this->form_validation->set_rules('telepon_panti', $data['telepon_panti']['jenis_biodata'], 'required|trim|min_length[11]|max_length[13]', ['min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
+      $this->form_validation->set_rules('ketua_panti', $data['ketua_panti']['jenis_biodata'], 'required|trim');
+
+      if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/BiodataPanti/TambahBiodataPanti', $data);
+        $this->load->view('Admin/BiodataPanti/UbahBiodataPanti', $data);
         $this->load->view('Templates/foot');
       }
       else{
-        $this->db->select('*');
-        $this->db->from('tabel_panti');
-        $tabel_panti = $this->db->get()->result();
+        if($this->input->post('foto_panti') == null){
+          $alamat_panti  = ucwords($this->input->post('alamat_panti'));
+          $email_panti   = strtolower($this->input->post('email_panti'));
+          $telepon_panti = $this->input->post('telepon_panti');
+          $ketua_panti   = ucwords($this->input->post('ketua_panti'));
 
-        if(!$tabel_panti){
-          $id_biodata = 1;
+          if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
+            redirect('Admin/BiodataPanti');
+          }
+          else{
+            $this->db->set('isi_biodata', $alamat_panti);
+            $this->db->where('jenis_biodata', 'Alamat');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $email_panti);
+            $this->db->where('jenis_biodata', 'Email');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $telepon_panti);
+            $this->db->where('jenis_biodata', 'Telepon');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $ketua_panti);
+            $this->db->where('jenis_biodata', 'Ketua');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $data['profil_panti']['isi_biodata']);
+            $this->db->where('jenis_biodata', 'Foto Panti');
+            $this->db->update('tabel_panti');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+            redirect('Admin/BiodataPanti');
+          }
         }
         else{
-          $this->db->select('*');
-          $this->db->from('tabel_panti');
-          $this->db->order_by('id_biodata', 'DESC');
-          $this->db->limit(1);
-          $biodata_terakhir = $this->db->get()->row_array();
+          $config['upload_path']   = './assets/img/bukti_tf';
+          $config['allowed_types'] = 'jpg|jpeg|png';
+          $config['max_size']      = '5000';
 
-          $id_biodata = $biodata_terakhir['id_biodata'] + 1;
+          $this->load->library('upload', $config);
+
+          if(!$this->upload->do_upload('foto_panti')){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 100%; font-size: 15px" align="left">Foto panti tidak valid.</div>');
+            redirect('Admin/UbahBiodataPanti');
+          }
+          else{
+            $alamat_panti  = ucwords($this->input->post('alamat_panti'));
+            $email_panti   = strtolower($this->input->post('email_panti'));
+            $telepon_panti = $this->input->post('telepon_panti');
+            $ketua_panti   = ucwords($this->input->post('ketua_panti'));
+            $foto_panti    = $this->upload->data();
+            $foto_panti    = $foto_panti['file_name'];
+
+            if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
+              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
+              redirect('Admin/BiodataPanti');
+            }
+            else{
+              $this->db->set('isi_biodata', $alamat_panti);
+              $this->db->where('jenis_biodata', 'Alamat');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $email_panti);
+              $this->db->where('jenis_biodata', 'Email');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $telepon_panti);
+              $this->db->where('jenis_biodata', 'Telepon');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $ketua_panti);
+              $this->db->where('jenis_biodata', 'Ketua');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $foto_panti);
+              $this->db->where('jenis_biodata', 'Foto Panti');
+              $this->db->update('tabel_panti');
+
+              $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+              redirect('Admin/BiodataPanti');
+            }
+          }
         }
-
-				$jenis_biodata	= $this->input->post('jenis_biodata');
-				$isi_biodata		= $this->input->post('isi_biodata');
-
-				$data = [
-					'id_biodata'     	=> $id_biodata,
-					'jenis_biodata'  	=> $jenis_biodata,
-					'isi_biodata'  		=> $isi_biodata
-				];
-				$this->db->insert('tabel_panti', $data);
-
-				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Biodata panti berhasil ditambahkan</div>');
-				redirect('Admin/BiodataPanti');
-			
-      }
-		}
-
-    public function HapusBiodataPanti($id_biodata){
-      $this->db->where('id_biodata', $id_biodata);
-      $this->db->delete('tabel_panti');
-
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil dihapus.</div>');
-        redirect('Admin/BiodataPanti');
       }
     }
 
@@ -905,9 +955,9 @@
 
 		public function TambahAlbum(){
 			$data['judul'] 			= 'Tambah Album';
-			
+
 			$this->form_validation->set_rules('nama_album', 'Nama album', 'required');
-			
+
 			$this->form_validation->set_message('required', '%s tidak boleh kosong');
 
 			if($this->form_validation->run() == false){
@@ -944,7 +994,7 @@
 
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Album berhasil ditambahkan</div>');
 				redirect('Admin/DaftarAlbum');
-			
+
       }
 		}
 

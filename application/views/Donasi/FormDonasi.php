@@ -25,7 +25,7 @@
 
           <label style="color: #030153" class="mt-1 ml-4">Upload Bukti Transfer</label><br>
           <input type="file" class="ml-4 mt-1" name="bukti_tf" id="bukti_tf">
-          <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Berupa file jpeg, jpg, ataupun pdf dan berukuran maksimal 5 MB)</p>
+          <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Berupa file jpeg, jpg, png, ataupun pdf dan berukuran maksimal 5 MB)</p>
 
           <?= $this->session->flashdata('message') ?>
         </div>

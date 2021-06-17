@@ -9,10 +9,10 @@
 
 		      <div class="row">
             <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahBiodataPanti') ?>" style="margin-left: -15%">
+              <a href="<?= base_url('Admin/UbahBiodataPanti') ?>" style="margin-left: -15%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
-                  <i class="fas fa-plus-circle mr-2"></i>
-                  Tambah Data
+                  <i class="fas fa-edit mr-2"></i>
+                  Ubah Biodata
                 </button>
               </a>
             </div>
@@ -36,13 +36,12 @@
 	                    <th>No.</th>
 	                    <th>Biodata</th>
 	                    <th>Isi</th>
-	                    <th>Pengaturan</th>
 	                  </tr>
 	                </thead>
 
 	                <tbody style="height: 50px">
 	                  <tr>
-	                    <td style="color: #7F7F7F" align="center" colspan="4">Tidak ada data tersedia.</td>
+	                    <td style="color: #7F7F7F" align="center" colspan="3">Tidak ada data tersedia.</td>
 	                  </tr>
 									<tbody>
               </table>
@@ -53,9 +52,8 @@
                 <thead style="background-color: #CAA615; height: 40px">
                   <tr style="text-align: center">
                     <th>No.</th>
-										<th>Biodata</th>
-										<th>Isi</th>
-                    <th>Pengaturan</th>
+										<th width="20%">Biodata</th>
+										<th width="75%">Isi</th>
                   </tr>
                 </thead>
 
@@ -66,19 +64,18 @@
                   ?>
 
                   <tr height="50px">
-                    <td style="text-align: center"><?= $no ?></td>
-                    <td style="padding: 7px"><?= $val->jenis_biodata ?></td>
-                    <td style="padding: 7px"><?= $val->isi_biodata ?></td>
+                    <?php if($val->jenis_biodata == 'Foto Panti') : ?>
+                      <td style="text-align: center; padding: 7px" valign="top"><?= $no ?></td>
+                      <td style="padding: 7px" valign="top"><?= $val->jenis_biodata ?></td>
 
-										<td style="text-align: center">
-                      <a href="<?= site_url('Admin/UbahBiodataPanti/'.$val->id_biodata)?>" class="btn btn-warning btn-sm">
-                        <i class="fas fa-edit"></i>
-                      </a>
-
-                      <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusModal<?= $val->id_biodata ?>" style="color: white" type="submit">
-                        <i class="fas fa-trash"></i>
-                      </a>
-                    </td>
+                      <td style="padding: 7px">
+                        <img src="<?= base_url('assets/img/').$val->isi_biodata ?>" style="height: 190px">
+                      </td>
+                    <?php else : ?>
+                      <td style="text-align: center"><?= $no ?></td>
+                      <td style="padding: 7px"><?= $val->jenis_biodata ?></td>
+                      <td style="padding: 7px"><?= $val->isi_biodata ?></td>
+                    <?php endif ?>
                   </tr>
 
                   <?php $no++; } ?>
@@ -100,32 +97,4 @@
       </div>
     </div>
   </div>
-
-  <?php foreach($biodata as $val) : ?>
-    <div class="modal fade" id="hapusModal<?= $val->id_biodata ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
-          <div class="modal-body">
-            <span>
-              <p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 10px"></p>
-              <p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 196px">!</p>
-            </span>
-
-            <h3 class="modal-title mt-3" id="exampleModalLabel" align="center">
-              <b style="font-family: Arial; color: #595959">Hapus Biodata Panti</b>
-            </h3>
-
-            <div class="row mb-3">
-              <h5 style="margin-left: auto; margin-right: auto">Anda yakin ingin menghapus data ini?</h5>
-            </div>
-
-            <div class="row">
-              <a class="btn btn-primary text-center" href="<?= base_url('Admin/HapusBiodataPanti/') . $val->id_biodata ?>" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Yakin</a>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <?php endforeach ?>
 </body>
