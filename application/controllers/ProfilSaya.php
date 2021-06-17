@@ -159,12 +159,22 @@
     }
 
     public function HapusAkun($id_user){
+      $this->db->set('status_user', 0);
       $this->db->where('id_user', $id_user);
-      $this->db->delete('tabel_akun');
+      $this->db->update('tabel_akun');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%; margin-left: 1%" align="left">Akun Anda berhasil dihapus.</div>');
-        redirect('Masuk');
-      }
+      $user = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
+      date_default_timezone_set('Asia/Jakarta');
+
+      $this->db->set('waktu_log_akun', date("Y-m-d G:i:s"));
+      $this->db->set('status_user', 'Dihapus');
+      $this->db->where('email_user', $user['email_user']);
+      $this->db->update('log_akun');
+
+      $this->session->unset_userdata('id_user');
+      $this->session->unset_userdata('role_id');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%; margin-left: 1%" align="left">Akun Anda berhasil dihapus.</div>');
+      redirect('Masuk');
     }
   }

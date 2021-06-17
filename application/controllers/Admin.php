@@ -68,7 +68,7 @@
       $data['judul'] = 'Detail Data Akun';
 
       $this->db->select('*');
-      $this->db->from('tabel_akun');
+      $this->db->from('view_akun');
       $this->db->where('id_user', $id_user);
       $data['detail_akun'] = $this->db->get()->result();
 
@@ -80,59 +80,93 @@
     }
 
     public function HapusDataAkun($id_user){
+      $this->db->set('status_user', 0);
       $this->db->where('id_user', $id_user);
-      $this->db->delete('tabel_akun');
+      $this->db->update('tabel_akun');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data akun berhasil dihapus.</div>');
-        redirect('Admin/DaftarAkun');
-      }
+      $user = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
+      date_default_timezone_set('Asia/Jakarta');
+
+      $this->db->set('waktu_log_akun', date("Y-m-d G:i:s"));
+      $this->db->set('status_user', 'Dihapus');
+      $this->db->where('email_user', $user['email_user']);
+      $this->db->update('log_akun');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data akun berhasil dihapus.</div>');
+      redirect('Admin/DaftarAkun');
     }
 
     public function UbahDataAkun($id_user){
-      $data['judul'] = 'Ubah Data Akun';
-
-      $this->db->where('id_user', $id_user);
-      $recordUser = $this->db->get('tabel_akun')->row();
-      $DATA       = array('tabel_akun' => $recordUser);
+      $data['judul']      = 'Ubah Data Akun';
+      $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
 
       $this->form_validation->set_rules('nama_user', 'Nama Lengkap', 'required|trim');
       $this->form_validation->set_rules('tmpt_lahir_user', 'Tempat Lahir', 'required|trim');
       $this->form_validation->set_rules('tgl_lahir_user', 'Tanggal Lahir', 'required|trim');
-      $this->form_validation->set_rules('nomorhp_user', 'Nomor Handphone', 'required|trim|numeric[tabel_akun.nomorhp_user]|greater_than[0]|min_length[11]|max_length[13]', ['greater_than' => 'tidak valid.','min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
-      $this->form_validation->set_rules('jk_user', 'Jenis Kelamin', 'required|trim');
-      $this->form_validation->set_rules('alamat_user', 'Alamat', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_user', 'Nomor handphone', 'trim|numeric|greater_than[0]|required', ['numeric' => 'Gagal diperbarui! Nomor Handphone harus berupa angka.', 'greater_than' => 'Nomor handphone tidak valid']);
+      $this->form_validation->set_rules('alamat_user', 'Alamat', 'trim|required');
       $this->form_validation->set_rules('email_user', 'Email', 'required|trim');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarAkun/UbahDataAkun', $DATA);
+        $this->load->view('Admin/DaftarAkun/UbahDataAkun', $data);
         $this->load->view('Templates/foot');
       }
       else {
-        $nama_user       = $this->input->post('nama_user');
-        $tmpt_lahir_user = $this->input->post('tmpt_lahir_user');
+        $nama            = strtolower($this->input->post('nama_user'));
+        $nama_user       = ucwords($nama);
+        $tmpt_lahir      = strtolower($this->input->post('tmpt_lahir_user'));
+        $tmpt_lahir_user = ucwords($tmpt_lahir);
         $tgl_lahir_user  = $this->input->post('tgl_lahir_user');
         $nomorhp_user    = $this->input->post('nomorhp_user');
-        $jk_user         = $this->input->post('jk_user');
-        $alamat_user     = $this->input->post('alamat_user');
-        $email_user      = $this->input->post('email_user');
+        $alamat          = strtolower($this->input->post('alamat_user'));
+        $alamat_user     = ucwords($alamat);
+        $email_user      = strtolower($this->input->post('email_user'));
 
-        $data = [
-          'nama_user'       => $nama_user,
-          'tmpt_lahir_user' => $tmpt_lahir_user,
-          'tgl_lahir_user'  => $tgl_lahir_user,
-          'nomorhp_user'    => $nomorhp_user,
-          'jk_user'         => $jk_user,
-          'alamat_user'     => $alamat_user,
-          'email_user'      => $email_user
-        ];
-        $this->db->where('id_user', $id_user);
-        $this->db->update('tabel_akun', $data);
+        $this->db->select('*');
+        $this->db->from('tabel_akun');
+        $this->db->where_not_in('id_user', $id_user);
+        $hp = $this->db->get()->result();
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Data akun berhasil diperbarui.</div>');
-        redirect('Admin/DaftarAkun');
+        foreach($hp as $nomor){
+          if($nomorhp_user == $nomor->nomorhp_user){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Nomor telah terdaftar.</div>');
+            redirect('Admin/UbahDataAkun');
+          }
+        }
+
+        if($nama_user == $data['tabel_akun']['nama_user'] && $tmpt_lahir_user == $data['tabel_akun']['tmpt_lahir_user'] && $tgl_lahir_user == $data['tabel_akun']['tgl_lahir_user'] && $nomorhp_user == $data['tabel_akun']['nomorhp_user'] && $alamat_user == $data['tabel_akun']['alamat_user'] && $email_user == $data['tabel_akun']['email_user']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+          redirect('Admin/DaftarAkun');
+        }
+        else{
+          $data = [
+            'nama_user'       => $nama_user,
+            'tmpt_lahir_user' => $tmpt_lahir_user,
+            'tgl_lahir_user'  => $tgl_lahir_user,
+            'nomorhp_user'    => $nomorhp_user,
+            'jk_user'         => $jk_user,
+            'alamat_user'     => $alamat_user,
+            'email_user'      => $email_user
+          ];
+          $this->db->where('email_user', $data['tabel_akun']['email_user']);
+          $this->db->update('log_akun', $data);
+
+          $data = [
+            'nama_user'       => $nama_user,
+            'tmpt_lahir_user' => $tmpt_lahir_user,
+            'tgl_lahir_user'  => $tgl_lahir_user,
+            'nomorhp_user'    => $nomorhp_user,
+            'alamat_user'     => $alamat_user,
+            'email_user'      => $email_user
+          ];
+          $this->db->where('id_user', $id_user);
+          $this->db->update('tabel_akun', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+          redirect('Admin/DaftarAkun');
+        }
       }
     }
 
@@ -757,9 +791,9 @@
 
     public function TambahDataInventaris(){
       $data['judul']      = 'Tambah Data Inventaris';
-      
+
       $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
-      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required', 
+      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required',
         ['numeric' => 'Letak inventaris harus berupa angka']);
       $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
         ['numeric' => 'Jumlah inventaris harus berupa angka']);
@@ -793,9 +827,9 @@
     public function UbahDataInventaris($id_inventaris){
       $data['judul']      = 'Ubah Data Inventaris';
       $data['inventaris'] = $this->db->get_where('tabel_inventaris', ['id_inventaris' => $id_inventaris])->row_array();
-      
+
       $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
-      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required', 
+      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required',
         ['numeric' => 'Letak inventaris harus berupa angka']);
       $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
         ['numeric' => 'Jumlah inventaris harus berupa angka']);

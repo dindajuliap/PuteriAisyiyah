@@ -5,15 +5,15 @@
         $this->db->like('nama_user', $search);
         $this->db->or_like('email_user', $search);
       }
-      return $this->db->get('tabel_akun')->result();
+      return $this->db->get('view_akun')->result();
     }
 
     public function getUser2($limit, $start){
-      return $this->db->get('tabel_akun', $limit, $start)->result();
+      return $this->db->get('view_akun', $limit, $start)->result();
     }
 
     public function countUser(){
-      return $this->db->get('tabel_akun')->num_rows();
+      return $this->db->get('view_akun')->num_rows();
     }
 
     public function getAnak1($search){

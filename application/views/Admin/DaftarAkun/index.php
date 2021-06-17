@@ -8,14 +8,7 @@
           <?= $this->session->flashdata('message') ?>
 
 		      <div class="row">
-            <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahDataAkun') ?>" style="margin-left: -15%">
-                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
-                  <i class="fas fa-plus-circle mr-2"></i>
-                  Tambah Data
-                </button>
-              </a>
-            </div>
+            <div class="col-lg-6"></div>
 
 	          <div class="col-lg-6">
 							<form action="" method="post" style="width: 45%; margin-left: 53%; margin-top: 1%">
@@ -37,13 +30,14 @@
 	                    <th>No.</th>
 	                    <th>Nama</th>
 	                    <th>Email</th>
+                      <th>Status Akun</th>
 	                    <th>Pengaturan</th>
 	                  </tr>
 	                </thead>
 
 	                <tbody style="height: 50px">
 	                  <tr>
-	                    <td style="color: #7F7F7F" align="center" colspan="4">Tidak ada data tersedia.</td>
+	                    <td style="color: #7F7F7F" align="center" colspan="5">Tidak ada data tersedia.</td>
 	                  </tr>
 									<tbody>
               </table>
@@ -56,6 +50,7 @@
                     <th>No.</th>
                     <th>Nama</th>
                     <th>Email</th>
+                    <th>Status Akun</th>
                     <th>Pengaturan</th>
                   </tr>
                 </thead>
@@ -70,6 +65,7 @@
                     <td style="text-align: center"><?= $no ?></td>
                     <td style="padding: 7px"><?= $val->nama_user ?></td>
                     <td style="padding: 7px"><?= $val->email_user ?></td>
+                    <td style="padding: 7px" align="center"><?= $val->status_user ?></td>
 
                     <?php if($val->role_id == 1) : ?>
                       <td></td>
@@ -79,13 +75,15 @@
                           <i class="fas fa-eye"></i>
                         </a>
 
-                        <a href="<?= site_url('Admin/UbahDataAkun/'.$val->id_user)?>" class="btn btn-warning btn-sm">
-                          <i class="fas fa-edit"></i>
-                        </a>
+                        <?php if($val->status_user == 'Terdaftar') : ?>
+                          <a href="<?= site_url('Admin/UbahDataAkun/'.$val->id_user)?>" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i>
+                          </a>
 
-                        <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusModal<?= $val->id_user ?>" style="color: white" type="submit">
-                          <i class="fas fa-trash"></i>
-                        </a>
+                          <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusModal<?= $val->id_user ?>" style="color: white" type="submit">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                        <?php endif ?>
                       </td>
                     <?php endif ?>
                   </tr>

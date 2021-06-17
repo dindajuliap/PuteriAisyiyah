@@ -22,11 +22,14 @@
       else{
         $email_user = strtolower($this->input->post('email_user'));
         $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
-        $user2      = $this->db->get_where('log_akun', ['email_user' => $email_user])->row_array();
+        $user2      = $this->db->get_where('log_akun', ['email_user' => $email_user, 'status_user' => 'Dihapus'])->row_array();
 
         if($user2){
           $this->db->where('email_user', $email_user);
           $this->db->delete('log_akun');
+
+          $this->db->where('email_user', $email_user);
+          $this->db->delete('tabel_akun');
         }
 
         $this->db->select('*');
