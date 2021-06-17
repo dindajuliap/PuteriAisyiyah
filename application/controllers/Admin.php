@@ -534,6 +534,7 @@
           ];
           $this->db->insert('tabel_donasi', $data);
 
+					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data donasi berhasil ditambahkan</div>');
           redirect('Admin/DaftarDonasi');
         }
       }
