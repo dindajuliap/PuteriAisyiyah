@@ -14,13 +14,13 @@
 										<h1 style="text-align: center;"><?= $val->judul_berita ?></h1>
 									</div>
 									<div class="col-lg-12 mt-3">
-										<img src="<?= base_url('assets/img/foto_berita/') . $val->cover_berita ?>" style="max-width: 500px; margin: 20px auto 30px auto; display: block;">
+										<img src="<?= base_url('assets/img/foto_berita/') . $val->cover_berita ?>" style="max-width: 500px; margin: 20px auto 30px auto; display: block; box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.65);">
 									</div>
 									<div class="col-lg-12 mt-4">
 										<?= $val->isi_berita ?>
 									</div>
 									<div class="col-lg-12 mt-4">
-										<p>Diposting tanggal : <?= date("d F Y", strtotime($val->tanggal_berita)) ?></p>
+										<p style="color: #5E5E5E"><i>Diposting tanggal : <?= date("d F Y", strtotime($val->tanggal_berita)) ?></i></p>
 									</div>
 								</div>
 
@@ -29,7 +29,7 @@
 										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_berita ?>" style="border-radius: 10px; width: 25%; margin-left: 10px; float: right; background: red; color: white">Hapus Data</button>
 									</div>
 									<div class="col-lg-6">
-										<a href="<?= base_url('Admin/UbahDataBerita/'.$val->id_berita) ?>" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white">Ubah Data</a>
+										<a href="<?= base_url('Admin/UbahBerita/'.$val->id_berita) ?>" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white">Ubah Data</a>
 									</div>
 								</div>
 							</div>

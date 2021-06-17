@@ -1,5 +1,6 @@
 <body style="color: #030153; font-family: Arial;">
 	<div class="container mt-4 mb-5">
+		<?= $this->session->flashdata('message'); ?>
 		<h3 style="text-align: center; font-weight: 700px"><b>TAMBAH BERITA</b></h3>
 
 		<form action="" method="post" enctype="multipart/form-data">

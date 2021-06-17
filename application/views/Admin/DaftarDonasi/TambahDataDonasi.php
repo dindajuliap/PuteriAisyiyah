@@ -1,5 +1,6 @@
 <body style="color: #030153; font-family: Arial;">
   <div class="container mt-4 mb-5">
+		<?= $this->session->flashdata('message'); ?>
 		<h3 style="text-align: center; font-weight: 700px"><b>TAMBAH DATA DONASI</b></h3>
 
     <form action="" method="post" enctype="multipart/form-data">
@@ -18,7 +19,7 @@
 					<p style="color: #7F7F7F; font-size: 12px" class="mt-1">(Sedekah, zakat mal, infaq, nazar, berbagi, atau lainnya)</p>
         </div>
 
-				<div class="col-lg-6">
+				<div class="col-lg-6" style="padding-left: 3%;">
 					<label class="mt-2">Tanggal Donasi <b style="color: red">*</b></label>
 					<input type="date" name="tgl_donasi" id="tgl_donasi" value="<?= date("d-m-y"); ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%;">
 					<small class="form-text text-danger"><?= form_error('tgl_donasi') ?></small>

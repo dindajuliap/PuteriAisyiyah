@@ -221,7 +221,7 @@
 			$this->form_validation->set_rules('nama_anak', 'Nama anak', 'required');
 			$this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal masuk anak', 'required');
 			$this->form_validation->set_rules('jk_anak', 'Jenis kelamin', 'required', ['required' => 'Jenis kelamin anak harus dipilih.']);
-      $this->form_validation->set_rules('status_anak', 'Status anak', 'required', ['required' => 'Status anak harus dipilih.']);
+			$this->form_validation->set_rules('status_anak', 'Status anak', 'required', ['required' => 'Status anak harus dipilih.']);
 			$this->form_validation->set_rules('pendidikan_anak', 'Pendidikan anak', 'required');
       $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal lahir anak', 'required');
 
@@ -258,7 +258,7 @@
         $jk_anak        = $this->input->post('jk_anak');
         $alamat	        = strtolower($this->input->post('alamat_anak'));
         $status_ortu    = $this->input->post('status_ortu');
-        $status_anak    = $this->input->post('status_anak');
+				$status_anak    = $this->input->post('status_anak');
 
         $anak_ke = null;
         if($this->input->post('anak_ke')){
@@ -743,18 +743,16 @@
 		public function TambahDataPengurus(){
 			$data['judul'] 			= 'Tambah Data Pengurus';
 
-			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required');
-			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required');
+			$this->form_validation->set_rules('nama_pengurus', 'Nama', 'required|trim');
+			$this->form_validation->set_rules('tmpt_lahir_pengurus', 'Tempat lahir', 'required|trim');
 			$this->form_validation->set_rules('tgl_lahir_pengurus', 'Tanggal lahir', 'required');
-			$this->form_validation->set_rules('jk_pengurus', 'Jenis kelamin', 'required');
-			$this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir', 'required');
-			$this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required');
-			$this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'required');
-			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required');
-			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required');
-			$this->form_validation->set_rules('status_pengurus', 'Status', 'required');
-
-			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+			$this->form_validation->set_rules('jk_pengurus', 'Jenis kelamin', 'required|trim');
+			$this->form_validation->set_rules('pendidikan_pengurus', 'Pendidikan terakhir', 'required|trim');
+			$this->form_validation->set_rules('alamat_pengurus', 'Alamat', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_pengurus', 'Nomor handphone', 'trim|numeric|greater_than[0]|required', ['numeric' => 'Gagal diperbarui! Nomor Handphone harus berupa angka.', 'greater_than' => 'Nomor handphone tidak valid']);
+			$this->form_validation->set_rules('jabatan_pengurus', 'Jabatan', 'required|trim');
+			$this->form_validation->set_rules('periode_kepengurusan', 'Periode kepengurusan', 'required|trim');
+			$this->form_validation->set_rules('status_pengurus', 'Status', 'required|trim');
 
 			if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -806,7 +804,7 @@
 				];
 				$this->db->insert('tabel_pengurus', $data);
 
-				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data pengurus berhasil ditambahkan</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data pengurus berhasil ditambahkan.</div>');
 				redirect('Admin/DaftarPengurus');
       }
 		}
@@ -833,9 +831,9 @@
       $recordPengurus = $this->db->get('tabel_pengurus')->row();
       $DATA       = array('tabel_pengurus' => $recordPengurus);
 
-      $this->form_validation->set_rules('nama_pengurus', 'Nama Lengkap', 'required|trim');
-      $this->form_validation->set_rules('nomorhp_pengurus', 'Tanggal Masuk', 'required|trim');
-      $this->form_validation->set_rules('alamat_pengurus', 'Alamat Pengurus', 'required|trim');
+      $this->form_validation->set_rules('nama_pengurus', 'Nama lengkap', 'required|trim');
+      $this->form_validation->set_rules('nomorhp_pengurus', 'Tanggal masuk', 'required|trim');
+      $this->form_validation->set_rules('alamat_pengurus', 'Alamat pengurus', 'required|trim');
       $this->form_validation->set_rules('status_pengurus', 'Status', 'required|trim');
 
       if($this->form_validation->run() == false){
@@ -960,8 +958,8 @@
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('bukti_tf')){
-          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Bukti transfer tidak valid.</div>');
-          redirect('Donasi/TambahDataDonasi');
+					$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Bukti transfer tidak valid.</div>');
+          redirect('Admin/TambahDataDonasi');
         }
         else{
           $bukti_tf     = $this->upload->data();
@@ -980,7 +978,7 @@
           ];
           $this->db->insert('tabel_donasi', $data);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data donasi berhasil ditambahkan</div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
           redirect('Admin/DaftarDonasi');
         }
       }
@@ -1084,9 +1082,8 @@
 		public function TambahBerita(){
 			$data['judul'] 			= 'Tambah Berita';
 
-			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required');
-			$this->form_validation->set_rules('isi_berita', 'Isi berita', 'required');
-			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required|trim');
+			$this->form_validation->set_rules('isi_berita', 'Isi berita', 'required|trim');
 
 			if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1143,6 +1140,73 @@
         }
       }
 		}
+
+		public function UbahBerita($id_berita){
+      $data['judul']      = 'Ubah Berita';
+      $data['berita'] = $this->db->get_where('tabel_berita', ['id_berita' => $id_berita])->row_array();
+
+      $this->form_validation->set_rules('judul_berita', 'Judul berita', 'required|trim');
+      $this->form_validation->set_rules('isi_berita', 'Berita', 'required|trim');
+      
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarBerita/UbahBerita', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $judul_berita   = $this->input->post('judul_berita');
+        $isi_berita   	= $this->input->post('isi_berita');
+
+        $upload_image   = $_FILES['cover_berita']['name'];
+
+				if($upload_image){
+					$config['upload_path']	 = './assets/img/foto_berita';
+					$config['allowed_types'] = 'gif|jpg|png|jpeg';
+					$config['max_size']      = '10000';
+
+					$this->load->library('upload', $config);
+
+					if($this->upload->do_upload('cover_berita')) {
+						$old_image = $data['tabel_berita']['cover_berita'];
+
+						if($old_image != 'default.jpg'){
+							unlink(FCPATH . 'assets/img/cover_berita/' . $old_image);
+						}
+
+						$new_image = $this->upload->data('file_name');
+
+						$data = [
+							'judul_berita'	=> $judul_berita,
+							'isi_berita'		=> $isi_berita,
+							'cover_berita'	=> $new_image
+						];
+
+						$this->db->where('id_berita', $id_berita);
+						$this->db->update('tabel_berita', $data);
+
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+						redirect('Admin/DaftarBerita');
+					}
+					else{
+						$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Sampul berita harus berupa gambar yang sesuai.</div>');
+						redirect('Admin/UbahBerita/'.$id_berita);
+					}
+				}
+				else{
+					$data = [
+						'judul_berita'	=> $judul_berita,
+						'isi_berita'		=> $isi_berita
+					];
+
+					$this->db->where('id_berita', $id_berita);
+					$this->db->update('tabel_berita', $data);
+
+					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+					redirect('Admin/DaftarBerita');
+				}
+      }
+    }
 
     public function DaftarInventaris(){
       $data['judul']      = 'Daftar Inventaris';
@@ -1204,13 +1268,12 @@
     public function TambahDataInventaris(){
       $data['judul']      = 'Tambah Data Inventaris';
 
-      $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
-      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required',
+			$this->form_validation->set_rules('nama_inventaris', 'Nama inventaris', 'required|trim');
+      $this->form_validation->set_rules('letak_inventaris', 'Letak inventaris', 'numeric|required|trim',
         ['numeric' => 'Letak inventaris harus berupa angka']);
-      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
+      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah inventaris', 'numeric|required|trim',
         ['numeric' => 'Jumlah inventaris harus berupa angka']);
-      $this->form_validation->set_message('required', '%s tidak boleh kosong');
-
+				
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbarAdmin');
@@ -1231,7 +1294,7 @@
 
         $this->db->insert('tabel_inventaris', $data);
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data inventaris berhasil ditambahkan</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil ditambahkan.</div>');
         redirect('Admin/DaftarInventaris');
       }
     }
@@ -1240,12 +1303,11 @@
       $data['judul']      = 'Ubah Data Inventaris';
       $data['inventaris'] = $this->db->get_where('tabel_inventaris', ['id_inventaris' => $id_inventaris])->row_array();
 
-      $this->form_validation->set_rules('nama_inventaris', 'Nama Inventaris', 'required');
-      $this->form_validation->set_rules('letak_inventaris', 'Letak Inventaris', 'numeric|required',
+			$this->form_validation->set_rules('nama_inventaris', 'Nama inventaris', 'required|trim');
+      $this->form_validation->set_rules('letak_inventaris', 'Letak inventaris', 'numeric|required|trim',
         ['numeric' => 'Letak inventaris harus berupa angka']);
-      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah Inventaris', 'numeric|required',
+      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah inventaris', 'numeric|required|trim',
         ['numeric' => 'Jumlah inventaris harus berupa angka']);
-      $this->form_validation->set_message('required', '%s tidak boleh kosong');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1267,7 +1329,7 @@
         $this->db->where('id_inventaris', $id_inventaris);
         $this->db->update('tabel_inventaris', $data);
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Data inventaris berhasil diubah</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil diubah.</div>');
         redirect('Admin/DaftarInventaris');
       }
     }
@@ -1473,9 +1535,7 @@
 		public function TambahAlbum(){
 			$data['judul'] 			= 'Tambah Album';
 
-			$this->form_validation->set_rules('nama_album', 'Nama album', 'required');
-
-			$this->form_validation->set_message('required', '%s tidak boleh kosong');
+			$this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
 
 			if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1528,6 +1588,33 @@
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarAlbum/DetailAlbum', $data);
       $this->load->view('Templates/foot');
+    }
+
+		public function UbahAlbum($id_album){
+      $data['judul']      = 'Ubah Data Inventaris';
+      $data['inventaris'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
+
+      $this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
+      
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAlbum/UbahAlbum', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        $nama_album    = $this->input->post('nama_album');
+
+        $data = [
+          'nama_album'     => $nama_album
+        ];
+
+        $this->db->where('id_album', $id_album);
+        $this->db->update('tabel_album', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diubah.</div>');
+        redirect('Admin/DaftarAlbum');
+      }
     }
 
 		public function HapusFoto($id_foto){
