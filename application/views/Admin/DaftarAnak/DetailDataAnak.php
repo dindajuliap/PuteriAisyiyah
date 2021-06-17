@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card" style="padding: 2%">
-					<h1 class="mt-1" style="text-align: center"><b>DETAIL DATA ANAK</b></h1>
+					<h1 class="mt-1 mb-3" style="text-align: center"><b>DETAIL DATA ANAK</b></h1>
 
 					<?= $this->session->flashdata('message') ?>
 

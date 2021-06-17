@@ -611,19 +611,59 @@
       $this->load->view('Templates/foot');
 
       if($this->input->post('simpan')){
-  			$nama_ayah       = strtolower($this->input->post('nama_ayah'));
-        $umur_ayah       = $this->input->post('umur_ayah');
-        $nama_ibu        = strtolower($this->input->post('nama_ibu'));
-        $umur_ibu        = $this->input->post('umur_ibu');
-        $pekerjaan_ayah  = strtolower($this->input->post('pekerjaan_ayah'));
-        $pendidikan_ayah = $this->input->post('pendidikan_ayah');
-        $pekerjaan_ibu   = strtolower($this->input->post('pekerjaan_ibu'));
-        $pendidikan_ibu  = $this->input->post('pendidikan_ibu');
-        $alamat_ortu     = strtolower($this->input->post('alamat_ortu'));
+        $nama_ayah = null;
+        if($this->input->post('nama_ayah')){
+          $nama_ayah = strtolower($this->input->post('nama_ayah'));
+          $nama_ayah = ucwords($nama_ayah);
+        }
 
-        if(ucwords($nama_ayah) == $data['ortu']['nama_ayah'] && ucwords($nama_ibu) == $data['ortu']['nama_ibu'] && ucwords($pekerjaan_ayah) == $data['ortu']['pekerjaan_ayah'] && ucwords($pekerjaan_ibu) == $data['ortu']['pekerjaan_ibu'] && ucwords($alamat_ortu) == $data['ortu']['alamat_ortu'] && $umur_ayah == $data['ortu']['umur_ayah'] && $umur_ibu == $data['ortu']['umur_ibu'] && $pendidikan_ayah == $data['ortu']['pendidikan_ayah'] && $pendidikan_ibu == $data['ortu']['pendidikan_ibu']){
+        $umur_ayah = null;
+        if($this->input->post('umur_ayah')){
+          $umur_ayah = $this->input->post('umur_ayah');
+        }
+
+        $pekerjaan_ayah = null;
+        if($this->input->post('pekerjaan_ayah')){
+          $pekerjaan_ayah = strtolower($this->input->post('pekerjaan_ayah'));
+          $pekerjaan_ayah = ucwords($pekerjaan_ayah);
+        }
+
+        $pendidikan_ayah = null;
+        if($this->input->post('pendidikan_ayah')){
+          $pendidikan_ayah = $this->input->post('pendidikan_ayah');
+        }
+
+        $nama_ibu = null;
+        if($this->input->post('nama_ibu')){
+          $nama_ibu = strtolower($this->input->post('nama_ibu'));
+          $nama_ibu = ucwords($nama_ibu);
+        }
+
+        $umur_ibu = null;
+        if($this->input->post('umur_ibu')){
+          $umur_ibu = $this->input->post('umur_ibu');
+        }
+
+        $pekerjaan_ibu = null;
+        if($this->input->post('pekerjaan_ibu')){
+          $pekerjaan_ibu = strtolower($this->input->post('pekerjaan_ibu'));
+          $pekerjaan_ibu = ucwords($pekerjaan_ibu);
+        }
+
+        $pendidikan_ibu = null;
+        if($this->input->post('pendidikan_ibu')){
+          $pendidikan_ibu = $this->input->post('pendidikan_ibu');
+        }
+
+        $alamat_ortu = null;
+        if($this->input->post('alamat_ortu')){
+          $alamat_ortu = strtolower($this->input->post('alamat_ortu'));
+          $alamat_ortu = ucwords($alamat_ortu);
+        }
+
+        if($nama_ayah == $data['ortu']['nama_ayah'] && $nama_ibu == $data['ortu']['nama_ibu'] && $pekerjaan_ayah == $data['ortu']['pekerjaan_ayah'] && $pekerjaan_ibu == $data['ortu']['pekerjaan_ibu'] && $alamat_ortu == $data['ortu']['alamat_ortu'] && $umur_ayah == $data['ortu']['umur_ayah'] && $umur_ibu == $data['ortu']['umur_ibu'] && $pendidikan_ayah == $data['ortu']['pendidikan_ayah'] && $pendidikan_ibu == $data['ortu']['pendidikan_ibu']){
           $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
-          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+          redirect('Admin/DetailDataAnak/'.$id_anak);
         }
         else{
           $data = [
