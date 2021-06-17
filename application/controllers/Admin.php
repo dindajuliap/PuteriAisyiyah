@@ -218,10 +218,11 @@
     public function TambahDataAnak(){
 			$data['judul'] = 'Tambah Data Anak';
 
-			$this->form_validation->set_rules('nama_anak', 'Nama', 'required');
-			$this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal', 'required');
+			$this->form_validation->set_rules('nama_anak', 'Nama anak', 'required');
+			$this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal masuk anak', 'required');
 			$this->form_validation->set_rules('jk_anak', 'Jenis kelamin', 'required', ['required' => 'Jenis kelamin anak harus dipilih.']);
 			$this->form_validation->set_rules('pendidikan_anak', 'Pendidikan anak', 'required');
+      $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal lahir anak', 'required');
 
 			if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -247,19 +248,35 @@
           $id_anak = $anak_terakhir['id_anak'] + 1;
         }
 
-				$nama	            = strtolower($this->input->post('nama_anak'));
-        $asal	            = strtolower($this->input->post('asal_anak'));
-        $tgl_lahir_anak   = $this->input->post('tgl_lahir_anak');
-        $pendidikan	      = strtolower($this->input->post('pendidikan_anak'));
-        $tgl_masuk_anak   = $this->input->post('tgl_masuk_anak');
-        $agama	          = strtolower($this->input->post('agama_anak'));
-        $jk_anak          = $this->input->post('jk_anak');
-        $alamat	          = strtolower($this->input->post('alamat_anak'));
-        $anak_ke          = $this->input->post('anak_ke');
-        $jlh_saudara_lk   = $this->input->post('jlh_saudara_lk');
-        $jlh_saudara_pr   = $this->input->post('jlh_saudara_pr');
-        $jlh_saudara_tiri = $this->input->post('jlh_saudara_tiri');
-        $status_ortu      = $this->input->post('status_ortu');
+				$nama	          = strtolower($this->input->post('nama_anak'));
+        $asal	          = strtolower($this->input->post('asal_anak'));
+        $tgl_lahir_anak = $this->input->post('tgl_lahir_anak');
+        $pendidikan	    = strtolower($this->input->post('pendidikan_anak'));
+        $tgl_masuk_anak = $this->input->post('tgl_masuk_anak');
+        $agama	        = strtolower($this->input->post('agama_anak'));
+        $jk_anak        = $this->input->post('jk_anak');
+        $alamat	        = strtolower($this->input->post('alamat_anak'));
+        $status_ortu    = $this->input->post('status_ortu');
+
+        $anak_ke = null;
+        if($this->input->post('anak_ke')){
+          $anak_ke = $this->input->post('anak_ke');
+        }
+
+        $jlh_saudara_lk = null;
+        if($this->input->post('jlh_saudara_lk')){
+          $jlh_saudara_lk = $this->input->post('jlh_saudara_lk');
+        }
+
+        $jlh_saudara_pr = null;
+        if($this->input->post('jlh_saudara_pr')){
+          $jlh_saudara_pr = $this->input->post('jlh_saudara_pr');
+        }
+
+        $jlh_saudara_tiri = null;
+        if($this->input->post('jlh_saudara_tiri')){
+          $jlh_saudara_tiri = $this->input->post('jlh_saudara_tiri');
+        }
 
 				$data = [
 					'id_anak'     		 => $id_anak,
@@ -341,98 +358,59 @@
       $this->load->view('Admin/DaftarAnak/TambahDataOrangTua', $data);
       $this->load->view('Templates/foot');
 
-      $this->db->select('*');
-      $this->db->from('tabel_ortu');
-      $tabel_ortu = $this->db->get()->result();
-
-      if(!$tabel_ortu){
-        $id_ortu = 1;
-      }
-      else{
+      if($this->input->post('simpan')){
         $this->db->select('*');
         $this->db->from('tabel_ortu');
-        $this->db->order_by('id_ortu', 'DESC');
-        $this->db->limit(1);
-        $ortu_terakhir = $this->db->get()->row_array();
+        $tabel_ortu = $this->db->get()->result();
 
-        $id_ortu = $ortu_terakhir['id_ortu'] + 1;
-      }
+        if(!$tabel_ortu){
+          $id_ortu = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_ortu');
+          $this->db->order_by('id_ortu', 'DESC');
+          $this->db->limit(1);
+          $ortu_terakhir = $this->db->get()->row_array();
 
-			$nama_ayah       = strtolower($this->input->post('nama_ayah'));
-      $umur_ayah       = $this->input->post('umur_ayah');
-      $nama_ibu        = strtolower($this->input->post('nama_ibu'));
-      $umur_ibu        = $this->input->post('umur_ibu');
-      $pekerjaan_ayah  = strtolower($this->input->post('pekerjaan_ayah'));
-      $pendidikan_ayah = $this->input->post('pendidikan_ayah');
-      $pekerjaan_ibu   = strtolower($this->input->post('pekerjaan_ibu'));
-      $pendidikan_ibu  = $this->input->post('pendidikan_ibu');
-      $alamat_ortu     = strtolower($this->input->post('alamat_ortu'));
+          $id_ortu = $ortu_terakhir['id_ortu'] + 1;
+        }
 
-			$data = [
-				'id_ortu'         => $id_ortu,
-        'id_anak'     		=> $id_anak,
-        'nama_ayah'       => ucwords($nama_ayah),
-        'umur_ayah'       => $umur_ayah,
-        'pekerjaan_ayah'  => ucwords($pekerjaan_ayah),
-        'pendidikan_ayah' => $pendidikan_ayah,
-        'nama_ibu'        => ucwords($nama_ibu),
-        'umur_ibu'        => $umur_ibu,
-        'pekerjaan_ibu'   => ucwords($pekerjaan_ibu),
-        'pendidikan_ibu'  => $pendidikan_ibu
-			];
-			$this->db->insert('tabel_ortu', $data);
+  			$nama_ayah       = strtolower($this->input->post('nama_ayah'));
+        $umur_ayah       = $this->input->post('umur_ayah');
+        $nama_ibu        = strtolower($this->input->post('nama_ibu'));
+        $umur_ibu        = $this->input->post('umur_ibu');
+        $pekerjaan_ayah  = strtolower($this->input->post('pekerjaan_ayah'));
+        $pendidikan_ayah = $this->input->post('pendidikan_ayah');
+        $pekerjaan_ibu   = strtolower($this->input->post('pekerjaan_ibu'));
+        $pendidikan_ibu  = $this->input->post('pendidikan_ibu');
+        $alamat_ortu     = strtolower($this->input->post('alamat_ortu'));
 
-      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil ditambahkan.</div>');
-      redirect('Admin/DaftarAnak');
-		}
+  			$data = [
+  				'id_ortu'         => $id_ortu,
+          'id_anak'     		=> $id_anak,
+          'nama_ayah'       => ucwords($nama_ayah),
+          'umur_ayah'       => $umur_ayah,
+          'pekerjaan_ayah'  => ucwords($pekerjaan_ayah),
+          'pendidikan_ayah' => $pendidikan_ayah,
+          'nama_ibu'        => ucwords($nama_ibu),
+          'umur_ibu'        => $umur_ibu,
+          'pekerjaan_ibu'   => ucwords($pekerjaan_ibu),
+          'pendidikan_ibu'  => $pendidikan_ibu,
+          'alamat_ortu'     => ucwords($alamat_ortu)
+  			];
+  			$this->db->insert('tabel_ortu', $data);
 
-    public function UbahDataAnak($id_anak){
-      $data['judul'] = 'Ubah Data Anak';
-
-      $this->db->where('id_anak', $id_anak);
-      $recordAnak = $this->db->get('tabel_anak')->row();
-      $DATA       = array('tabel_anak' => $recordAnak);
-
-      $this->form_validation->set_rules('nama_anak', 'Nama Lengkap', 'required|trim');
-      $this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal Masuk', 'required|trim');
-      $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal Lahir', 'required|trim');
-      $this->form_validation->set_rules('status_anak', 'Status', 'required|trim');
-      $this->form_validation->set_rules('agama_anak', 'Agama', 'required|trim');
-
-      if($this->form_validation->run() == false){
-        $this->load->view('Templates/head', $data);
-        $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarAnak/UbahDataAnak', $DATA);
-        $this->load->view('Templates/foot');
-      }
-      else {
-        $nama_anak       = $this->input->post('nama_anak');
-        $tgl_masuk_anak  = $this->input->post('tgl_masuk_anak');
-        $tgl_lahir_anak  = $this->input->post('tgl_lahir_anak');
-        $status_anak     = $this->input->post('status_anak');
-        $agama_anak      = $this->input->post('agama_anak');
-
-        $data = [
-          'nama_anak'      => $nama_anak,
-          'tgl_masuk_anak' => $tgl_masuk_anak,
-          'tgl_lahir_anak' => $tgl_lahir_anak,
-          'status_anak'    => $status_anak,
-          'agama_anak'     => $agama_anak
-        ];
-        $this->db->where('id_anak', $id_anak);
-        $this->db->update('tabel_anak', $data);
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Data anak berhasil diperbarui.</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil ditambahkan.</div>');
         redirect('Admin/DaftarAnak');
       }
-    }
-
+		}
 
 		public function DetailDataAnak($id_anak){
       $data['judul'] = 'Detail Data Anak';
 
       $this->db->select('*');
-      $this->db->from('tabel_anak');
+      $this->db->from('view_anak');
       $this->db->where('id_anak', $id_anak);
       $data['detail_anak'] = $this->db->get()->result();
 
@@ -443,14 +421,236 @@
       $this->load->view('Templates/foot');
     }
 
-    public function HapusDataAnak($id_anak){
-      $this->db->where('id_anak', $id_anak);
-      $this->db->delete('tabel_anak');
+    public function UbahDataAnak($id_anak){
+			$data['judul'] = 'Ubah Data Anak';
+      $data['anak']  = $this->db->get_where('tabel_anak', ['id_anak' => $id_anak])->row_array();
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil dihapus.</div>');
-        redirect('Admin/DaftarAnak');
+			$this->form_validation->set_rules('nama_anak', 'Nama anak', 'required');
+			$this->form_validation->set_rules('pendidikan_anak', 'Pendidikan anak', 'required');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/UbahDataAnak', $data);
+        $this->load->view('Templates/foot');
       }
+      else{
+				$nama	          = strtolower($this->input->post('nama_anak'));
+        $asal	          = strtolower($this->input->post('asal_anak'));
+        $pendidikan	    = strtolower($this->input->post('pendidikan_anak'));
+        $agama	        = strtolower($this->input->post('agama_anak'));
+        $alamat	        = strtolower($this->input->post('alamat_anak'));
+        $status_ortu    = $this->input->post('status_ortu');
+        $status_anak    = $this->input->post('status_anak');
+
+        $anak_ke = null;
+        if($this->input->post('anak_ke')){
+          $anak_ke = $this->input->post('anak_ke');
+        }
+
+        $jlh_saudara_lk = null;
+        if($this->input->post('jlh_saudara_lk')){
+          $jlh_saudara_lk = $this->input->post('jlh_saudara_lk');
+        }
+
+        $jlh_saudara_pr = null;
+        if($this->input->post('jlh_saudara_pr')){
+          $jlh_saudara_pr = $this->input->post('jlh_saudara_pr');
+        }
+
+        $jlh_saudara_tiri = null;
+        if($this->input->post('jlh_saudara_tiri')){
+          $jlh_saudara_tiri = $this->input->post('jlh_saudara_tiri');
+        }
+
+        if($status_ortu == null && $status_anak == null){
+          if(ucwords($nama) == $data['anak']['nama_anak'] && ucwords($asal) == $data['anak']['asal_anak'] && ucwords($pendidikan) == $data['anak']['pendidikan_anak'] && ucwords($agama) == $data['anak']['agama_anak'] && ucwords($alamat) == $data['anak']['alamat_anak'] && $anak_ke == $data['anak']['anak_ke'] && $jlh_saudara_lk == $data['anak']['jlh_saudara_lk'] && $jlh_saudara_pr == $data['anak']['jlh_saudara_pr'] && $jlh_saudara_tiri == $data['anak']['jlh_saudara_tiri']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+          }
+          else{
+            $data = [
+              'nama_anak'        => ucwords($nama),
+              'asal_anak'	       => ucwords($asal),
+              'pendidikan_anak'  => ucwords($pendidikan),
+              'agama_anak'       => ucwords($agama),
+              'alamat_anak'      => ucwords($alamat),
+              'anak_ke'          => $anak_ke,
+              'jlh_saudara_lk'   => $jlh_saudara_lk,
+              'jlh_saudara_pr'   => $jlh_saudara_pr,
+              'jlh_saudara_tiri' => $jlh_saudara_tiri
+            ];
+            $this->db->where('id_anak', $id_anak);
+            $this->db->update('tabel_anak', $data);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+          }
+        }
+        elseif($status_ortu == null){
+          $data = [
+            'nama_anak'        => ucwords($nama),
+            'asal_anak'	       => ucwords($asal),
+            'pendidikan_anak'  => ucwords($pendidikan),
+            'agama_anak'       => ucwords($agama),
+            'alamat_anak'      => ucwords($alamat),
+            'anak_ke'          => $anak_ke,
+            'jlh_saudara_lk'   => $jlh_saudara_lk,
+            'jlh_saudara_pr'   => $jlh_saudara_pr,
+            'jlh_saudara_tiri' => $jlh_saudara_tiri,
+            'status_anak'      => $status_anak
+          ];
+          $this->db->where('id_anak', $id_anak);
+          $this->db->update('tabel_anak', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+        }
+        elseif($status_anak == null){
+          $data = [
+            'nama_anak'        => ucwords($nama),
+            'asal_anak'	       => ucwords($asal),
+            'pendidikan_anak'  => ucwords($pendidikan),
+            'agama_anak'       => ucwords($agama),
+            'alamat_anak'      => ucwords($alamat),
+            'anak_ke'          => $anak_ke,
+            'jlh_saudara_lk'   => $jlh_saudara_lk,
+            'jlh_saudara_pr'   => $jlh_saudara_pr,
+            'jlh_saudara_tiri' => $jlh_saudara_tiri,
+            'status_ortu'      => $status_ortu
+          ];
+          $this->db->where('id_anak', $id_anak);
+          $this->db->update('tabel_anak', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+        }
+        else{
+          $data = [
+            'nama_anak'        => ucwords($nama),
+            'asal_anak'	       => ucwords($asal),
+            'pendidikan_anak'  => ucwords($pendidikan),
+            'agama_anak'       => ucwords($agama),
+            'alamat_anak'      => ucwords($alamat),
+            'anak_ke'          => $anak_ke,
+            'jlh_saudara_lk'   => $jlh_saudara_lk,
+            'jlh_saudara_pr'   => $jlh_saudara_pr,
+            'jlh_saudara_tiri' => $jlh_saudara_tiri,
+            'status_ortu'      => $status_ortu,
+            'status_anak'      => $status_anak
+          ];
+          $this->db->where('id_anak', $id_anak);
+          $this->db->update('tabel_anak', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
+          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+        }
+      }
+		}
+
+    public function UbahDataKesehatanAnak($id_anak){
+			$data['judul'] = 'Ubah Data Kesehatan Anak';
+      $data['anak']  = $this->db->get_where('tabel_kesehatan', ['id_anak' => $id_anak])->row_array();
+
+			$this->form_validation->set_rules('bb_anak', 'Berat badan', 'required');
+			$this->form_validation->set_rules('tb_anak', 'Tinggi badan', 'required');
+
+			if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/DaftarAnak/UbahDataKesehatanAnak', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+				$bb_anak         = $this->input->post('bb_anak');
+        $tb_anak         = $this->input->post('tb_anak');
+        $penyakit_bawaan = $this->input->post('penyakit_bawaan');
+        $goldar_anak     = $this->input->post('goldar_anak');
+
+        if($goldar_anak == null){
+          if($bb_anak == $data['anak']['bb_anak'] && $tb_anak == $data['anak']['tb_anak'] && $penyakit_bawaan == $data['anak']['penyakit_bawaan']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+          }
+          else{
+            $data = [
+    					'bb_anak'         => $bb_anak,
+              'penyakit_bawaan' => $penyakit_bawaan,
+              'tb_anak'         => $tb_anak
+    				];
+            $this->db->where('id_anak', $id_anak);
+    				$this->db->update('tabel_kesehatan', $data);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data kesehatan anak berhasil diperbarui.</div>');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
+          }
+        }
+        else{
+          $data = [
+  					'bb_anak'         => $bb_anak,
+            'penyakit_bawaan' => $penyakit_bawaan,
+            'tb_anak'         => $tb_anak,
+            'goldar_anak'     => $goldar_anak
+  				];
+          $this->db->where('id_anak', $id_anak);
+          $this->db->update('tabel_kesehatan', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data kesehatan anak berhasil diperbarui.</div>');
+          redirect('Admin/DetailDataAnak/'.$id_anak);
+        }
+      }
+		}
+
+    public function UbahDataOrangTua($id_anak){
+			$data['judul'] = 'Ubah Data Orang Tua';
+      $data['ortu']  = $this->db->get_where('tabel_ortu', ['id_anak' => $id_anak])->row_array();
+
+			$this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/DaftarAnak/UbahDataOrangTua', $data);
+      $this->load->view('Templates/foot');
+
+      if($this->input->post('simpan')){
+  			$nama_ayah       = strtolower($this->input->post('nama_ayah'));
+        $umur_ayah       = $this->input->post('umur_ayah');
+        $nama_ibu        = strtolower($this->input->post('nama_ibu'));
+        $umur_ibu        = $this->input->post('umur_ibu');
+        $pekerjaan_ayah  = strtolower($this->input->post('pekerjaan_ayah'));
+        $pendidikan_ayah = $this->input->post('pendidikan_ayah');
+        $pekerjaan_ibu   = strtolower($this->input->post('pekerjaan_ibu'));
+        $pendidikan_ibu  = $this->input->post('pendidikan_ibu');
+        $alamat_ortu     = strtolower($this->input->post('alamat_ortu'));
+
+        if(ucwords($nama_ayah) == $data['ortu']['nama_ayah'] && ucwords($nama_ibu) == $data['ortu']['nama_ibu'] && ucwords($pekerjaan_ayah) == $data['ortu']['pekerjaan_ayah'] && ucwords($pekerjaan_ibu) == $data['ortu']['pekerjaan_ibu'] && ucwords($alamat_ortu) == $data['ortu']['alamat_ortu'] && $umur_ayah == $data['ortu']['umur_ayah'] && $umur_ibu == $data['ortu']['umur_ibu'] && $pendidikan_ayah == $data['ortu']['pendidikan_ayah'] && $pendidikan_ibu == $data['ortu']['pendidikan_ibu']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+        }
+        else{
+          $data = [
+    				'nama_ayah'       => ucwords($nama_ayah),
+            'umur_ayah'       => $umur_ayah,
+            'pekerjaan_ayah'  => ucwords($pekerjaan_ayah),
+            'pendidikan_ayah' => $pendidikan_ayah,
+            'nama_ibu'        => ucwords($nama_ibu),
+            'umur_ibu'        => $umur_ibu,
+            'pekerjaan_ibu'   => ucwords($pekerjaan_ibu),
+            'pendidikan_ibu'  => $pendidikan_ibu,
+            'alamat_ortu'     => ucwords($alamat_ortu)
+    			];
+          $this->db->where('id_anak', $id_anak);
+    			$this->db->update('tabel_ortu', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data orang tua berhasil diperbarui.</div>');
+          redirect('Admin/DetailDataAnak/'.$id_anak);
+        }
+      }
+		}
+
+    public function HapusDataAnak($id_anak){
+      $sql_query = $this->db->query("call procedure_hapus_anak(".$id_anak.")");
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data anak berhasil dihapus.</div>');
+      redirect('Admin/DaftarAnak');
     }
 
     public function DaftarPengurus(){

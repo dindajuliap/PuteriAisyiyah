@@ -5,28 +5,29 @@
 		<form action="" method="post">
 			<div class="row mt-3">
 				<div class="col-lg-6">
-					<label>Nama Anak</label>
+					<label>Nama Anak <b style="color: red">*</b></label>
 					<input type="text" autocomplete="off" name="nama_anak" id="nama_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
 					<small class="form-text text-danger"><?= form_error('nama_anak') ?></small>
 
-          <label class="mt-2">Asal Anak</label>
+          <label class="mt-1">Asal Anak</label>
 					<input type="text" autocomplete="off" name="asal_anak" id="asal_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
 
-          <label class="mt-2">Tanggal Lahir Anak</label>
+          <label class="mt-2">Tanggal Lahir Anak <b style="color: red">*</b></label>
 					<input type="date" name="tgl_lahir_anak" id="tgl_lahir_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
+					<small class="form-text text-danger"><?= form_error('tgl_lahir_anak') ?></small>
 
-          <label class="mt-2">Pendidikan Anak</label>
+          <label class="mt-1">Pendidikan Anak <b style="color: red">*</b></label>
 					<input type="text" autocomplete="off" name="pendidikan_anak" id="pendidikan_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
 					<small class="form-text text-danger"><?= form_error('pendidikan_anak') ?></small>
 
-          <label class="mt-2">Tanggal Masuk Anak</label>
+          <label class="mt-1">Tanggal Masuk Anak <b style="color: red">*</b></label>
 					<input type="date" name="tgl_masuk_anak" id="tgl_masuk_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
 					<small class="form-text text-danger"><?= form_error('tgl_masuk_anak') ?></small>
 
-          <label class="mt-2">Agama Anak</label>
+          <label class="mt-1">Agama Anak</label>
 					<input type="text" autocomplete="off" name="agama_anak" id="agama_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
 
-          <label class="mt-2">Jenis Kelamin Anak</label>
+          <label class="mt-3">Jenis Kelamin Anak <b style="color: red">*</b></label>
           <div class="form-inline " style="text-align: center; color: #7E7E7E">
             <div class="form-group" style="margin-right: 5%">
               <input type="radio" value="L" class="mr-2" name="jk_anak" id="jk_anak"> Laki-laki
@@ -41,7 +42,7 @@
 
 				<div class="col-lg-6">
           <label style="margin-left: 3%">Alamat Anak</label>
-					<textarea name="alamat_anak" id="alamat_anak"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 97%; height: 127px; resize: none; margin-left: 3%"></textarea>
+					<textarea name="alamat_anak" id="alamat_anak"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 97%; height: 100px; resize: none; margin-left: 3%"></textarea>
 
           <label class="mt-2" style="margin-left: 3%">Anak Ke</label>
 					<input type="number" max="30" min="1" maxlength="2" name="anak_ke" id="anak_ke" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%">
@@ -55,7 +56,7 @@
           <label class="mt-2" style="margin-left: 3%">Jumlah Saudara Tiri</label>
 					<input type="number" max="30" min="1" maxlength="2" name="jlh_saudara_tiri" id="jlh_saudara_tiri" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%">
 
-          <label class="mt-2" style="margin-left: 3%">Status Orang Tua</label>
+          <label class="mt-3" style="margin-left: 3%">Status Orang Tua</label>
           <div class="form-inline " style="text-align: center; color: #7E7E7E; margin-left: 3%">
             <div class="form-group" style="margin-right: 5%">
               <input type="radio" value="Yatim" class="mr-2" name="status_ortu" id="status_ortu"> Yatim
