@@ -466,7 +466,7 @@
         if($status_ortu == null && $status_anak == null){
           if(ucwords($nama) == $data['anak']['nama_anak'] && ucwords($asal) == $data['anak']['asal_anak'] && ucwords($pendidikan) == $data['anak']['pendidikan_anak'] && ucwords($agama) == $data['anak']['agama_anak'] && ucwords($alamat) == $data['anak']['alamat_anak'] && $anak_ke == $data['anak']['anak_ke'] && $jlh_saudara_lk == $data['anak']['jlh_saudara_lk'] && $jlh_saudara_pr == $data['anak']['jlh_saudara_pr'] && $jlh_saudara_tiri == $data['anak']['jlh_saudara_tiri']){
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
-            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
           }
           else{
             $data = [
@@ -484,7 +484,7 @@
             $this->db->update('tabel_anak', $data);
 
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+            redirect('Admin/DetailDataAnak/'.$id_anak);
           }
         }
         elseif($status_ortu == null){
@@ -504,7 +504,7 @@
           $this->db->update('tabel_anak', $data);
 
           $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+          redirect('Admin/DetailDataAnak/'.$id_anak);
         }
         elseif($status_anak == null){
           $data = [
@@ -523,7 +523,7 @@
           $this->db->update('tabel_anak', $data);
 
           $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+          redirect('Admin/DetailDataAnak/'.$id_anak);
         }
         else{
           $data = [
@@ -543,7 +543,7 @@
           $this->db->update('tabel_anak', $data);
 
           $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data diri anak berhasil diperbarui.</div>');
-          redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak']);
+          redirect('Admin/DetailDataAnak/'.$id_anak);
         }
       }
 		}
@@ -570,7 +570,7 @@
         if($goldar_anak == null){
           if($bb_anak == $data['anak']['bb_anak'] && $tb_anak == $data['anak']['tb_anak'] && $penyakit_bawaan == $data['anak']['penyakit_bawaan']){
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1.5%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
-            redirect('Admin/DetailDataAnak/'.$data['anak']['id_anak'].'');
+            redirect('Admin/DetailDataAnak/'.$id_anak);
           }
           else{
             $data = [
