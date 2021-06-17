@@ -221,6 +221,7 @@
 			$this->form_validation->set_rules('nama_anak', 'Nama anak', 'required');
 			$this->form_validation->set_rules('tgl_masuk_anak', 'Tanggal masuk anak', 'required');
 			$this->form_validation->set_rules('jk_anak', 'Jenis kelamin', 'required', ['required' => 'Jenis kelamin anak harus dipilih.']);
+      $this->form_validation->set_rules('status_anak', 'Status anak', 'required', ['required' => 'Status anak harus dipilih.']);
 			$this->form_validation->set_rules('pendidikan_anak', 'Pendidikan anak', 'required');
       $this->form_validation->set_rules('tgl_lahir_anak', 'Tanggal lahir anak', 'required');
 
@@ -257,6 +258,7 @@
         $jk_anak        = $this->input->post('jk_anak');
         $alamat	        = strtolower($this->input->post('alamat_anak'));
         $status_ortu    = $this->input->post('status_ortu');
+        $status_anak    = $this->input->post('status_anak');
 
         $anak_ke = null;
         if($this->input->post('anak_ke')){
@@ -293,7 +295,7 @@
           'jlh_saudara_pr'   => $jlh_saudara_pr,
           'jlh_saudara_tiri' => $jlh_saudara_tiri,
           'status_ortu'      => $status_ortu,
-          'status_anak'      => 1
+          'status_anak'      => $status_anak
 				];
 				$this->db->insert('tabel_anak', $data);
 

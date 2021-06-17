@@ -38,11 +38,23 @@
             </div>
           </div>
 					<small class="form-text text-danger"><?= form_error('jk_anak') ?></small>
+
+					<label class="mt-3">Status Anak <b style="color: red">*</b></label>
+					<div class="form-inline " style="text-align: center; color: #7E7E7E">
+						<div class="form-group" style="margin-right: 5%">
+							<input type="radio" value="1" class="mr-2" name="status_anak" id="status_anak"> Belum diadopsi
+						</div>
+
+						<div class="form-group" style="margin-right: 5%">
+							<input type="radio" value="0" class="mr-2" name="status_anak" id="status_anak"> Telah diadopsi
+						</div>
+					</div>
+					<small class="form-text text-danger"><?= form_error('status_anak') ?></small>
 				</div>
 
 				<div class="col-lg-6">
           <label style="margin-left: 3%">Alamat Anak</label>
-					<textarea name="alamat_anak" id="alamat_anak"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 97%; height: 100px; resize: none; margin-left: 3%"></textarea>
+					<textarea name="alamat_anak" id="alamat_anak"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 97%; height: 127px; resize: none; margin-left: 3%"></textarea>
 
           <label class="mt-2" style="margin-left: 3%">Anak Ke</label>
 					<input type="number" max="30" min="1" maxlength="2" name="anak_ke" id="anak_ke" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%">
