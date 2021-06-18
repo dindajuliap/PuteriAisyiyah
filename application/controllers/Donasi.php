@@ -18,6 +18,7 @@
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbar');
       $this->load->view('Donasi/index');
+      $this->load->view('Templates/footer');
       $this->load->view('Templates/foot');
     }
 
@@ -36,6 +37,7 @@
 					$this->load->view('Templates/head', $data);
 					$this->load->view('Templates/navbar');
 					$this->load->view('Donasi/FormDonasi');
+      				$this->load->view('Templates/footer');
 					$this->load->view('Templates/foot');
 				}
 				else{

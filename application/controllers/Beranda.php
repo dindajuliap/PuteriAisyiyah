@@ -49,6 +49,7 @@
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbar');
       $this->load->view('Beranda/index', $data);
+      $this->load->view('Templates/footer');
       $this->load->view('Templates/foot');
     }
 
@@ -66,6 +67,7 @@
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbar');
       $this->load->view('Beranda/Berita');
+      $this->load->view('Templates/footer');
       $this->load->view('Templates/foot');
     }
   }

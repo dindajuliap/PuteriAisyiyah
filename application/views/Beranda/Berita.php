@@ -10,7 +10,7 @@
 		<p style="color: #5E5E5E"><i>Diposting tanggal : <?= date("d F Y", strtotime($berita['tanggal_berita'])) ?></i></p>
 	</div>
 
-	<div style="margin: 10px 100px 10px 100px; float: left">
+	<div style="margin: 10px 100px 10px 100px; width: 100vh;">
 		<h5><b>Berita Lainnya</b></h5>
 		<hr style="border: 1px solid #CAA615">
 
@@ -30,4 +30,3 @@
 			<?php endforeach ?>
 		</div>
 	</div>
-</body>

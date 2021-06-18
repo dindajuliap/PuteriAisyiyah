@@ -25,6 +25,7 @@
       $this->load->view('Templates/head', $data);
       $this->load->view('Templates/navbar');
       $this->load->view('ProfilSaya/index', $data);
+      $this->load->view('Templates/footer');
       $this->load->view('Templates/foot');
     }
 
@@ -39,6 +40,7 @@
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbar');
         $this->load->view('ProfilSaya/UbahDataDiri', $data);
+        $this->load->view('Templates/footer');
         $this->load->view('Templates/foot');
       }
       else {
@@ -90,6 +92,7 @@
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbar');
         $this->load->view('ProfilSaya/UbahKataSandi', $data);
+        $this->load->view('Templates/footer');
         $this->load->view('Templates/foot');
       }
       else {
@@ -132,6 +135,7 @@
         $this->load->view('Templates/head', $data);
         $this->load->view('Templates/navbar');
         $this->load->view('ProfilSaya/UbahEmail', $data);
+        $this->load->view('Templates/footer');
         $this->load->view('Templates/foot');
       }
       else {

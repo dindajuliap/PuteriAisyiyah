@@ -1,4 +1,5 @@
-<footer class="sticky-footer" style="width: 100%; color: #CAA615; background: #030153; margin-top: 200px; opacity: 0.9;">
+<div class="row" style="margin-right: 0px;">  
+<footer class="sticky-footer" style="width: 100%; color: #CAA615; background: #030153; margin-top: 100px; opacity: 0.9;">
   <?php  
       $alamat_panti  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Alamat'])->row_array();
       $telepon_panti = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Telepon'])->row_array();
@@ -44,3 +45,6 @@
   </style>
 
 </footer>
+</div>
+
+</body>
