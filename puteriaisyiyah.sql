@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2021 at 09:41 PM
+-- Generation Time: Jun 18, 2021 at 02:37 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -41,7 +41,7 @@ CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_donasi` (
 delete from tabel_donasi where id_donasi = id;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_foto` (IN `id` INT(11))  delete from tabel_donasi where id_foto = id$$
+CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_foto` (IN `id` INT(11))  delete from tabel_foto where id_foto = id$$
 
 CREATE DEFINER=`puteriaisyiyah`@`localhost` PROCEDURE `procedure_hapus_inventaris` (IN `id` INT(11))  begin
 delete from tabel_inventaris where id_inventaris = id;
@@ -54,15 +54,15 @@ end$$
 --
 -- Functions
 --
-CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_anak` (`status_anak` INT(1)) RETURNS INT(11) begin
+CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_anak` (`par_status_anak` INT(1)) RETURNS INT(11) begin
 declare jumlah_anak int;
-select count(*) into jumlah_anak from tabel_anak where status_anak = status_anak;
+select count(*) into jumlah_anak from tabel_anak where status_anak = par_status_anak;
 return jumlah_anak;
 end$$
 
-CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_pengurus` (`status_pengurus` INT(1)) RETURNS INT(11) begin
+CREATE DEFINER=`puteriaisyiyah`@`localhost` FUNCTION `function_jumlah_pengurus` (`par_status_pengurus` INT(1)) RETURNS INT(11) begin
 declare jumlah_pengurus int;
-select count(*) into jumlah_pengurus from tabel_pengurus where status_pengurus = status_pengurus;
+select count(*) into jumlah_pengurus from tabel_pengurus where status_pengurus = par_status_pengurus;
 return jumlah_pengurus;
 END$$
 
@@ -84,29 +84,6 @@ CREATE TABLE `log_akun` (
   `jk_user` enum('L','P') DEFAULT NULL,
   `status_user` varchar(20) NOT NULL,
   `waktu_log_akun` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `log_akun`
---
-
-INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, 'Terdaftar', '0000-00-00 00:00:00'),
-(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'a3f184733ccecf3b36fdeb97588778f0ee2a6a49', 'Jl. Belibis 9 No. 127', 'P', 'Dihapus', '2021-06-17 15:00:13');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `log_inventaris`
---
-
-CREATE TABLE `log_inventaris` (
-  `id_log` int(11) NOT NULL,
-  `id_inventaris` int(11) NOT NULL,
-  `nama_inventaris` varchar(100) NOT NULL,
-  `inventaris_lantai` int(1) NOT NULL,
-  `jumlah_inventaris` int(3) NOT NULL,
-  `status_inventaris` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -134,8 +111,7 @@ CREATE TABLE `tabel_akun` (
 --
 
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1),
-(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', 'a3f184733ccecf3b36fdeb97588778f0ee2a6a49', 'Jl. Belibis 9 No. 127', 'Banda Aceh', '2001-07-30', 'P', 2, 0);
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -182,13 +158,6 @@ CREATE TABLE `tabel_anak` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tabel_anak`
---
-
-INSERT INTO `tabel_anak` (`id_anak`, `nama_anak`, `asal_anak`, `tgl_lahir_anak`, `jk_anak`, `pendidikan_anak`, `tgl_masuk_anak`, `agama_anak`, `kewarganegaraan_anak`, `alamat_anak`, `anak_ke`, `jlh_saudara_pr`, `jlh_saudara_lk`, `jlh_saudara_tiri`, `status_ortu`, `status_anak`) VALUES
-(2, 'Oiuyghfc', '', '0000-00-00', 'P', 'Nvadsads', '5443-02-23', '', NULL, '', NULL, NULL, NULL, NULL, NULL, 1);
-
---
 -- Triggers `tabel_anak`
 --
 DELIMITER $$
@@ -225,7 +194,7 @@ CREATE TABLE `tabel_donasi` (
   `nama_donatur` varchar(100) NOT NULL,
   `jumlah_donasi` varchar(50) NOT NULL,
   `jenis_donasi` varchar(50) NOT NULL,
-  `ket_donasi` text NOT NULL,
+  `ket_donasi` text DEFAULT NULL,
   `bukti_tf` varchar(100) DEFAULT NULL,
   `tgl_donasi` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -255,25 +224,6 @@ CREATE TABLE `tabel_inventaris` (
   `jumlah_inventaris` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Triggers `tabel_inventaris`
---
-DELIMITER $$
-CREATE TRIGGER `trigger_hapus_inventaris` BEFORE DELETE ON `tabel_inventaris` FOR EACH ROW UPDATE log_inventaris SET
-status_inventaris = "Tidak Tersedia Lagi" WHERE id_inventaris = old.id_inventaris
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `trigger_tambah_inventaris` AFTER INSERT ON `tabel_inventaris` FOR EACH ROW INSERT INTO log_inventaris SET
-id_inventaris = new.id_inventaris, nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris, status_inventaris = "Tersedia"
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `trigger_ubah_inventaris` AFTER UPDATE ON `tabel_inventaris` FOR EACH ROW UPDATE log_inventaris SET
-nama_inventaris = new.nama_inventaris, inventaris_lantai = new.inventaris_lantai, jumlah_inventaris = new.jumlah_inventaris WHERE id_inventaris = old.id_inventaris
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -288,13 +238,6 @@ CREATE TABLE `tabel_kesehatan` (
   `goldar_anak` enum('O','A','B','AB') DEFAULT NULL,
   `penyakit_bawaan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tabel_kesehatan`
---
-
-INSERT INTO `tabel_kesehatan` (`id_kesehatan`, `id_anak`, `bb_anak`, `tb_anak`, `goldar_anak`, `penyakit_bawaan`) VALUES
-(2, 2, 443, 23, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -316,13 +259,6 @@ CREATE TABLE `tabel_ortu` (
   `alamat_ortu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tabel_ortu`
---
-
-INSERT INTO `tabel_ortu` (`id_ortu`, `id_anak`, `nama_ayah`, `umur_ayah`, `nama_ibu`, `umur_ibu`, `pekerjaan_ayah`, `pendidikan_ayah`, `pekerjaan_ibu`, `pendidikan_ibu`, `alamat_ortu`) VALUES
-(2, 2, '', 0, '', 0, '', '', '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -343,8 +279,9 @@ INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (1, 'Alamat', 'Jl. Santun No. 17, Sudirejo I, Kec. Medan Kota, Kota Medan, Sumatera Utara 20218'),
 (2, 'Email', 'puteriaisyiyah@gmail.com'),
 (3, 'Telepon ', '(061) 7863466'),
-(4, 'Ketua ', 'Zulbaidah, BA.'),
-(5, 'Foto Panti', 'profil.jpeg');
+(4, 'Ketua ', 'Zulbaidah, BA'),
+(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
+(7, 'Foto Panti', 'profil.jpeg');
 
 -- --------------------------------------------------------
 
@@ -467,12 +404,6 @@ ALTER TABLE `log_akun`
   ADD UNIQUE KEY `email_user` (`email_user`,`nomorhp_user`);
 
 --
--- Indexes for table `log_inventaris`
---
-ALTER TABLE `log_inventaris`
-  ADD PRIMARY KEY (`id_log`);
-
---
 -- Indexes for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
@@ -556,19 +487,13 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `log_inventaris`
---
-ALTER TABLE `log_inventaris`
   MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabel_album`
@@ -580,7 +505,7 @@ ALTER TABLE `tabel_album`
 -- AUTO_INCREMENT for table `tabel_anak`
 --
 ALTER TABLE `tabel_anak`
-  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_berita`
@@ -598,25 +523,25 @@ ALTER TABLE `tabel_donasi`
 -- AUTO_INCREMENT for table `tabel_foto`
 --
 ALTER TABLE `tabel_foto`
-  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tabel_inventaris`
 --
 ALTER TABLE `tabel_inventaris`
-  MODIFY `id_inventaris` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_inventaris` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_kesehatan`
 --
 ALTER TABLE `tabel_kesehatan`
-  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kesehatan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_ortu`
 --
 ALTER TABLE `tabel_ortu`
-  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tabel_panti`
@@ -628,13 +553,13 @@ ALTER TABLE `tabel_panti`
 -- AUTO_INCREMENT for table `tabel_pengurus`
 --
 ALTER TABLE `tabel_pengurus`
-  MODIFY `id_pengurus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengurus` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

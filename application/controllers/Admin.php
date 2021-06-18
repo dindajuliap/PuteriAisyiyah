@@ -1387,7 +1387,7 @@
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('cover_berita')){
-          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Cover berita tidak valid.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%; font-size: 15px" align="left">Cover berita tidak valid.</div>');
           redirect('Admin/TambahBerita');
         }
         else{
@@ -1681,6 +1681,7 @@
 
     public function DetailAlbum($id_album){
       $data['judul'] = 'Detail Album';
+      $data['album'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
 
 			$this->db->select('*');
       $this->db->from('tabel_album');
@@ -1694,7 +1695,47 @@
       $this->load->view('Templates/foot');
     }
 
-		public function TambahAlbum(){
+    public function upload($id_album){
+      if(!empty($_FILES)){
+        $this->db->select('*');
+        $this->db->from('tabel_foto');
+        $tabel_foto = $this->db->get()->result();
+
+        if(!$tabel_foto){
+          $id_foto = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_foto');
+          $this->db->order_by('id_foto', 'DESC');
+          $this->db->limit(1);
+          $foto_terakhir = $this->db->get()->row_array();
+
+          $id_foto = $foto_terakhir['id_foto'] + 1;
+        }
+
+        $config['upload_path']   = './assets/img/album_foto';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size']      = '5000';
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        if($this->upload->do_upload('file')){
+          $fileData = $this->upload->data();
+          $uploadData['file_name'] = $fileData['file_name'];
+
+          $data1 = [
+            'id_foto' => $id_foto,
+            'id_album' => $id_album,
+            'file_foto' => $uploadData['file_name'],
+          ];
+          $this->db->insert('tabel_foto', $data1);
+        }
+      }
+    }
+
+    public function TambahAlbum(){
 			$data['judul'] = 'Tambah Album';
 
 			$this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
@@ -1737,7 +1778,7 @@
 		}
 
 		public function UbahAlbum($id_album){
-      $data['judul'] = 'Ubah Data Inventaris';
+      $data['judul'] = 'Ubah Album';
       $data['album'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
 
       $this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
@@ -1749,27 +1790,37 @@
         $this->load->view('Templates/foot');
       }
       else{
-        $nama_album    = $this->input->post('nama_album');
+        $nama_album = strtolower($this->input->post('nama_album'));
+        $nama_album = ucwords($nama_album);
 
-        $data = [
-          'nama_album'     => $nama_album
-        ];
+        if($nama_album == $data['album']['nama_album']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama album sama seperti sebelumnya.</div>');
+          redirect('Admin/DaftarAlbum');
+        }
+        else{
+          $data = [
+            'nama_album' => $nama_album
+          ];
+          $this->db->where('id_album', $id_album);
+          $this->db->update('tabel_album', $data);
 
-        $this->db->where('id_album', $id_album);
-        $this->db->update('tabel_album', $data);
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diubah.</div>');
-        redirect('Admin/DaftarAlbum');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diubah.</div>');
+          redirect('Admin/DaftarAlbum');
+        }
       }
     }
 
-		public function HapusFoto($id_foto){
-      $this->db->where('id_foto', $id_foto);
-      $this->db->delete('tabel_foto');
+		public function HapusFoto($id_foto, $id_album){
+      $this->db->query('call procedure_hapus_foto('.$id_foto.')');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Foto berhasil dihapus.</div>');
-        redirect('Admin/DaftarAlbum');
-      }
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Foto berhasil dihapus.</div>');
+      redirect('Admin/DetailAlbum/'.$id_album);
+    }
+
+    public function HapusAlbum($id_album){
+      $this->db->query('call procedure_hapus_album('.$id_album.')');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil dihapus.</div>');
+      redirect('Admin/DaftarAlbum');
     }
   }
