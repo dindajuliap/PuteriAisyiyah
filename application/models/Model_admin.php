@@ -22,10 +22,12 @@
       if($search){
         $this->db->like('nama_anak', $search);
       }
+      $this->db->order_by('status_anak', 'DESC');
       return $this->db->get('view_anak')->result();
     }
 
     public function getAnak2($limit, $start){
+      $this->db->order_by('status_anak', 'DESC');
       return $this->db->get('view_anak', $limit, $start)->result();
     }
 
@@ -37,10 +39,12 @@
       if($search){
         $this->db->like('nama_pengurus', $search);
       }
+      $this->db->order_by('status_pengurus', 'DESC');
       return $this->db->get('tabel_pengurus')->result();
     }
 
     public function getPengurus2($limit, $start){
+      $this->db->order_by('status_pengurus', 'DESC');
       return $this->db->get('tabel_pengurus', $limit, $start)->result();
     }
 

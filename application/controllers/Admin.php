@@ -234,6 +234,7 @@
 
           $this->db->like('nama_user', $data['search']);
           $this->db->or_like('email_user', $data['search']);
+          $this->db->order_by('status_user', 'DESC');
           $this->db->from('tabel_akun');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
@@ -388,6 +389,7 @@
           $data['search'] = $this->input->post('search');
 
           $this->db->like('nama_anak', $data['search']);
+          $this->db->order_by('status_anak', 'DESC');
           $this->db->from('tabel_anak');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
@@ -931,6 +933,7 @@
           $data['search'] = $this->input->post('search');
 
           $this->db->like('nama_pengurus', $data['search']);
+          $this->db->order_by('status_pengurus', 'DESC');
           $this->db->from('tabel_pengurus');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];
