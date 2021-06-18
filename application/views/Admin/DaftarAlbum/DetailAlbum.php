@@ -7,10 +7,10 @@
 
 					<div class="row">
             <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahAlbum') ?>" style="margin-left: -15%">
+              <a href="<?= base_url('Admin/TambahFoto/'.$album['id_album']) ?>" style="margin-left: -15%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
                   <i class="fas fa-plus-circle mr-2"></i>
-                  Upload Foto
+                  Tambah Foto
                 </button>
               </a>
             </div>
@@ -40,30 +40,30 @@
 	</div>
 </body>
 
-	<?php foreach($detail_album as $val) : ?>
-		<div class="modal fade" id="hapusModal<?= $val->id_foto ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content" style="border-radius: 5px">
-					<div class="modal-body">
-						<span>
-							<p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 30px"></p>
-							<p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 225px">!</p>
-						</span>
+<?php foreach($detail_album as $val) : ?>
+	<div class="modal fade" id="hapusModal<?= $val->id_foto ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content" style="border-radius: 5px">
+				<div class="modal-body">
+					<span>
+						<p style="border-radius: 50%; border: 4px solid #FACEA8; width: 85px; height: 85px; margin-left: auto; margin-right: auto; margin-top: 30px"></p>
+						<p style="color: #F8BB86; font-size: 60px; margin-top: -105px; margin-left: 225px">!</p>
+					</span>
 
-						<h3 class="modal-title" id="exampleModalLabel" align="center">
-							<b style="font-family: Arial; color: #595959">Hapus Foto</b>
-						</h3>
+					<h3 class="modal-title" id="exampleModalLabel" align="center">
+						<b style="font-family: Arial; color: #595959">Hapus Foto</b>
+					</h3>
 
-						<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus foto ini?</h5>
+					<h5 class="modal-title" id="exampleModalLabel" align="center" style="color: #545454">Anda yakin ingin menghapus foto ini?</h5>
 
-						<br>
+					<br>
 
-						<div class="row mb-2">
-							<a class="btn" href="<?= base_url('Admin/HapusFoto/') . $val->id_foto ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
-							<button class="btn" type="button" data-dismiss="modal" style="background: grey; color: white; margin-right: auto; margin-left: 10px; width: 105px; padding: 10px">Tidak</button>
-						</div>
+					<div class="row mb-2">
+						<a class="btn" href="<?= base_url('Admin/HapusFoto/') . $val->id_foto ?>" style="background: #30454A; color: white; margin-left: auto; margin-right: 10px; width: 105px; padding: 10px">Yakin</a>
+						<button class="btn" type="button" data-dismiss="modal" style="background: grey; color: white; margin-right: auto; margin-left: 10px; width: 105px; padding: 10px">Tidak</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	<?php endforeach ?>
+	</div>
+<?php endforeach ?>

@@ -1,6 +1,5 @@
 <body style="color: #030153; font-family: Arial">
 	<div class="container mt-4 mb-5">
-		<?= $this->session->flashdata('message'); ?>
 		<h3 style="text-align: center; font-weight: 700px"><b>TAMBAH ALBUM</b></h3>
 
 		<form action="" method="post" enctype="multipart/form-data">
@@ -16,6 +15,7 @@
 				<div class="col-lg-6">
 					<a href="<?= base_url('Admin/DaftarAlbum') ?>" class="btn" style="border-radius: 10px; width: 25%; float: right; background: grey; color: white">Batal</a>
 				</div>
+
 				<div class="col-lg-6">
 					<button type="submit" class="btn" style="border-radius: 10px; width: 25%; margin-left: 10px; float: left; background: #030153; color: white">Tambah</button>
 				</div>
