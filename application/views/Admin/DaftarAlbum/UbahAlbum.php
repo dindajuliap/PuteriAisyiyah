@@ -17,7 +17,7 @@
 				</div>
 
 				<div class="col-lg-6">
-					<button type="submit" class="btn" style="border-radius: 10px; width: 25%; margin-left: 10px; float: left; background: #030153; color: white">Tambah</button>
+					<button type="submit" class="btn" style="border-radius: 10px; width: 25%; margin-left: 10px; float: left; background: #030153; color: white">Simpan</button>
 				</div>
 			</div>
 		</form>
