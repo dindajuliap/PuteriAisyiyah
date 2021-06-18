@@ -1764,7 +1764,6 @@
 
         $config['upload_path']   = './assets/img/album_foto';
         $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size']      = '5000';
 
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
