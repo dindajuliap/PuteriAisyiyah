@@ -47,7 +47,7 @@
 		border-radius: 10px;
 		outline: none;
 		cursor: pointer;
-    margin-left: 5%
+    margin-left: 7%
 	}
 </style>
 

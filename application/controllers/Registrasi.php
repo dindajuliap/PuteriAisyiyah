@@ -10,7 +10,7 @@
     public function index(){
       $data['judul'] = 'Registrasi';
 
-      $this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email|is_unique[tabel_akun.email_user]', ['is_unique' => 'Email sudah terdaftar.']);
+      $this->form_validation->set_rules('email_user', 'Email', 'required|trim|valid_email');
       $this->form_validation->set_rules('password', 'Kata sandi', 'required|trim|min_length[6]|matches[konfirmasi_password]', ['matches' => 'Konfirmasi sandi tidak cocok.', 'min_length' => 'Kata sandi minimal 6 Karakter']);
       $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi sandi', 'required|trim|matches[password]');
 
@@ -23,82 +23,89 @@
         $email_user = strtolower($this->input->post('email_user'));
         $user       = $this->db->get_where('tabel_akun', ['email_user' => $email_user])->row_array();
         $user2      = $this->db->get_where('log_akun', ['email_user' => $email_user, 'status_user' => 'Dihapus'])->row_array();
+        $user3      = $this->db->get_where('tabel_akun', ['email_user' => $email_user, 'status_user' => 1])->row_array();
 
-        if($user2){
-          $this->db->where('email_user', $email_user);
-          $this->db->delete('log_akun');
-
-          $this->db->where('email_user', $email_user);
-          $this->db->delete('tabel_akun');
-        }
-
-        $this->db->select('*');
-        $this->db->from('tabel_akun');
-        $tabel_akun = $this->db->get()->result();
-
-        if(!$tabel_akun){
-          $id_akun = 1;
+        if($user3){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 70%" align="left">Email telah terdaftar.</div>');
+          redirect('Registrasi');
         }
         else{
+          if($user2){
+            $this->db->where('email_user', $email_user);
+            $this->db->delete('log_akun');
+
+            $this->db->where('email_user', $email_user);
+            $this->db->delete('tabel_akun');
+          }
+
           $this->db->select('*');
           $this->db->from('tabel_akun');
-          $this->db->order_by('id_user', 'DESC');
-          $this->db->limit(1);
-          $akun_terakhir = $this->db->get()->row_array();
+          $tabel_akun = $this->db->get()->result();
 
-          $id_akun = $akun_terakhir['id_user'] + 1;
-        }
-
-        $data = [
-          'id_user'      => $id_akun,
-          'email_user'   => strtolower($this->input->post('email_user')),
-          'password'     => sha1($this->input->post('password')),
-        ];
-        $this->db->insert('tabel_akun', $data);
-
-        function randomString($length = 20) {
-          $str = "";
-          $characters = array_merge(range('0','9'), range('A', 'Z'), range('a', 'z'));
-          $max = count($characters) - 1;
-
-          for ($i = 0; $i < $length; $i++) {
-              $rand = mt_rand(0, $max);
-              $str .= $characters[$rand];
+          if(!$tabel_akun){
+            $id_akun = 1;
           }
-          return $str;
-        }
+          else{
+            $this->db->select('*');
+            $this->db->from('tabel_akun');
+            $this->db->order_by('id_user', 'DESC');
+            $this->db->limit(1);
+            $akun_terakhir = $this->db->get()->row_array();
 
-        $token = randomString();
-        date_default_timezone_set('Asia/Jakarta');
+            $id_akun = $akun_terakhir['id_user'] + 1;
+          }
 
-        $this->db->select('*');
-        $this->db->from('user_token');
-        $tabel_token = $this->db->get()->result();
+          $data = [
+            'id_user'      => $id_akun,
+            'email_user'   => strtolower($this->input->post('email_user')),
+            'password'     => sha1($this->input->post('password')),
+          ];
+          $this->db->insert('tabel_akun', $data);
 
-        if(!$tabel_token){
-          $id_token = 1;
-        }
-        else{
+          function randomString($length = 20) {
+            $str = "";
+            $characters = array_merge(range('0','9'), range('A', 'Z'), range('a', 'z'));
+            $max = count($characters) - 1;
+
+            for ($i = 0; $i < $length; $i++) {
+                $rand = mt_rand(0, $max);
+                $str .= $characters[$rand];
+            }
+            return $str;
+          }
+
+          $token = randomString();
+          date_default_timezone_set('Asia/Jakarta');
+
           $this->db->select('*');
           $this->db->from('user_token');
-          $this->db->order_by('id_token', 'DESC');
-          $this->db->limit(1);
-          $token_terakhir = $this->db->get()->row_array();
+          $tabel_token = $this->db->get()->result();
 
-          $id_token = $token_terakhir['id_token'] + 1;
+          if(!$tabel_token){
+            $id_token = 1;
+          }
+          else{
+            $this->db->select('*');
+            $this->db->from('user_token');
+            $this->db->order_by('id_token', 'DESC');
+            $this->db->limit(1);
+            $token_terakhir = $this->db->get()->row_array();
+
+            $id_token = $token_terakhir['id_token'] + 1;
+          }
+
+          $user_token = [
+            'id_token'      => $id_token,
+            'email_user'    => $email_user,
+            'token'         => $token,
+            'tanggal_token' => date("Y-m-d")
+          ];
+          $this->db->insert('user_token', $user_token);
+
+          $this->_sendEmail($token);
+
+          redirect('Registrasi/VerifikasiEmail');
         }
-
-        $user_token = [
-          'id_token'      => $id_token,
-          'email_user'    => $email_user,
-          'token'         => $token,
-          'tanggal_token' => date("Y-m-d")
-        ];
-        $this->db->insert('user_token', $user_token);
-
-        $this->_sendEmail($token);
-
-        redirect('Registrasi/VerifikasiEmail');
       }
     }
 

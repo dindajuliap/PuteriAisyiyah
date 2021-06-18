@@ -108,7 +108,7 @@
       $this->form_validation->set_rules('nama_user', 'Nama Lengkap', 'required|trim');
       $this->form_validation->set_rules('tmpt_lahir_user', 'Tempat Lahir', 'required|trim');
       $this->form_validation->set_rules('tgl_lahir_user', 'Tanggal Lahir', 'required|trim');
-      $this->form_validation->set_rules('nomorhp_user', 'Nomor handphone', 'trim|numeric|greater_than[0]|required', ['numeric' => 'Gagal diperbarui! Nomor Handphone harus berupa angka.', 'greater_than' => 'Nomor handphone tidak valid']);
+      $this->form_validation->set_rules('nomorhp_user', 'Nomor handphone', 'trim|numeric|greater_than[0]|required|min_length[11]|max_length[13]', ['numeric' => 'Gagal diperbarui! Nomor Handphone harus berupa angka.', 'greater_than' => 'Nomor handphone tidak valid', 'min_length' => 'Nomor handphone tidak valid.', 'max_length' => 'Nomor handphone tidak valid.']);
       $this->form_validation->set_rules('alamat_user', 'Alamat', 'trim|required');
       $this->form_validation->set_rules('email_user', 'Email', 'required|trim');
 
@@ -139,6 +139,10 @@
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Nomor telah terdaftar.</div>');
             redirect('Admin/UbahDataAkun/'.$id_user);
           }
+          elseif($email_user == $nomor->email_user){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Email telah terdaftar.</div>');
+            redirect('Admin/UbahDataAkun/'.$id_user);
+          }
         }
 
         if($nama_user == $data['tabel_akun']['nama_user'] && $tmpt_lahir_user == $data['tabel_akun']['tmpt_lahir_user'] && $tgl_lahir_user == $data['tabel_akun']['tgl_lahir_user'] && $nomorhp_user == $data['tabel_akun']['nomorhp_user'] && $alamat_user == $data['tabel_akun']['alamat_user'] && $email_user == $data['tabel_akun']['email_user']){
@@ -146,16 +150,15 @@
           redirect('Admin/DaftarAkun');
         }
         else{
+          $tabel_akun = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
+
           $data = [
             'nama_user'       => $nama_user,
-            'tmpt_lahir_user' => $tmpt_lahir_user,
-            'tgl_lahir_user'  => $tgl_lahir_user,
             'nomorhp_user'    => $nomorhp_user,
-            'jk_user'         => $jk_user,
             'alamat_user'     => $alamat_user,
             'email_user'      => $email_user
           ];
-          $this->db->where('email_user', $data['tabel_akun']['email_user']);
+          $this->db->where('email_user', $tabel_akun['email_user']);
           $this->db->update('log_akun', $data);
 
           $data = [
@@ -169,7 +172,7 @@
           $this->db->where('id_user', $id_user);
           $this->db->update('tabel_akun', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data akun berhasil diperbarui.</div>');
           redirect('Admin/DaftarAkun');
         }
       }

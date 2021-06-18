@@ -12,7 +12,9 @@
           <b>Registrasi</b>
         </h2>
 
-        <input type="text" autocomplete="off" name="email_user" id="email_user" placeholder="Email" class="form-control mt-4" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
+        <?= $this->session->flashdata('message') ?>
+
+        <input type="text" autocomplete="off" name="email_user" id="email_user" placeholder="Email" class="form-control mt-3" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
         <small class="form-text text-danger" align="left" style="margin-left: 15%; margin-bottom: 2.5%"><?= form_error('email_user') ?></small>
 
         <input type="password" name="password" id="password" placeholder="Kata Sandi" class="form-control" style="border-radius: 10px; padding: 22px 20px; color: #7E7E7E; background: #ECECEC; width: 70%">
