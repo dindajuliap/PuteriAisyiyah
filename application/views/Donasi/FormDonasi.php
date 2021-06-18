@@ -5,15 +5,15 @@
     <form action="" method="post" enctype="multipart/form-data">
       <div class="row mt-4">
         <div class="col-lg-6 d-md-block" style="margin-left: auto; margin-right: auto">
-          <label style="color: #030153" class="ml-4">Nama Lengkap</label>
+          <label style="color: #030153" class="ml-4">Nama Lengkap <b style="color: red">*</b></label>
           <input type="text" autocomplete="off" name="nama_donatur" id="nama_donatur" class="form-control ml-4" style="border-radius: 10px; padding: 18px 16px; color: #7E7E7E; background: #ECECEC; width: 90%">
           <small class="form-text text-danger ml-4" align="left" style="margin-bottom: 3%"><?= form_error('nama_donatur') ?></small>
 
-          <label style="color: #030153" class="ml-4">Tanggal Donasi</label>
+          <label style="color: #030153" class="ml-4">Tanggal Donasi <b style="color: red">*</b></label>
           <input type="date" name="tgl_donasi" id="tgl_donasi" class="form-control ml-4" style="border-radius: 10px; padding: 18px 16px; color: #7E7E7E; background: #ECECEC; width: 90%">
           <small class="form-text text-danger ml-4" align="left" style="margin-bottom: 3%"><?= form_error('tgl_donasi') ?></small>
 
-          <label style="color: #030153" class="ml-4">Jumlah Donasi</label>
+          <label style="color: #030153" class="ml-4">Jumlah Donasi <b style="color: red">*</b></label>
           <input type="text" autocomplete="off" name="jumlah_donasi" id="jumlah_donasi" class="form-control ml-4" style="border-radius: 10px; padding: 18px 16px; color: #7E7E7E; background: #ECECEC; width: 90%">
           <small class="form-text text-danger ml-4" align="left" style="margin-bottom: 3%"><?= form_error('jumlah_donasi') ?></small>
         </div>
@@ -23,7 +23,7 @@
           <input type="text" autocomplete="off" name="ket_donasi" id="ket_donasi" class="form-control ml-4" style="border-radius: 10px; padding: 18px 16px; color: #7E7E7E; background: #ECECEC; width: 90%">
           <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Sedekah, zakat mal, infaq, nazar, berbagi, atau lainnya)</p>
 
-          <label style="color: #030153" class="mt-1 ml-4">Upload Bukti Transfer</label><br>
+          <label style="color: #030153" class="mt-1 ml-4">Upload Bukti Transfer <b style="color: red">*</b></label><br>
           <input type="file" id="bukti_tf" name="bukti_tf">
           <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Berupa file jpeg, jpg, png, ataupun pdf dan berukuran maksimal 5 MB)</p>
 
