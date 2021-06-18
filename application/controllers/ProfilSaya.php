@@ -6,9 +6,14 @@
       parent::__construct();
 
 			if($this->session->userdata('role_id') != 2){
-        redirect('Admin');
+        if($this->session->userdata('role_id') == 1){
+          redirect('Admin');
+        }
+        else{
+          redirect('Masuk');
+        }
       }
-			
+
       $this->load->library('form_validation');
     }
 
