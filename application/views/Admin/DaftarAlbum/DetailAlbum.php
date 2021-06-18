@@ -1,32 +1,44 @@
-<body style="color: #030153; font-family: Arial;">
-	<div class="container-fluid" style="padding: 3%; margin-top: -3%;">
+<body style="color: #030153; font-family: Arial">
+	<div class="container-fluid" style="padding: 3%; margin-top: -3%">
 		<div class="row">
 			<div class="col-12">
-				<div class="card" style="padding: 2%;">
-					<h1 class="mt-1" style="text-align: center; color: #030153;"><b>FOTO ALBUM</b></h1>
-					<hr>
+				<div class="card" style="padding: 2%">
+					<h1 class="mt-1" style="text-align: center; color: #030153"><b>FOTO ALBUM</b></h1>
+
+					<div class="row">
+            <div class="col-lg-6">
+              <a href="<?= base_url('Admin/TambahAlbum') ?>" style="margin-left: -15%">
+                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                  <i class="fas fa-plus-circle mr-2"></i>
+                  Upload Foto
+                </button>
+              </a>
+            </div>
+
+	          <div class="col-lg-6"></div>
+					</div>
 
 					<div class="card-body">
 						<?php if(!$detail_album) : ?>
 							<div class="row mt-3">
-								<h5 style="color: black; margin-left: 1.5%">Foto tidak tersedia.</h5>
+								<h5 style="color: black">Foto tidak tersedia.</h5>
 							</div>
 						<?php else : ?>
 							<div class="row mt-3 mb-4">
 								<?php foreach ($detail_album as $val) : ?>
-									<div class="col-lg-3 d-md-block mt-3" style="float: left;">
-										<img src="<?= base_url('assets/img/album_foto/') . $val->file_foto ?>" style="width: 100%; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.65);">
-										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_foto ?>" style="border-radius: 10px; margin: 6px 0px 10px -13px; color: red;">[ Hapus Foto ]</button>
+									<div class="col-lg-3 d-md-block mt-3" style="float: left">
+										<img src="<?= base_url('assets/img/album_foto/') . $val->file_foto ?>" style="width: 100%; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.65)">
+										<button type="submit" class="btn" data-toggle="modal" data-target="#hapusModal<?= $val->id_foto ?>" style="border-radius: 10px; margin: 6px 0px 10px -13px; color: red">[ Hapus Foto ]</button>
 									</div>
 								<?php endforeach ?>
 							</div>
 						<?php endif ?>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
+</body>
 
 	<?php foreach($detail_album as $val) : ?>
 		<div class="modal fade" id="hapusModal<?= $val->id_foto ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

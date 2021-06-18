@@ -58,20 +58,20 @@
           </a>
         </div>
 
-				<div class="col-lg-3">
-          <a href="<?= base_url('Admin/DaftarAlbum') ?>">
+        <div class="col-lg-3">
+          <a href="<?= base_url('Admin/DaftarInventaris') ?>">
             <button class="btn" style="background-color: #CAA615; width: 100%; color: white">
-              <i class="fas fa-images fa-4x mt-4"></i>
-              <h5 class="mt-3 mb-4">Daftar Album</h5>
+              <i class="fas fa-list fa-4x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Inventaris</h5>
             </button>
           </a>
         </div>
 
         <div class="col-lg-3">
-          <a href="<?= base_url('Admin/DaftarInventaris') ?>">
+          <a href="<?= base_url('Admin/DaftarAlbum') ?>">
             <button class="btn" style="background-color: #030153; width: 100%; color: white">
-              <i class="fas fa-list fa-4x mt-4"></i>
-              <h5 class="mt-3 mb-4">Daftar Inventaris</h5>
+              <i class="fas fa-images fa-4x mt-4"></i>
+              <h5 class="mt-3 mb-4">Daftar Album</h5>
             </button>
           </a>
         </div>

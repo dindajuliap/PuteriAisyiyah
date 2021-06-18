@@ -12,7 +12,7 @@
               <a href="<?= base_url('Admin/TambahAlbum') ?>" style="margin-left: -15%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
                   <i class="fas fa-plus-circle mr-2"></i>
-                  Tambah Data
+                  Tambah Album
                 </button>
               </a>
             </div>

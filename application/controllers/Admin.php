@@ -23,6 +23,159 @@
       $this->load->view('Templates/foot');
     }
 
+    public function BiodataPanti(){
+      $data['judul']      = 'Biodata Panti';
+      $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/BiodataPanti/index';
+
+      if($this->input->post('submit')){
+        if($this->input->post('search')){
+          $data['search'] = $this->input->post('search');
+
+          $this->db->like('jenis_biodata', $data['search']);
+          $this->db->or_like('isi_biodata', $data['search']);
+          $this->db->from('tabel_panti');
+          $config['total_rows'] = $this->db->count_all_results();
+          $data['total_rows']   = $config['total_rows'];
+
+          $data['start']   = 0;
+          $data['biodata'] = $this->admin->getBiodata1($data['search']);
+        }
+        else{
+          $config['total_rows'] = $this->admin->countBiodata();
+          $data['total_rows']   = $config['total_rows'];
+          $config['per_page']   = 8;
+
+          $this->pagination->initialize($config);
+
+          $data['start']   = $this->uri->segment(4);
+          $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
+        }
+      }
+      else{
+        $config['total_rows'] = $this->admin->countBiodata();
+        $data['total_rows']   = $config['total_rows'];
+        $config['per_page']   = 8;
+
+        $this->pagination->initialize($config);
+
+        $data['start']   = $this->uri->segment(4);
+        $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
+      }
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/BiodataPanti/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function UbahBiodataPanti(){
+      $data['judul']         = 'Ubah Biodata Panti';
+      $data['alamat_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Alamat'])->row_array();
+      $data['email_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
+      $data['telepon_panti'] = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Telepon'])->row_array();
+      $data['ketua_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Ketua'])->row_array();
+      $data['profil_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Foto Panti'])->row_array();
+
+      $this->form_validation->set_rules('alamat_panti', $data['alamat_panti']['jenis_biodata'], 'required|trim');
+      $this->form_validation->set_rules('email_panti', $data['email_panti']['jenis_biodata'], 'required|trim');
+      $this->form_validation->set_rules('telepon_panti', $data['telepon_panti']['jenis_biodata'], 'required|trim|min_length[11]|max_length[13]', ['min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
+      $this->form_validation->set_rules('ketua_panti', $data['ketua_panti']['jenis_biodata'], 'required|trim');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/BiodataPanti/UbahBiodataPanti', $data);
+        $this->load->view('Templates/foot');
+      }
+      else{
+        if($this->input->post('foto_panti') == null){
+          $alamat_panti  = ucwords($this->input->post('alamat_panti'));
+          $email_panti   = strtolower($this->input->post('email_panti'));
+          $telepon_panti = $this->input->post('telepon_panti');
+          $ketua_panti   = ucwords($this->input->post('ketua_panti'));
+
+          if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
+            redirect('Admin/BiodataPanti');
+          }
+          else{
+            $this->db->set('isi_biodata', $alamat_panti);
+            $this->db->where('jenis_biodata', 'Alamat');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $email_panti);
+            $this->db->where('jenis_biodata', 'Email');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $telepon_panti);
+            $this->db->where('jenis_biodata', 'Telepon');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $ketua_panti);
+            $this->db->where('jenis_biodata', 'Ketua');
+            $this->db->update('tabel_panti');
+
+            $this->db->set('isi_biodata', $data['profil_panti']['isi_biodata']);
+            $this->db->where('jenis_biodata', 'Foto Panti');
+            $this->db->update('tabel_panti');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+            redirect('Admin/BiodataPanti');
+          }
+        }
+        else{
+          $config['upload_path']   = './assets/img/bukti_tf';
+          $config['allowed_types'] = 'jpg|jpeg|png';
+          $config['max_size']      = '5000';
+
+          $this->load->library('upload', $config);
+
+          if(!$this->upload->do_upload('foto_panti')){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 100%; font-size: 15px" align="left">Foto panti tidak valid.</div>');
+            redirect('Admin/UbahBiodataPanti');
+          }
+          else{
+            $alamat_panti  = ucwords($this->input->post('alamat_panti'));
+            $email_panti   = strtolower($this->input->post('email_panti'));
+            $telepon_panti = $this->input->post('telepon_panti');
+            $ketua_panti   = ucwords($this->input->post('ketua_panti'));
+            $foto_panti    = $this->upload->data();
+            $foto_panti    = $foto_panti['file_name'];
+
+            if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
+              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
+              redirect('Admin/BiodataPanti');
+            }
+            else{
+              $this->db->set('isi_biodata', $alamat_panti);
+              $this->db->where('jenis_biodata', 'Alamat');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $email_panti);
+              $this->db->where('jenis_biodata', 'Email');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $telepon_panti);
+              $this->db->where('jenis_biodata', 'Telepon');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $ketua_panti);
+              $this->db->where('jenis_biodata', 'Ketua');
+              $this->db->update('tabel_panti');
+
+              $this->db->set('isi_biodata', $foto_panti);
+              $this->db->where('jenis_biodata', 'Foto Panti');
+              $this->db->update('tabel_panti');
+
+              $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
+              redirect('Admin/BiodataPanti');
+            }
+          }
+        }
+      }
+    }
+
     public function DaftarAkun(){
       $data['judul']      = 'Daftar Akun';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAkun/index';
@@ -82,23 +235,6 @@
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarAkun/DetailDataAkun', $data);
       $this->load->view('Templates/foot');
-    }
-
-    public function HapusDataAkun($id_user){
-      $this->db->set('status_user', 0);
-      $this->db->where('id_user', $id_user);
-      $this->db->update('tabel_akun');
-
-      $user = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
-      date_default_timezone_set('Asia/Jakarta');
-
-      $this->db->set('waktu_log_akun', date("Y-m-d G:i:s"));
-      $this->db->set('status_user', 'Dihapus');
-      $this->db->where('email_user', $user['email_user']);
-      $this->db->update('log_akun');
-
-      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data akun berhasil dihapus.</div>');
-      redirect('Admin/DaftarAkun');
     }
 
     public function UbahDataAkun($id_user){
@@ -178,6 +314,23 @@
       }
     }
 
+    public function HapusDataAkun($id_user){
+      $this->db->set('status_user', 0);
+      $this->db->where('id_user', $id_user);
+      $this->db->update('tabel_akun');
+
+      $user = $this->db->get_where('tabel_akun', ['id_user' => $id_user])->row_array();
+      date_default_timezone_set('Asia/Jakarta');
+
+      $this->db->set('waktu_log_akun', date("Y-m-d G:i:s"));
+      $this->db->set('status_user', 'Dihapus');
+      $this->db->where('email_user', $user['email_user']);
+      $this->db->update('log_akun');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data akun berhasil dihapus.</div>');
+      redirect('Admin/DaftarAkun');
+    }
+
     public function DaftarAnak(){
       $data['judul']      = 'Daftar Anak';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAnak/index';
@@ -220,6 +373,21 @@
       $this->load->view('Templates/navbarAdmin');
       $this->load->view('Admin/index');
       $this->load->view('Admin/DaftarAnak/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function DetailDataAnak($id_anak){
+      $data['judul'] = 'Detail Data Anak';
+
+      $this->db->select('*');
+      $this->db->from('view_anak');
+      $this->db->where('id_anak', $id_anak);
+      $data['detail_anak'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAnak/DetailDataAnak', $data);
       $this->load->view('Templates/foot');
     }
 
@@ -415,21 +583,6 @@
         redirect('Admin/DaftarAnak');
       }
 		}
-
-		public function DetailDataAnak($id_anak){
-      $data['judul'] = 'Detail Data Anak';
-
-      $this->db->select('*');
-      $this->db->from('view_anak');
-      $this->db->where('id_anak', $id_anak);
-      $data['detail_anak'] = $this->db->get()->result();
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin');
-      $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarAnak/DetailDataAnak', $data);
-      $this->load->view('Templates/foot');
-    }
 
     public function UbahDataAnak($id_anak){
 			$data['judul'] = 'Ubah Data Anak';
@@ -766,6 +919,21 @@
       $this->load->view('Templates/foot');
     }
 
+    public function DetailDataPengurus($id_pengurus){
+      $data['judul'] = 'Detail Data Pengurus';
+
+      $this->db->select('*');
+      $this->db->from('tabel_pengurus');
+      $this->db->where('id_pengurus', $id_pengurus);
+      $data['detail_pengurus'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarPengurus/DetailDataPengurus', $data);
+      $this->load->view('Templates/foot');
+    }
+
     public function TambahDataPengurus(){
 			$data['judul'] = 'Tambah Data Pengurus';
 
@@ -836,21 +1004,6 @@
 				redirect('Admin/DaftarPengurus');
       }
 		}
-
-    public function DetailDataPengurus($id_pengurus){
-      $data['judul'] = 'Detail Data Pengurus';
-
-      $this->db->select('*');
-      $this->db->from('tabel_pengurus');
-      $this->db->where('id_pengurus', $id_pengurus);
-      $data['detail_pengurus'] = $this->db->get()->result();
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin');
-      $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarPengurus/DetailDataPengurus', $data);
-      $this->load->view('Templates/foot');
-    }
 
     public function UbahDataPengurus($id_pengurus){
       $data['judul']    = 'Ubah Data Pengurus';
@@ -1000,6 +1153,49 @@
       $this->load->view('Templates/foot');
     }
 
+    public function DetailDataDonasi($id_donasi){
+      $data['judul'] = 'Detail Data Donasi';
+
+      $this->db->select('*');
+      $this->db->from('tabel_donasi');
+      $this->db->where('id_donasi', $id_donasi);
+      $data['detail_donasi'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarDonasi/DetailDataDonasi', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function Download(){
+      if (isset($_GET['filename'])) {
+        $filename    = $_GET['filename'];
+        $back_dir    = "assets/img/bukti_tf/";
+        $file        = $back_dir.$_GET['filename'];
+
+        if (file_exists($file)) {
+          header('Content-Description: File Transfer');
+          header('Content-Type: application/octet-stream');
+          header('Content-Disposition: attachment; filename='.basename($file));
+          header('Content-Transfer-Encoding: binary');
+          header('Expires: 0');
+          header('Cache-Control: private');
+          header('Pragma: private');
+          header('Content-Length: ' . filesize($file));
+          ob_clean();
+          flush();
+          readfile($file);
+
+          exit;
+        }
+        else {
+          $_SESSION['pesan'] = "Oops! File - $filename - not found ...";
+          header("location:index.php");
+        }
+      }
+    }
+
 		public function TambahDataDonasi(){
       $data['judul'] = 'Tambah Data Donasi';
 
@@ -1087,54 +1283,11 @@
       }
     }
 
-		public function DetailDataDonasi($id_donasi){
-      $data['judul'] = 'Detail Data Donasi';
-
-      $this->db->select('*');
-      $this->db->from('tabel_donasi');
-      $this->db->where('id_donasi', $id_donasi);
-      $data['detail_donasi'] = $this->db->get()->result();
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin');
-      $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarDonasi/DetailDataDonasi', $data);
-      $this->load->view('Templates/foot');
-    }
-
     public function HapusDataDonasi($id_donasi){
       $this->db->query('call procedure_hapus_donasi('.$id_donasi.')');
 
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil dihapus.</div>');
       redirect('Admin/DaftarDonasi');
-    }
-
-    public function Download(){
-      if (isset($_GET['filename'])) {
-        $filename    = $_GET['filename'];
-        $back_dir    = "assets/img/bukti_tf/";
-        $file        = $back_dir.$_GET['filename'];
-
-        if (file_exists($file)) {
-          header('Content-Description: File Transfer');
-          header('Content-Type: application/octet-stream');
-          header('Content-Disposition: attachment; filename='.basename($file));
-          header('Content-Transfer-Encoding: binary');
-          header('Expires: 0');
-          header('Cache-Control: private');
-          header('Pragma: private');
-          header('Content-Length: ' . filesize($file));
-          ob_clean();
-          flush();
-          readfile($file);
-
-          exit;
-        }
-        else {
-          $_SESSION['pesan'] = "Oops! File - $filename - not found ...";
-          header("location:index.php");
-        }
-      }
     }
 
     public function DaftarBerita(){
@@ -1182,14 +1335,7 @@
       $this->load->view('Templates/foot');
     }
 
-    public function HapusBerita($id_berita){
-      $this->db->query('call procedure_hapus_berita('.$id_berita.')');
-
-      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil dihapus.</div>');
-      redirect('Admin/DaftarBerita');
-    }
-
-		public function DetailBerita($id_Berita){
+    public function DetailBerita($id_Berita){
       $data['judul'] = 'Detail Berita';
 
       $this->db->select('*');
@@ -1204,7 +1350,7 @@
       $this->load->view('Templates/foot');
     }
 
-		public function TambahBerita(){
+    public function TambahBerita(){
 			$data['judul'] 			= 'Tambah Berita';
 
 			$this->form_validation->set_rules('judul_berita', 'Judul berita', 'required|trim');
@@ -1266,7 +1412,7 @@
       }
 		}
 
-		public function UbahBerita($id_berita){
+    public function UbahBerita($id_berita){
       $data['judul']  = 'Ubah Berita';
       $data['berita'] = $this->db->get_where('tabel_berita', ['id_berita' => $id_berita])->row_array();
 
@@ -1338,6 +1484,13 @@
       }
     }
 
+    public function HapusBerita($id_berita){
+      $this->db->query('call procedure_hapus_berita('.$id_berita.')');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil dihapus.</div>');
+      redirect('Admin/DaftarBerita');
+    }
+
     public function DaftarInventaris(){
       $data['judul']      = 'Daftar Inventaris';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarInventaris/index';
@@ -1385,16 +1538,6 @@
       $this->load->view('Templates/foot');
     }
 
-    public function HapusDataInventaris($id_inventaris){
-      $this->db->where('id_inventaris', $id_inventaris);
-      $this->db->delete('tabel_inventaris');
-
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil dihapus.</div>');
-        redirect('Admin/DaftarInventaris');
-      }
-    }
-
     public function TambahDataInventaris(){
       $data['judul']      = 'Tambah Data Inventaris';
 
@@ -1411,17 +1554,33 @@
         $this->load->view('Templates/foot');
       }
       else{
+        $this->db->select('*');
+        $this->db->from('tabel_inventaris');
+        $tabel_inventaris = $this->db->get()->result();
 
-        $nama_inventaris     = $this->input->post('nama_inventaris');
+        if(!$tabel_inventaris){
+          $id_inventaris = 1;
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_inventaris');
+          $this->db->order_by('id_inventaris', 'DESC');
+          $this->db->limit(1);
+          $inventaris_terakhir = $this->db->get()->row_array();
+
+          $id_inventaris = $inventaris_terakhir['id_inventaris'] + 1;
+        }
+
+        $nama_inventaris     = strtolower($this->input->post('nama_inventaris'));
         $letak_inventaris    = $this->input->post('letak_inventaris');
         $jumlah_inventaris   = $this->input->post('jumlah_inventaris');
 
         $data = [
-          'nama_inventaris'     => $nama_inventaris,
-          'inventaris_lantai'   => $letak_inventaris,
-          'jumlah_inventaris'   => $jumlah_inventaris
+          'id_inventaris'     => $id_inventaris,
+          'nama_inventaris'   => ucwords($nama_inventaris),
+          'inventaris_lantai' => $letak_inventaris,
+          'jumlah_inventaris' => $jumlah_inventaris
         ];
-
         $this->db->insert('tabel_inventaris', $data);
 
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil ditambahkan.</div>');
@@ -1434,10 +1593,8 @@
       $data['inventaris'] = $this->db->get_where('tabel_inventaris', ['id_inventaris' => $id_inventaris])->row_array();
 
 			$this->form_validation->set_rules('nama_inventaris', 'Nama inventaris', 'required|trim');
-      $this->form_validation->set_rules('letak_inventaris', 'Letak inventaris', 'numeric|required|trim',
-        ['numeric' => 'Letak inventaris harus berupa angka']);
-      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah inventaris', 'numeric|required|trim',
-        ['numeric' => 'Jumlah inventaris harus berupa angka']);
+      $this->form_validation->set_rules('letak_inventaris', 'Letak inventaris', 'required|trim');
+      $this->form_validation->set_rules('jumlah_inventaris', 'Jumlah inventaris', 'required|trim');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1446,175 +1603,35 @@
         $this->load->view('Templates/foot');
       }
       else{
-        $nama_inventaris    = $this->input->post('nama_inventaris');
+        $nama_inventaris    = strtolower($this->input->post('nama_inventaris'));
+        $nama_inventaris    = ucwords($nama_inventaris);
         $letak_inventaris   = $this->input->post('letak_inventaris');
         $jumlah_inventaris  = $this->input->post('jumlah_inventaris');
 
-        $data = [
-          'nama_inventaris'     => $nama_inventaris,
-          'inventaris_lantai'   => $letak_inventaris,
-          'jumlah_inventaris'   => $jumlah_inventaris
-        ];
+        if($nama_inventaris == $data['inventaris']['nama_inventaris'] && $letak_inventaris == $data['inventaris']['inventaris_lantai'] && $jumlah_inventaris == $data['inventaris']['jumlah_inventaris']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Data sama seperti sebelumnya.</div>');
+          redirect('Admin/DaftarInventaris');
+        }
+        else{
+          $data = [
+            'nama_inventaris'     => $nama_inventaris,
+            'inventaris_lantai'   => $letak_inventaris,
+            'jumlah_inventaris'   => $jumlah_inventaris
+          ];
+          $this->db->where('id_inventaris', $id_inventaris);
+          $this->db->update('tabel_inventaris', $data);
 
-        $this->db->where('id_inventaris', $id_inventaris);
-        $this->db->update('tabel_inventaris', $data);
-
-				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil diubah.</div>');
-        redirect('Admin/DaftarInventaris');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil diperbarui.</div>');
+          redirect('Admin/DaftarInventaris');
+        }
       }
     }
 
-    public function BiodataPanti(){
-      $data['judul']      = 'Biodata Panti';
-      $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/BiodataPanti/index';
+    public function HapusDataInventaris($id_inventaris){
+      $this->db->query('call procedure_hapus_inventaris('.$id_inventaris.')');
 
-      if($this->input->post('submit')){
-        if($this->input->post('search')){
-          $data['search'] = $this->input->post('search');
-
-          $this->db->like('jenis_biodata', $data['search']);
-          $this->db->or_like('isi_biodata', $data['search']);
-          $this->db->from('tabel_panti');
-          $config['total_rows'] = $this->db->count_all_results();
-          $data['total_rows']   = $config['total_rows'];
-
-          $data['start']   = 0;
-          $data['biodata'] = $this->admin->getBiodata1($data['search']);
-        }
-        else{
-          $config['total_rows'] = $this->admin->countBiodata();
-          $data['total_rows']   = $config['total_rows'];
-          $config['per_page']   = 8;
-
-          $this->pagination->initialize($config);
-
-          $data['start']   = $this->uri->segment(4);
-          $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
-        }
-      }
-      else{
-        $config['total_rows'] = $this->admin->countBiodata();
-        $data['total_rows']   = $config['total_rows'];
-        $config['per_page']   = 8;
-
-        $this->pagination->initialize($config);
-
-        $data['start']   = $this->uri->segment(4);
-        $data['biodata'] = $this->admin->getBiodata2($config['per_page'], $data['start']);
-      }
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin');
-      $this->load->view('Admin/index');
-      $this->load->view('Admin/BiodataPanti/index', $data);
-      $this->load->view('Templates/foot');
-    }
-
-    public function UbahBiodataPanti(){
-      $data['judul']         = 'Ubah Biodata Panti';
-      $data['alamat_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Alamat'])->row_array();
-      $data['email_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
-      $data['telepon_panti'] = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Telepon'])->row_array();
-      $data['ketua_panti']   = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Ketua'])->row_array();
-      $data['profil_panti']  = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Foto Panti'])->row_array();
-
-      $this->form_validation->set_rules('alamat_panti', $data['alamat_panti']['jenis_biodata'], 'required|trim');
-      $this->form_validation->set_rules('email_panti', $data['email_panti']['jenis_biodata'], 'required|trim');
-      $this->form_validation->set_rules('telepon_panti', $data['telepon_panti']['jenis_biodata'], 'required|trim|min_length[11]|max_length[13]', ['min_length' => 'tidak valid.', 'max_length' => 'tidak valid.']);
-      $this->form_validation->set_rules('ketua_panti', $data['ketua_panti']['jenis_biodata'], 'required|trim');
-
-      if($this->form_validation->run() == false){
-        $this->load->view('Templates/head', $data);
-        $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/BiodataPanti/UbahBiodataPanti', $data);
-        $this->load->view('Templates/foot');
-      }
-      else{
-        if($this->input->post('foto_panti') == null){
-          $alamat_panti  = ucwords($this->input->post('alamat_panti'));
-          $email_panti   = strtolower($this->input->post('email_panti'));
-          $telepon_panti = $this->input->post('telepon_panti');
-          $ketua_panti   = ucwords($this->input->post('ketua_panti'));
-
-          if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
-            redirect('Admin/BiodataPanti');
-          }
-          else{
-            $this->db->set('isi_biodata', $alamat_panti);
-            $this->db->where('jenis_biodata', 'Alamat');
-            $this->db->update('tabel_panti');
-
-            $this->db->set('isi_biodata', $email_panti);
-            $this->db->where('jenis_biodata', 'Email');
-            $this->db->update('tabel_panti');
-
-            $this->db->set('isi_biodata', $telepon_panti);
-            $this->db->where('jenis_biodata', 'Telepon');
-            $this->db->update('tabel_panti');
-
-            $this->db->set('isi_biodata', $ketua_panti);
-            $this->db->where('jenis_biodata', 'Ketua');
-            $this->db->update('tabel_panti');
-
-            $this->db->set('isi_biodata', $data['profil_panti']['isi_biodata']);
-            $this->db->where('jenis_biodata', 'Foto Panti');
-            $this->db->update('tabel_panti');
-
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
-            redirect('Admin/BiodataPanti');
-          }
-        }
-        else{
-          $config['upload_path']   = './assets/img/bukti_tf';
-          $config['allowed_types'] = 'jpg|jpeg|png';
-          $config['max_size']      = '5000';
-
-          $this->load->library('upload', $config);
-
-          if(!$this->upload->do_upload('foto_panti')){
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 100%; font-size: 15px" align="left">Foto panti tidak valid.</div>');
-            redirect('Admin/UbahBiodataPanti');
-          }
-          else{
-            $alamat_panti  = ucwords($this->input->post('alamat_panti'));
-            $email_panti   = strtolower($this->input->post('email_panti'));
-            $telepon_panti = $this->input->post('telepon_panti');
-            $ketua_panti   = ucwords($this->input->post('ketua_panti'));
-            $foto_panti    = $this->upload->data();
-            $foto_panti    = $foto_panti['file_name'];
-
-            if($alamat_panti == $data['alamat_panti']['isi_biodata'] && $email_panti == $data['email_panti']['isi_biodata'] && $telepon_panti == $data['telepon_panti']['isi_biodata'] && $ketua_panti == $data['ketua_panti']['isi_biodata'] && $foto_panti == $data['foto_panti']['isi_biodata']){
-              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Biodata sama seperti sebelumnya.</div>');
-              redirect('Admin/BiodataPanti');
-            }
-            else{
-              $this->db->set('isi_biodata', $alamat_panti);
-              $this->db->where('jenis_biodata', 'Alamat');
-              $this->db->update('tabel_panti');
-
-              $this->db->set('isi_biodata', $email_panti);
-              $this->db->where('jenis_biodata', 'Email');
-              $this->db->update('tabel_panti');
-
-              $this->db->set('isi_biodata', $telepon_panti);
-              $this->db->where('jenis_biodata', 'Telepon');
-              $this->db->update('tabel_panti');
-
-              $this->db->set('isi_biodata', $ketua_panti);
-              $this->db->where('jenis_biodata', 'Ketua');
-              $this->db->update('tabel_panti');
-
-              $this->db->set('isi_biodata', $foto_panti);
-              $this->db->where('jenis_biodata', 'Foto Panti');
-              $this->db->update('tabel_panti');
-
-              $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Biodata panti berhasil diperbarui.</div>');
-              redirect('Admin/BiodataPanti');
-            }
-          }
-        }
-      }
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data inventaris berhasil dihapus.</div>');
+      redirect('Admin/DaftarInventaris');
     }
 
 		public function DaftarAlbum(){
@@ -1662,8 +1679,23 @@
       $this->load->view('Templates/foot');
     }
 
+    public function DetailAlbum($id_album){
+      $data['judul'] = 'Detail Album';
+
+			$this->db->select('*');
+      $this->db->from('tabel_album');
+      $this->db->join('tabel_foto', 'tabel_foto.id_album = tabel_album.id_album');
+      $data['detail_album'] = $this->db->get()->result();
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarAlbum/DetailAlbum', $data);
+      $this->load->view('Templates/foot');
+    }
+
 		public function TambahAlbum(){
-			$data['judul'] 			= 'Tambah Album';
+			$data['judul'] = 'Tambah Album';
 
 			$this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
 
@@ -1691,38 +1723,22 @@
           $id_album = $album_terakhir['id_album'] + 1;
         }
 
-				$nama_album	= $this->input->post('nama_album');
+				$nama_album	= strtolower($this->input->post('nama_album'));
 
 				$data = [
 					'id_album'     	=> $id_album,
-					'nama_album'  	=> $nama_album
+					'nama_album'  	=> ucwords($nama_album)
 				];
 				$this->db->insert('tabel_album', $data);
 
-				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Album berhasil ditambahkan</div>');
-				redirect('Admin/DaftarAlbum');
-
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil ditambahkan.</div>');
+        redirect('Admin/DaftarAlbum');
       }
 		}
 
-		public function DetailAlbum($id_album){
-      $data['judul'] = 'Detail Album';
-
-			$this->db->select('*');
-      $this->db->from('tabel_album');
-      $this->db->join('tabel_foto', 'tabel_foto.id_album = tabel_album.id_album');
-      $data['detail_album'] = $this->db->get()->result();
-
-      $this->load->view('Templates/head', $data);
-      $this->load->view('Templates/navbarAdmin');
-      $this->load->view('Admin/index');
-      $this->load->view('Admin/DaftarAlbum/DetailAlbum', $data);
-      $this->load->view('Templates/foot');
-    }
-
 		public function UbahAlbum($id_album){
-      $data['judul']      = 'Ubah Data Inventaris';
-      $data['inventaris'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
+      $data['judul'] = 'Ubah Data Inventaris';
+      $data['album'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
 
       $this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
 
