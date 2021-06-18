@@ -34,7 +34,7 @@
 									</div>
 
 									<div class="col-lg-6">
-										<label class="mt-3" style="margin-left: 3%">Bukti Transfer</label>
+										<label style="margin-left: 3%">Bukti Transfer</label>
 										<div class="row" style="margin-left: 2%">
 											<div class="col-lg-6" style="float: left">
 												<div style="height: 270px; width: 210px; position: relative">
@@ -71,7 +71,7 @@
 										</div>
 
 										<div class="col-lg-6">
-											<label class="mt-3" style="margin-left: 3%">Jumlah Donasi</label>
+											<label style="margin-left: 3%">Jumlah Donasi</label>
 											<input type="text" name="jumlah_donasi" id="jumlah_donasi" value="<?= $val->jumlah_donasi ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%" readonly>
 
 											<label class="mt-3" style="margin-left: 3%">Keterangan</label>
@@ -114,7 +114,7 @@
 									</div>
 
 									<div class="col-lg-6">
-										<label class="mt-3">Jumlah Donasi</label>
+										<label>Jumlah Donasi</label>
 										<input type="text" name="jumlah_donasi" id="jumlah_donasi" value="<?= $val->jumlah_donasi ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%" readonly>
 
 										<label class="mt-3">Keterangan</label>
