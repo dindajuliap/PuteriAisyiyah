@@ -19,6 +19,7 @@
 
           $this->db->like('judul_berita', $data['search']);
           $this->db->or_like('tanggal_berita', $data['search']);
+          $this->db->order_by('tanggal_berita', 'ASC');
           $this->db->from('tabel_berita');
           $config['total_rows'] = $this->db->count_all_results();
           $data['total_rows']   = $config['total_rows'];

@@ -76,11 +76,14 @@
     public function getBerita1($search){
       if($search){
         $this->db->like('judul_berita', $search);
+        $this->db->or_like('tanggal_berita', $search);
       }
+      $this->db->order_by('tanggal_berita', 'ASC');
       return $this->db->get('tabel_berita')->result();
     }
 
     public function getBerita2($limit, $start){
+      $this->db->order_by('tanggal_berita', 'ASC');
       return $this->db->get('tabel_berita', $limit, $start)->result();
     }
 
