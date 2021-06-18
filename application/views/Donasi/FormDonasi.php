@@ -24,7 +24,7 @@
           <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Sedekah, zakat mal, infaq, nazar, berbagi, atau lainnya)</p>
 
           <label style="color: #030153" class="mt-1 ml-4">Upload Bukti Transfer</label><br>
-          <input type="file" class="ml-4 mt-1" name="bukti_tf" id="bukti_tf">
+          <input type="file" id="bukti_tf" name="bukti_tf">
           <p style="color: #7F7F7F; font-size: 12px" class="ml-4 mt-1">(Berupa file jpeg, jpg, png, ataupun pdf dan berukuran maksimal 5 MB)</p>
 
           <?= $this->session->flashdata('message') ?>
@@ -38,6 +38,18 @@
     </form>
   </div>
 </body>
+
+<style>
+	::-webkit-file-upload-button{
+		background: lightgrey;
+		padding: 7px 15px;
+		border: none;
+		border-radius: 10px;
+		outline: none;
+		cursor: pointer;
+    margin-left: 5%
+	}
+</style>
 
 <script type="text/javascript">
 	var jumlah_donasi = document.getElementById('jumlah_donasi');

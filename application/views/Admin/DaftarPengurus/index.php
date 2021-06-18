@@ -121,7 +121,7 @@
                   <td align="center" width="30px">:</td>
                   <td>
                     <?php if($aktif == 0) : ?>
-                      Tidak Ada
+                      -
                     <?php else : ?>
                       <?= $aktif ?>&nbsp;pengurus
                     <?php endif ?>
@@ -133,7 +133,7 @@
                   <td align="center" width="30px">:</td>
                   <td>
                     <?php if($tdk_aktif == 0) : ?>
-                      Tidak Ada
+                      -
                     <?php else : ?>
                       <?= $tdk_aktif ?>&nbsp;pengurus
                     <?php endif ?>

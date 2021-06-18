@@ -50,11 +50,13 @@
         </a>
 
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="<?= base_url('ProfilSaya') ?>">
-            Profil Saya
-          </a>
+          <?php if($this->session->userdata('role_id') == 2) : ?>
+            <a class="dropdown-item" href="<?= base_url('ProfilSaya') ?>">
+              Profil Saya
+            </a>
 
-          <div class="dropdown-divider"></div>
+            <div class="dropdown-divider"></div>
+          <?php endif ?>
 
           <a class="dropdown-item" href="<?= base_url('Keluar') ?>" data-toggle="modal" data-target="#keluarModal">
             Keluar

@@ -1000,9 +1000,10 @@
 		public function TambahDataDonasi(){
       $data['judul'] = 'Tambah Data Donasi';
 
-      $this->form_validation->set_rules('nama_donatur', 'Nama', 'required|trim');
+      $this->form_validation->set_rules('nama_donatur', 'Nama donatur', 'required|trim');
       $this->form_validation->set_rules('tgl_donasi', 'Tanggal donasi', 'required|trim');
       $this->form_validation->set_rules('jumlah_donasi', 'Jumlah donasi', 'required|trim');
+      $this->form_validation->set_rules('jenis_donasi', 'Jenis donasi', 'required|trim');
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1028,21 +1029,44 @@
           $id_donasi = $donasi_terakhir['id_donasi'] + 1;
         }
 
-        $config['upload_path']   = './assets/img/bukti_tf';
-        $config['allowed_types'] = 'pdf|jpg|jpeg|png';
-        $config['max_size']      = '5000';
+        $jenis_donasi = strtolower($this->input->post('jenis_donasi'));
+        $jenis_donasi = ucwords($jenis_donasi);
 
-        $this->load->library('upload', $config);
+        if($jenis_donasi == 'Uang'){
+          $config['upload_path']   = './assets/img/bukti_tf';
+          $config['allowed_types'] = 'pdf|jpg|jpeg|png';
+          $config['max_size']      = '5000';
 
-        if(!$this->upload->do_upload('bukti_tf')){
-					$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Bukti transfer tidak valid.</div>');
-          redirect('Admin/TambahDataDonasi');
+          $this->load->library('upload', $config);
+
+          if(!$this->upload->do_upload('bukti_tf')){
+  					$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Bukti transfer tidak valid.</div>');
+            redirect('Admin/TambahDataDonasi');
+          }
+          else{
+            $bukti_tf     = $this->upload->data();
+            $bukti_tf     = $bukti_tf['file_name'];
+            $keterangan   = strtolower($this->input->post('ket_donasi'));
+            $nama_donatur = strtolower($this->input->post('nama_donatur'));
+
+            $data = [
+              'id_donasi'     => $id_donasi,
+              'nama_donatur'  => ucwords($nama_donatur),
+              'tgl_donasi'    => $this->input->post('tgl_donasi'),
+              'jumlah_donasi' => $this->input->post('jumlah_donasi'),
+              'ket_donasi'    => ucwords($keterangan),
+              'bukti_tf'      => $bukti_tf,
+              'jenis_donasi'  => 'Uang'
+            ];
+            $this->db->insert('tabel_donasi', $data);
+
+  					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
+            redirect('Admin/DaftarDonasi');
+          }
         }
         else{
-          $bukti_tf     = $this->upload->data();
-          $bukti_tf     = $bukti_tf['file_name'];
           $keterangan   = strtolower($this->input->post('ket_donasi'));
-          $nama_donatur = $this->input->post('nama_donatur');
+          $nama_donatur = strtolower($this->input->post('nama_donatur'));
 
           $data = [
             'id_donasi'     => $id_donasi,
@@ -1050,12 +1074,11 @@
             'tgl_donasi'    => $this->input->post('tgl_donasi'),
             'jumlah_donasi' => $this->input->post('jumlah_donasi'),
             'ket_donasi'    => ucwords($keterangan),
-            'bukti_tf'      => $bukti_tf,
-            'jenis_donasi'  => 'Uang'
+            'jenis_donasi'  => $jenis_donasi
           ];
           $this->db->insert('tabel_donasi', $data);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
           redirect('Admin/DaftarDonasi');
         }
       }
@@ -1077,12 +1100,37 @@
     }
 
     public function HapusDataDonasi($id_donasi){
-      $this->db->where('id_donasi', $id_donasi);
-      $this->db->delete('tabel_donasi');
+      $this->db->query('call procedure_hapus_donasi('.$id_donasi.')');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil dihapus.</div>');
-        redirect('Admin/DaftarDonasi');
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil dihapus.</div>');
+      redirect('Admin/DaftarDonasi');
+    }
+
+    public function Download(){
+      if (isset($_GET['filename'])) {
+        $filename    = $_GET['filename'];
+        $back_dir    = "assets/img/bukti_tf/";
+        $file        = $back_dir.$_GET['filename'];
+
+        if (file_exists($file)) {
+          header('Content-Description: File Transfer');
+          header('Content-Type: application/octet-stream');
+          header('Content-Disposition: attachment; filename='.basename($file));
+          header('Content-Transfer-Encoding: binary');
+          header('Expires: 0');
+          header('Cache-Control: private');
+          header('Pragma: private');
+          header('Content-Length: ' . filesize($file));
+          ob_clean();
+          flush();
+          readfile($file);
+
+          exit;
+        }
+        else {
+          $_SESSION['pesan'] = "Oops! File - $filename - not found ...";
+          header("location:index.php");
+        }
       }
     }
 
