@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2021 at 02:37 PM
+-- Generation Time: Jun 18, 2021 at 03:21 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -86,6 +86,13 @@ CREATE TABLE `log_akun` (
   `waktu_log_akun` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `log_akun`
+--
+
+INSERT INTO `log_akun` (`id_log`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `jk_user`, `status_user`, `waktu_log_akun`) VALUES
+(1, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', '59130467d177a8ed9a371b37e61e89c0feb0676d', 'Jl. Belibis 9 No. 127', 'P', 'Terdaftar', '2021-06-18 14:46:23');
+
 -- --------------------------------------------------------
 
 --
@@ -111,7 +118,8 @@ CREATE TABLE `tabel_akun` (
 --
 
 INSERT INTO `tabel_akun` (`id_user`, `nama_user`, `email_user`, `nomorhp_user`, `password`, `alamat_user`, `tmpt_lahir_user`, `tgl_lahir_user`, `jk_user`, `role_id`, `status_user`) VALUES
-(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1);
+(1, 'Panti Asuhan Puteri Aisyiyah', 'puteriaisyiyah@gmail.com', NULL, '8f315d491f7abd6d8cc7a057b3994688bc92db1e', NULL, NULL, NULL, NULL, 1, 1),
+(2, 'Dinda Julia Putri', 'dindajuliap30@gmail.com', '082388373276', '59130467d177a8ed9a371b37e61e89c0feb0676d', 'Jl. Belibis 9 No. 127', 'Banda Aceh', '2001-07-30', 'P', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -278,10 +286,11 @@ CREATE TABLE `tabel_panti` (
 INSERT INTO `tabel_panti` (`id_biodata`, `jenis_biodata`, `isi_biodata`) VALUES
 (1, 'Alamat', 'Jl. Santun No. 17, Sudirejo I, Kec. Medan Kota, Kota Medan, Sumatera Utara 20218'),
 (2, 'Email', 'puteriaisyiyah@gmail.com'),
-(3, 'Telepon ', '(061) 7863466'),
-(4, 'Ketua ', 'Zulbaidah, BA'),
-(6, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
-(7, 'Foto Panti', 'profil.jpeg');
+(3, 'Password ', '011c304ed2956fbbfc48d403beb88a3a08547004'),
+(4, 'Telepon ', '(061) 7863466'),
+(6, 'Ketua', 'Zulbaidah, BA'),
+(7, 'Nama Panti', 'Panti Asuhan Puteri Aisyiyah'),
+(8, 'Foto Panti', 'profil.jpeg');
 
 -- --------------------------------------------------------
 
@@ -487,13 +496,13 @@ ALTER TABLE `user_token`
 -- AUTO_INCREMENT for table `log_akun`
 --
 ALTER TABLE `log_akun`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tabel_akun`
 --
 ALTER TABLE `tabel_akun`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tabel_album`
@@ -547,7 +556,7 @@ ALTER TABLE `tabel_ortu`
 -- AUTO_INCREMENT for table `tabel_panti`
 --
 ALTER TABLE `tabel_panti`
-  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_biodata` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tabel_pengurus`
@@ -559,7 +568,7 @@ ALTER TABLE `tabel_pengurus`
 -- AUTO_INCREMENT for table `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_token` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

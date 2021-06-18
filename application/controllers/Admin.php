@@ -176,6 +176,54 @@
       }
     }
 
+    public function UbahKataSandi(){
+      $data['judul']      = 'Ubah Kata Sandi';
+      $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['role_id' => 1])->row_array();
+
+      $this->form_validation->set_rules('password1', 'Kata sandi', 'required|trim');
+      $this->form_validation->set_rules('password2', 'Kata sandi', 'required|trim|min_length[6]|matches[password3]', ['matches' => 'Konfirmasi sandi tidak cocok.', 'min_length' => 'Kata sandi minimal 6 Karakter']);
+      $this->form_validation->set_rules('password3', 'Konfirmasi sandi', 'required|trim|matches[password2]');
+
+      if($this->form_validation->run() == false){
+        $this->load->view('Templates/head', $data);
+        $this->load->view('Templates/navbarAdmin');
+        $this->load->view('Admin/BiodataPanti/UbahKataSandi', $data);
+        $this->load->view('Templates/foot');
+      }
+      else {
+        $user      = $this->db->get_where('tabel_akun', ['role_id' => 1])->row_array();
+        $password1 = sha1($this->input->post('password1'));
+        $password2 = sha1($this->input->post('password2'));
+
+        if($password1 != $user['password']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 100%" align="left">Gagal diperbarui! Kata sandi lama salah.</div>');
+          redirect('Admin/UbahKataSandi');
+        }
+        else{
+          if($password2 == $user['password']){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Kata sandi sama seperti sebelumnya.</div>');
+            redirect('Admin/BiodataPanti');
+          }
+          else{
+            $data = [ 'password' => $password2 ];
+
+            $this->db->where('role_id', 1);
+            $this->db->update('tabel_akun', $data);
+
+            $this->db->where('email_user', $user['email_user']);
+            $this->db->update('log_akun', $data);
+
+            $this->db->set('isi_biodata', $password2);
+            $this->db->where('jenis_biodata', 'Password');
+            $this->db->update('tabel_panti');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Kata sandi berhasil diperbarui.</div>');
+            redirect('Admin/BiodataPanti');
+          }
+        }
+      }
+    }
+
     public function DaftarAkun(){
       $data['judul']      = 'Daftar Akun';
       $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarAkun/index';
@@ -1460,7 +1508,7 @@
   						$this->db->where('id_berita', $id_berita);
   						$this->db->update('tabel_berita', $data);
 
-  						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+  						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diperbarui.</div>');
   						redirect('Admin/DaftarBerita');
   					}
   					else{
@@ -1477,7 +1525,7 @@
   					$this->db->where('id_berita', $id_berita);
   					$this->db->update('tabel_berita', $data);
 
-  					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+  					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diperbarui.</div>');
   					redirect('Admin/DaftarBerita');
   				}
         }
@@ -1804,7 +1852,7 @@
           $this->db->where('id_album', $id_album);
           $this->db->update('tabel_album', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diubah.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diperbarui.</div>');
           redirect('Admin/DaftarAlbum');
         }
       }

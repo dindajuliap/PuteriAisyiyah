@@ -109,15 +109,18 @@
       if($search){
         $this->db->like('jenis_biodata', $search);
         $this->db->or_like('isi_biodata', $search);
+        $this->db->where_not_in('jenis_biodata', 'Password');
       }
       return $this->db->get('tabel_panti')->result();
     }
 
     public function getBiodata2($limit, $start){
+      $this->db->where_not_in('jenis_biodata', 'Password');
       return $this->db->get('tabel_panti', $limit, $start)->result();
     }
 
     public function countBiodata(){
+      $this->db->where_not_in('jenis_biodata', 'Password');
       return $this->db->get('tabel_panti')->num_rows();
     }
 

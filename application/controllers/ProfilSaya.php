@@ -79,7 +79,7 @@
     }
 
     public function UbahKataSandi(){
-      $data['judul'] = 'Ubah Kata Sandi';
+      $data['judul']      = 'Ubah Kata Sandi';
       $data['tabel_akun'] = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
 
       $this->form_validation->set_rules('password1', 'Kata sandi', 'required|trim');
@@ -107,7 +107,7 @@
             redirect('ProfilSaya');
           }
           else{
-            $data = [ 'password' => $password ];
+            $data = [ 'password' => $password2 ];
 
             $this->db->where('id_user', $this->session->userdata('id_user'));
             $this->db->update('tabel_akun', $data);

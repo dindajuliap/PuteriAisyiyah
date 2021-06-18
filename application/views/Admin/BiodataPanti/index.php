@@ -8,11 +8,20 @@
           <?= $this->session->flashdata('message') ?>
 
 		      <div class="row">
-            <div class="col-lg-6">
-              <a href="<?= base_url('Admin/UbahBiodataPanti') ?>" style="margin-left: -15%">
+            <div class="col-lg-2">
+              <a href="<?= base_url('Admin/UbahBiodataPanti') ?>" style="margin-left: -8%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
                   <i class="fas fa-edit mr-2"></i>
                   Ubah Biodata
+                </button>
+              </a>
+            </div>
+
+            <div class="col-lg-4">
+              <a href="<?= base_url('Admin/UbahKataSandi') ?>" style="margin-left: -15%">
+                <button class="btn" style="width: 200px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                  <i class="fas fa-edit mr-2"></i>
+                  Ubah Kata Sandi
                 </button>
               </a>
             </div>
