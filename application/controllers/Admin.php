@@ -1734,6 +1734,7 @@
 			$this->db->select('*');
       $this->db->from('tabel_album');
       $this->db->join('tabel_foto', 'tabel_foto.id_album = tabel_album.id_album');
+      $this->db->where('tabel_foto.id_album', $id_album);
       $data['detail_album'] = $this->db->get()->result();
 
       $this->load->view('Templates/head', $data);
