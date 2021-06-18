@@ -31,7 +31,7 @@
 
           $this->pagination->initialize($config);
 
-          $data['start']  = $this->uri->segment(2);
+          $data['start']  = $this->uri->segment(3);
           $data['berita'] = $this->berita->getBerita2($config['per_page'], $data['start']);
         }
       }
@@ -42,7 +42,7 @@
 
         $this->pagination->initialize($config);
 
-        $data['start']   = $this->uri->segment(2);
+        $data['start']   = $this->uri->segment(3);
         $data['berita']  = $this->berita->getBerita2($config['per_page'], $data['start']);
       }
 

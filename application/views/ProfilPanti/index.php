@@ -47,7 +47,7 @@
         <?php if($foto) : ?>
   	      <div class="col-lg-3 mt-2 d-md-block">
             <a href="<?= base_url('ProfilPanti/Album/').$a->id_album ?>">
-              <div style="height: 250px; position: relative">
+              <div style="height: 200px; position: relative">
                 <img src="<?= base_url('assets/img/album_foto/').$foto['file_foto'] ?>" style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); object-fit: cover">
                 <div class="nama">
                   <h4 style="position: absolute; bottom: 0; background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.5); color: #f1f1f1; width: 100%; padding: 10px">

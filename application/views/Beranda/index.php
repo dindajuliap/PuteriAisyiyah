@@ -52,14 +52,14 @@
 			<div class="row mt-3 mb-4">
 				<?php foreach ($berita as $b) : ?>
 					<div class="col-lg-4 d-md-block mt-3">
-						<div class="card" style="width: 95%; margin-left: auto; margin-right: auto; padding: 20px; background: #ECECEC">
-							<a href="<?= base_url('Beranda/Berita/') . $b->id_berita ?>">
-								<img class="" src="<?= base_url('assets/img/foto_berita/') . $b->cover_berita ?>" style="width: 100%; margin-bottom: 30px">
-								<h4 style="color: #030153"><b><?= $b->judul_berita ?></b></h4>
+						<div class="card" style="width: 95%; height: 510px; margin-left: auto; margin-right: auto; padding: 20px; background: #ECECEC">
+							<a href="<?= base_url('Beranda/Berita/') . $b->id_berita ?>" style="text-align: center">
+								<img class="" src="<?= base_url('assets/img/foto_berita/') . $b->cover_berita ?>" style="height: 150px; max-width: 100%; margin-bottom: 30px; margin-left: auto; margin-right: auto">
+								<h4 style="color: #030153" align="left"><b><?= $b->judul_berita ?></b></h4>
 							</a>
 
 							<p><?= date("d/m/Y", strtotime($b->tanggal_berita)) ?></p>
-							<div><?= substr($b->isi_berita, 0, 175) ?><b>...</b> </div>
+							<div><?= substr($b->isi_berita, 0, 100) ?><b>...</b> </div>
 							<a class="btn" href="<?= base_url('Beranda/Berita/') . $b->id_berita ?>" style="border-radius: 10px; height: 46px; padding-top: 10px; margin-top: 15px; background: #030153; color: white">Lihat Selengkapnya</a>
 						</div>
 					</div>
