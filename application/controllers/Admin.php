@@ -1183,13 +1183,10 @@
     }
 
     public function HapusBerita($id_berita){
-      $this->db->where('id_berita', $id_berita);
-      $this->db->delete('tabel_berita');
+      $this->db->query('call procedure_hapus_berita('.$id_berita.')');
 
-      if($this->db->affected_rows() > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil dihapus.</div>');
-        redirect('Admin/DaftarBerita');
-      }
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil dihapus.</div>');
+      redirect('Admin/DaftarBerita');
     }
 
 		public function DetailBerita($id_Berita){
@@ -1238,39 +1235,39 @@
         }
 
         $config['upload_path']   = './assets/img/foto_berita';
-        $config['allowed_types'] = 'pdf|jpg|jpeg|png';
+        $config['allowed_types'] = 'jpg|jpeg|png';
         $config['max_size']      = '5000';
 
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('cover_berita')){
-          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Bukti transfer tidak valid.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show ml-4" role="alert" style="font-family: Arial; width: 90%; font-size: 15px" align="left">Cover berita tidak valid.</div>');
           redirect('Admin/TambahBerita');
         }
         else{
           $cover_berita 		= $this->upload->data();
           $cover_berita 		= $cover_berita['file_name'];
-					$judul_berita			= $this->input->post('judul_berita');
+					$judul_berita			= strtolower($this->input->post('judul_berita'));
 					$isi_berita				= $this->input->post('isi_berita');
 					$tanggal_berita		= $this->input->post('tanggal_berita');
 
           $data = [
             'id_berita'     	=> $id_berita,
-            'judul_berita'  	=> $judul_berita,
+            'judul_berita'  	=> ucwords($judul_berita),
             'isi_berita'  		=> $isi_berita,
             'tanggal_berita'  => $tanggal_berita,
             'cover_berita'    => $cover_berita
           ];
           $this->db->insert('tabel_berita', $data);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" style="font-family: Arial">&times;</button>Berita berhasil ditambahkan</div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil ditambahkan.</div>');
           redirect('Admin/DaftarBerita');
         }
       }
 		}
 
 		public function UbahBerita($id_berita){
-      $data['judul']      = 'Ubah Berita';
+      $data['judul']  = 'Ubah Berita';
       $data['berita'] = $this->db->get_where('tabel_berita', ['id_berita' => $id_berita])->row_array();
 
       $this->form_validation->set_rules('judul_berita', 'Judul berita', 'required|trim');
@@ -1285,54 +1282,59 @@
       else{
         $judul_berita   = $this->input->post('judul_berita');
         $isi_berita   	= $this->input->post('isi_berita');
-
         $upload_image   = $_FILES['cover_berita']['name'];
 
-				if($upload_image){
-					$config['upload_path']	 = './assets/img/foto_berita';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					$config['max_size']      = '10000';
+        if($judul_berita == $data['berita']['judul_berita'] && $isi_berita == $data['berita']['isi_berita'] && $upload_image == null){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Data berita sama seperti sebelumnya.</div>');
+          redirect('Admin/DaftarBerita');
+        }
+        else{
+          if($upload_image){
+  					$config['upload_path']	 = './assets/img/foto_berita';
+  					$config['allowed_types'] = 'gif|jpg|png|jpeg';
+  					$config['max_size']      = '10000';
 
-					$this->load->library('upload', $config);
+  					$this->load->library('upload', $config);
 
-					if($this->upload->do_upload('cover_berita')) {
-						$old_image = $data['tabel_berita']['cover_berita'];
+  					if($this->upload->do_upload('cover_berita')) {
+  						$old_image = $data['tabel_berita']['cover_berita'];
 
-						if($old_image != 'default.jpg'){
-							unlink(FCPATH . 'assets/img/cover_berita/' . $old_image);
-						}
+  						if($old_image != 'default.jpg'){
+  							unlink(FCPATH . 'assets/img/cover_berita/' . $old_image);
+  						}
 
-						$new_image = $this->upload->data('file_name');
+  						$new_image = $this->upload->data('file_name');
 
-						$data = [
-							'judul_berita'	=> $judul_berita,
-							'isi_berita'		=> $isi_berita,
-							'cover_berita'	=> $new_image
-						];
+  						$data = [
+  							'judul_berita'	=> $judul_berita,
+  							'isi_berita'		=> $isi_berita,
+  							'cover_berita'	=> $new_image
+  						];
 
-						$this->db->where('id_berita', $id_berita);
-						$this->db->update('tabel_berita', $data);
+  						$this->db->where('id_berita', $id_berita);
+  						$this->db->update('tabel_berita', $data);
 
-						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
-						redirect('Admin/DaftarBerita');
-					}
-					else{
-						$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Sampul berita harus berupa gambar yang sesuai.</div>');
-						redirect('Admin/UbahBerita/'.$id_berita);
-					}
-				}
-				else{
-					$data = [
-						'judul_berita'	=> $judul_berita,
-						'isi_berita'		=> $isi_berita
-					];
+  						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+  						redirect('Admin/DaftarBerita');
+  					}
+  					else{
+  						$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Cover berita tidak valid.</div>');
+  						redirect('Admin/UbahBerita/'.$id_berita);
+  					}
+  				}
+  				else{
+  					$data = [
+  						'judul_berita'	=> $judul_berita,
+  						'isi_berita'		=> $isi_berita
+  					];
 
-					$this->db->where('id_berita', $id_berita);
-					$this->db->update('tabel_berita', $data);
+  					$this->db->where('id_berita', $id_berita);
+  					$this->db->update('tabel_berita', $data);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
-					redirect('Admin/DaftarBerita');
-				}
+  					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Berita berhasil diubah.</div>');
+  					redirect('Admin/DaftarBerita');
+  				}
+        }
       }
     }
 
