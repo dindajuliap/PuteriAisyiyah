@@ -23,7 +23,7 @@
 
       <div class="row mt-4">
 				<div class="col-lg-6">
-					<a href="<?= base_url('ProfilSaya') ?>" class="btn btn-secondary ml-5" style="border-radius: 10px; width: 75%; float: left">Batal</a>
+					<a href="<?= base_url('Admin/BiodataPanti') ?>" class="btn btn-secondary ml-5" style="border-radius: 10px; width: 75%; float: left">Batal</a>
 				</div>
 
 				<div class="col-lg-6">
