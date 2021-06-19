@@ -60,7 +60,7 @@
 					<small class="form-text text-danger"><?= form_error('jabatan_pengurus') ?></small>
 
 					<label style="margin-left: 3%" class="mt-1">Periode Kepengurusan <b style="color: red">*</b></label>
-					<input type="number" autocomplete="off" min="1" name="periode_kepengurusan" id="periode_kepengurusan" value="<?= set_value('periode_kepengurusan') ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%">
+					<input type="text" autocomplete="off" min="1" name="periode_kepengurusan" id="periode_kepengurusan" value="<?= set_value('periode_kepengurusan') ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%; margin-left: 3%">
 					<small class="form-text text-danger"><?= form_error('periode_kepengurusan') ?></small>
 				</div>
 			</div>
