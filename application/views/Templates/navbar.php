@@ -81,7 +81,7 @@
         </h3>
 
         <div class="row mb-3">
-          <h5 style="margin-left: auto; margin-right: auto">Anda yakin ingin mengeluarkan akun Anda?</h5>
+          <h5 style="margin-left: auto; margin-right: auto; color: black">Anda yakin ingin mengeluarkan akun Anda?</h5>
         </div>
 
         <div class="row">

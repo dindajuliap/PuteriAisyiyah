@@ -12,7 +12,7 @@
       <?php foreach($foto as $fot) : ?>
         <div class="col-lg-3 mt-3 d-md-block">
           <div style="height: 200px; position: relative">
-            <img src="<?= base_url('assets/img/album_foto/').$fot->file_foto ?>" style="width: 100%; height: 100%; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); object-fit: cover">
+            <img src="<?= base_url('assets/img/album_foto/').$fot->file_foto ?>" style="width: 100%; height: 100%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.65); object-fit: cover">
           </div>
         </div>
       <?php endforeach ?>
