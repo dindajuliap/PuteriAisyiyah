@@ -63,7 +63,7 @@
 					</div>
 
 					<div class="row">
-						<a class="btn btn-primary text-center" href="<?= base_url('Admin/HapusDataBerita/') . $val->id_berita ?>" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Yakin</a>
+						<a class="btn btn-primary text-center" href="<?= base_url('Admin/HapusBerita/') . $val->id_berita ?>" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Yakin</a>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
 					</div>
 				</div>

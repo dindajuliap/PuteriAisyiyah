@@ -17,7 +17,7 @@
       <span id="show2" onclick="show2()" style="position: relative; z-index: 1; top: -32px; left: 92%; cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
 			<small class="form-text text-danger" align="left" style="margin-bottom: 3%; margin-top: -4%"><?= form_error('password2') ?></small>
 
-      <label style="color: #030153">Kata Sandi Baru <b style="color: red">*</b></label>
+      <label style="color: #030153">Konfirmasi Kata Sandi Baru <b style="color: red">*</b></label>
       <input type="password" name="password3" id="password3" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
       <span id="show3" onclick="show3()" style="position: relative; z-index: 1; top: -32px; left: 92%; cursor: pointer; color: #AFAFAF"><i class="fa fa-eye icon"></i></span>
 
