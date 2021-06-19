@@ -4,13 +4,15 @@
 
 		<form action="" method="post">
 			<div class="row mt-3">
+				<div class="col-lg-3"></div>
+
 				<div class="col-lg-6">
 					<label>Berat Badan <b style="color: red">*</b></label>
-					<input type="number" value="<?= $anak['bb_anak'] ?>" max="999" min="1" maxlength="3" name="bb_anak" id="bb_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
+					<input type="number" value="<?= $anak['bb_anak'] ?>" max="999" min="1" maxlength="3" name="bb_anak" id="bb_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%">
 					<small class="form-text text-danger"><?= form_error('bb_anak') ?></small>
 
           <label class="mt-1">Tinggi Badan <b style="color: red">*</b></label>
-					<input type="number" value="<?= $anak['tb_anak'] ?>" max="999" min="1" maxlength="3" name="tb_anak" id="tb_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
+					<input type="number" value="<?= $anak['tb_anak'] ?>" max="999" min="1" maxlength="3" name="tb_anak" id="tb_anak" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 100%">
 					<small class="form-text text-danger"><?= form_error('tb_anak') ?></small>
 
           <label class="mt-2">Golongan Darah Anak</label>
@@ -31,12 +33,12 @@
               <input type="radio" value="AB" class="mr-2" name="goldar_anak" id="goldar_anak"> AB
             </div>
           </div>
+
+					<label class="mt-2">Penyakit Bawaan Anak</label>
+					<textarea name="penyakit_bawaan" id="penyakit_bawaan"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 100%; height: 127px; resize: none"><?php if($anak['penyakit_bawaan']) : ?><?= $anak['penyakit_bawaan'] ?><?php endif ?></textarea>
 				</div>
 
-				<div class="col-lg-6">
-          <label style="margin-left: 3%">Penyakit Bawaan Anak</label>
-					<textarea name="penyakit_bawaan" id="penyakit_bawaan"  class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; width: 97%; height: 127px; resize: none; margin-left: 3%"><?php if($anak['penyakit_bawaan']) : ?><?= $anak['penyakit_bawaan'] ?><?php endif ?></textarea>
-				</div>
+				<div class="col-lg-3"></div>
 			</div>
 
       <div class="row mt-5">

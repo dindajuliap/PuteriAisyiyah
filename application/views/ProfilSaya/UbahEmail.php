@@ -10,7 +10,7 @@
       <label style="color: #030153" class="mt-2">Email Lama</label>
 			<input disabled type="text" name="email_lama" id="email_lama" value="<?= $tabel_akun['email_user']; ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
 
-      <label style="color: #030153" class="mt-3">Email Baru</label>
+      <label style="color: #030153" class="mt-3">Email Baru <b style="color: red">*</b></label>
 			<input autocomplete="off" type="text" name="email_user" id="email_user" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
 			<small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('email_user') ?></small>
 

@@ -7,11 +7,11 @@
 		</div>
 
 		<form action="" method="post">
-			<label style="color: #030153" class="mt-2">Nomor Handphone</label>
+			<label style="color: #030153" class="mt-2">Nomor Handphone <b style="color: red">*</b></label>
 			<input autocomplete="off" type="text" name="nomorhp_user" id="nomorhp_user" value="<?= $tabel_akun['nomorhp_user'] ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
 			<small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('nomorhp_user') ?></small>
 
-			<label style="color: #030153" class="mt-3">Alamat</label>
+			<label style="color: #030153" class="mt-3">Alamat <b style="color: red">*</b></label>
 			<textarea name="alamat_user" id="alamat_user" class="form-control" style="border-radius: 10px; padding: 13px 20px; color: #7E7E7E; background: #ECECEC; height: 90px; resize: none"><?= $tabel_akun['alamat_user'] ?></textarea>
 			<small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('alamat_user') ?></small>
 

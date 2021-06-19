@@ -9,11 +9,11 @@
 		<form action="" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-lg-12">
-					<label class="mt-2">Judul Berita</label>
+					<label class="mt-2">Judul Berita <b style="color: red">*</b></label>
 					<input type="text" autocomplete="off" name="judul_berita" id="judul_berita" value="<?= $berita['judul_berita'] ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
 					<small class="form-text text-danger"><?= form_error('judul_berita') ?></small>
 
-					<label class="mt-2">Isi Berita</label>
+					<label class="mt-2">Isi Berita <b style="color: red">*</b></label>
           <textarea class="ckeditor" name="isi_berita" id="isi_berita" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC"><?= $berita['isi_berita'] ?></textarea>
 					<small class="form-text text-danger"><?= form_error('isi_berita') ?></small>
 

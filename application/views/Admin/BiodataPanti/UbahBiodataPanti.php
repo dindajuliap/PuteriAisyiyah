@@ -7,19 +7,19 @@
 		</div>
 
 		<form action="" method="post" enctype="multipart/form-data">
-      <label style="color: #030153"><?= $alamat_panti['jenis_biodata'] ?></label>
+      <label style="color: #030153"><?= $alamat_panti['jenis_biodata'] ?> <b style="color: red">*</b></label>
     	<textarea name="alamat_panti" id="alamat_panti" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; height: 100px; resize: none"><?= $alamat_panti['isi_biodata'] ?></textarea>
     	<small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('alamat_panti') ?></small>
 
-      <label style="color: #030153"><?= $email_panti['jenis_biodata'] ?></label>
+      <label style="color: #030153"><?= $email_panti['jenis_biodata'] ?> <b style="color: red">*</b></label>
       <input autocomplete="off" type="text" name="email_panti" id="email_panti" value="<?= $email_panti['isi_biodata'] ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
       <small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('email_panti') ?></small>
 
-      <label style="color: #030153"><?= $telepon_panti['jenis_biodata'] ?></label>
+      <label style="color: #030153"><?= $telepon_panti['jenis_biodata'] ?> <b style="color: red">*</b></label>
       <input autocomplete="off" type="text" name="telepon_panti" id="telepon_panti" value="<?= $telepon_panti['isi_biodata'] ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
       <small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('telepon_panti') ?></small>
 
-      <label style="color: #030153"><?= $ketua_panti['jenis_biodata'] ?></label>
+      <label style="color: #030153"><?= $ketua_panti['jenis_biodata'] ?> <b style="color: red">*</b></label>
       <input autocomplete="off" type="text" name="ketua_panti" id="ketua_panti" value="<?= $ketua_panti['isi_biodata'] ?>" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC">
       <small class="form-text text-danger" align="left" style="margin-bottom: 3%"><?= form_error('ketua_panti') ?></small>
 
