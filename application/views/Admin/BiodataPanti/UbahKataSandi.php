@@ -2,9 +2,7 @@
   <div style="width: 40%; margin: auto; padding: 40px 0px">
     <h3 style="color: #030153; font-weight: 700" align="center">UBAH KATA SANDI PANTI</h3>
 
-    <div class="row mt-3">
-			<?= $this->session->flashdata('message') ?>
-		</div>
+    <?= $this->session->flashdata('message') ?>
 
     <form action="" method="post">
       <label style="color: #030153">Kata Sandi Lama <b style="color: red">*</b></label>

@@ -68,7 +68,7 @@
                   <tr height="50px">
                     <td style="text-align: center"><?= $no ?></td>
                     <td style="padding: 7px"><?= $val->nama_anak ?></td>
-                    <td style="padding: 7px">
+                    <td style="padding: 7px" align="center">
 											<?php if($val->status_anak == 1) : ?>
 												Belum diadopsi
 											<?php else : ?>
