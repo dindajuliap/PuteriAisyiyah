@@ -102,8 +102,10 @@ Class Cetak extends CI_Controller{
     }
 
     function LaporanDonasi(){
+
         $this->db->select('*');
         $this->db->from('tabel_donasi');
+        $this->db->order_by('tgl_donasi', "desc");
         $data_donasi = $this->db->get()->result();
 
         $pdf = new FPDF('l','mm','A4');
