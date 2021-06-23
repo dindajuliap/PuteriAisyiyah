@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-lg-2">
-              <a href="<?= base_url('Admin/JenisDonasi') ?>" style="margin-left: -30%">
+              <a href="<?= base_url('Admin/JenisDonasi') ?>" style="margin-left: -29%">
                 <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
                   Jenis Donasi
                 </button>

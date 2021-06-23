@@ -1541,6 +1541,51 @@
       $this->load->view('Templates/foot');
     }
 
+    public function TambahJenisDonasi(){
+		  $this->db->select('*');
+      $this->db->from('jenis_donasi');
+      $jenis = $this->db->get()->result();
+
+      if(!$jenis){
+        $id_jenis_donasi = 1;
+      }
+      else{
+        $this->db->select('*');
+        $this->db->from('jenis_donasi');
+        $this->db->order_by('id_jenis_donasi', 'DESC');
+        $this->db->limit(1);
+        $jenis_terakhir = $this->db->get()->row_array();
+
+        $id_jenis_donasi = $jenis_terakhir['id_jenis_donasi'] + 1;
+      }
+
+			$jenis_donasi	= strtolower($this->input->post('jenis_donasi'));
+
+      $jenis1 = $this->db->get('jenis_donasi')->result();
+
+      if(!$jenis_donasi){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal ditambahkan! Jenis donasi tidak boleh kosong.</div>');
+        redirect('Admin/JenisDonasi');
+      }
+      else{
+        foreach($jenis1 as $val){
+          if(ucwords($jenis_donasi) == $val->jenis_donasi){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Jenis donasi telah terdaftar.</div>');
+            redirect('Admin/JenisDonasi');
+          }
+        }
+
+  			$data = [
+  				'id_jenis_donasi'	=> $id_jenis_donasi,
+  				'jenis_donasi'  	=> ucwords($jenis_donasi)
+  			];
+  			$this->db->insert('jenis_donasi', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Jenis donasi berhasil ditambahkan.</div>');
+        redirect('Admin/JenisDonasi');
+      }
+		}
+
     public function UbahJenisDonasi($id_jenis_donasi){
       $jenis_donasi = strtolower($this->input->post('jenis_donasi'));
       $jenis_donasi = ucwords($jenis_donasi);
@@ -1580,6 +1625,14 @@
           redirect('Admin/JenisDonasi');
         }
       }
+    }
+
+    public function HapusJenisDonasi($id_jenis_donasi){
+      $this->db->where('id_jenis_donasi', $id_jenis_donasi);
+      $this->db->delete('jenis_donasi');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Jenis donasi berhasil dihapus.</div>');
+      redirect('Admin/JenisDonasi');
     }
 
     public function DaftarBerita(){
@@ -2028,41 +2081,44 @@
     }
 
     public function TambahAlbum(){
-			$data['judul'] = 'Tambah Album';
+		  $this->db->select('*');
+      $this->db->from('tabel_album');
+      $tabel_album = $this->db->get()->result();
 
-			$this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
-
-			if($this->form_validation->run() == false){
-        $this->load->view('Templates/head', $data);
-        $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarAlbum/TambahAlbum', $data);
-        $this->load->view('Templates/foot');
+      if(!$tabel_album){
+        $id_album = 1;
       }
       else{
         $this->db->select('*');
         $this->db->from('tabel_album');
-        $tabel_album = $this->db->get()->result();
+        $this->db->order_by('id_album', 'DESC');
+        $this->db->limit(1);
+        $album_terakhir = $this->db->get()->row_array();
 
-        if(!$tabel_album){
-          $id_album = 1;
+        $id_album = $album_terakhir['id_album'] + 1;
+      }
+
+			$nama_album	= strtolower($this->input->post('nama_album'));
+
+      $album = $this->db->get('tabel_album')->result();
+
+      if(!$nama_album){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal ditambahkan! Nama album tidak boleh kosong.</div>');
+        redirect('Admin/DaftarAlbum');
+      }
+      else{
+        foreach($album as $val){
+          if(ucwords($nama_album) == $val->nama_album){
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album telah terdaftar.</div>');
+            redirect('Admin/DaftarAlbum');
+          }
         }
-        else{
-          $this->db->select('*');
-          $this->db->from('tabel_album');
-          $this->db->order_by('id_album', 'DESC');
-          $this->db->limit(1);
-          $album_terakhir = $this->db->get()->row_array();
 
-          $id_album = $album_terakhir['id_album'] + 1;
-        }
-
-				$nama_album	= strtolower($this->input->post('nama_album'));
-
-				$data = [
-					'id_album'     	=> $id_album,
-					'nama_album'  	=> ucwords($nama_album)
-				];
-				$this->db->insert('tabel_album', $data);
+  			$data = [
+  				'id_album'     	=> $id_album,
+  				'nama_album'  	=> ucwords($nama_album)
+  			];
+  			$this->db->insert('tabel_album', $data);
 
         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil ditambahkan.</div>');
         redirect('Admin/DaftarAlbum');
@@ -2070,33 +2126,38 @@
 		}
 
 		public function UbahAlbum($id_album){
-      $data['judul'] = 'Ubah Album';
-      $data['album'] = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
+      $nama_album = strtolower($this->input->post('nama_album'));
+      $nama_album = ucwords($nama_album);
 
-      $this->form_validation->set_rules('nama_album', 'Nama album', 'required|trim');
-
-      if($this->form_validation->run() == false){
-        $this->load->view('Templates/head', $data);
-        $this->load->view('Templates/navbarAdmin');
-        $this->load->view('Admin/DaftarAlbum/UbahAlbum', $data);
-        $this->load->view('Templates/foot');
+      if(!$nama_album){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama album tidak boleh kosong.</div>');
+        redirect('Admin/DaftarAlbum');
       }
       else{
-        $nama_album = strtolower($this->input->post('nama_album'));
-        $nama_album = ucwords($nama_album);
+        $nama1 = $this->db->get_where('tabel_album', ['id_album' => $id_album])->row_array();
 
-        if($nama_album == $data['album']['nama_album']){
+        if($nama_album == $nama1['nama_album']){
           $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama album sama seperti sebelumnya.</div>');
           redirect('Admin/DaftarAlbum');
         }
         else{
-          $data = [
-            'nama_album' => $nama_album
-          ];
+          $this->db->select('*');
+          $this->db->from('tabel_album');
+          $this->db->where_not_in('id_album', $id_album);
+          $donasi2 = $this->db->get()->result();
+
+          foreach($donasi2 as $val){
+            if($nama_album == $val->nama_album){
+              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama album sudah terdaftar.</div>');
+              redirect('Admin/DaftarAlbum');
+            }
+          }
+
+          $data = ['nama_album' => $nama_album];
           $this->db->where('id_album', $id_album);
           $this->db->update('tabel_album', $data);
 
-          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Album berhasil diperbarui.</div>');
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Nama album berhasil diperbarui.</div>');
           redirect('Admin/DaftarAlbum');
         }
       }

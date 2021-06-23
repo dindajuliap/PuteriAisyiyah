@@ -9,7 +9,7 @@
 
 		      <div class="row">
             <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahAlbum') ?>" style="margin-left: -15%">
+              <a data-toggle="modal" data-target="#tambahModal" style="margin-left: -15%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
                   <i class="fas fa-plus-circle mr-2"></i>
                   Tambah Album
@@ -72,7 +72,7 @@
                         <i class="fas fa-eye"></i>
                       </a>
 
-                      <a href="<?= site_url('Admin/UbahAlbum/'.$val->id_album)?>" class="btn btn-warning btn-sm">
+                      <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ubahModal<?= $val->id_album ?>">
                         <i class="fas fa-edit"></i>
                       </a>
 
@@ -103,7 +103,53 @@
   </div>
 </body>
 
+<div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
+      <div class="modal-body">
+        <h3 class="modal-title mt-3" id="exampleModalLabel" align="center">
+          <b style="font-family: Arial; color: #595959">Tambah Album</b>
+        </h3>
+
+        <form action="<?= site_url('Admin/TambahAlbum')?>" method="post">
+          <div class="row mb-4 mt-3">
+            <input type="text" autocomplete="off" style="border-radius: 10px; padding: 10px 22px; color: #7E7E7E; background: #ECECEC; border-color: #ECECEC; width: 100%" placeholder="Nama Album" name="nama_album">
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn-primary text-center" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Tambah</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php foreach($album as $val) : ?>
+  <div class="modal fade" id="ubahModal<?= $val->id_album ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
+        <div class="modal-body">
+          <h3 class="modal-title mt-3" id="exampleModalLabel" align="center">
+            <b style="font-family: Arial; color: #595959">Ubah Album</b>
+          </h3>
+
+          <form action="<?= site_url('Admin/UbahAlbum/'.$val->id_album)?>" method="post">
+            <div class="row mb-4 mt-3">
+              <input type="text" autocomplete="off" style="border-radius: 10px; padding: 10px 22px; color: #7E7E7E; background: #ECECEC; border-color: #ECECEC; width: 100%" placeholder="Nama Album" value="<?= $val->nama_album ?>" name="nama_album">
+            </div>
+
+            <div class="row">
+              <button type="submit" class="btn btn-primary text-center" style="width: 100px; margin-left: auto; margin-right: 7px; background: #030153; border-color: #030153">Ubah</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px; margin-right: auto; margin-left: 7px">Batal</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="hapusModal<?= $val->id_album ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   	<div class="modal-dialog modal-dialog-centered" role="document">
   		<div class="modal-content" style="padding: 20px 30px; border-radius: 20px">
