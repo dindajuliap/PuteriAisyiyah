@@ -15,6 +15,12 @@
                   Tambah Data
                 </button>
               </a>
+              <a href="<?= base_url('Cetak/CetakDataAnak') ?>" style="margin-left: -15%">
+                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                  <i class="fas fa-print mr-2"></i>
+                  Cetak Data
+                </button>
+              </a>
             </div>
 
 	          <div class="col-lg-6">
