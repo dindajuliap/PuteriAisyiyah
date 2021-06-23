@@ -8,11 +8,16 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<label class="mt-2">Nama Lengkap <b style="color: red">*</b></label>
-					<input type="text" autocomplete="off" name="nama_donatur" id="nama_donatur" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
+          <input type='text' name='nama_donatur' autocomplete="off" class='form-control' style='border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%' onchange='return autofill()' list='data_donatur'>
 					<small class="form-text text-danger"><?= form_error('nama_donatur') ?></small>
 
           <label class="mt-2">Jenis Donasi <b style="color: red">*</b></label>
-					<input type="text" autocomplete="off" name="jenis_donasi" id="jenis_donasi" class="form-control" style="border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 97%">
+          <select name="jenis_donasi" class="form-control" style="width: 97%; border-radius: 10px; color: #7E7E7E; background: #ECECEC">
+            <option selected="selected" disabled="disabled">Pilih Salah Satu</option>
+            <?php foreach($jenis as $val) : ?>
+              <option value="<?= $val->jenis_donasi ?>" <?= set_value('jenis_donasi') == $val->jenis_donasi ? "selected" : null ?>><?= $val->jenis_donasi ?></option>
+            <?php endforeach ?>
+          </select>
 					<small class="form-text text-danger"><?= form_error('jenis_donasi') ?></small>
 
           <label class="mt-2">Upload Bukti Transfer <b style="color: red">*</b> <b style="color: red; font-size: 12px; font-weight: 100; margin-top: 1%"> Wajib upload hanya jika jenis donasi berupa uang</b></label><br>
@@ -37,10 +42,10 @@
 
 			<div class="row mt-5">
 				<div class="col-lg-6">
-					<a href="<?= base_url('Admin/DaftarDonasi') ?>" class="btn" style="border-radius: 10px; width: 25%; float: right; background: grey; color: white">Batal</a>
+					<a href="<?= base_url('Admin/DaftarDonasi') ?>" class="btn" style="border-radius: 10px; width: 25%; float: right; background: grey; color: white; margin-right: 3%">Batal</a>
 				</div>
 				<div class="col-lg-6">
-					<button type="submit" class="btn" style="border-radius: 10px; width: 25%; margin-left: 10px; float: left; background: #030153; color: white">Tambah</button>
+					<button type="submit" class="btn" style="border-radius: 10px; width: 25%; float: left; background: #030153; color: white; margin-left: 8%">Tambah</button>
 				</div>
 			</div>
     </form>
@@ -57,3 +62,28 @@
 		cursor: pointer;
 	}
 </style>
+
+<datalist id="data_donatur">
+  <?php
+    foreach ($record->result() as $b){
+      echo "<option value='$b->nama_donatur'>$b->nama_donatur</option>";
+    }
+  ?>
+</datalist>
+
+<script>
+  function autofill(){
+    var nama_donatur = document.getElementById('nama_donatur').value;
+    $.ajax({
+      url:"<?= base_url() ?>Admin/cari",
+      data:'&nama_donatur='+nama_donatur,
+      success:function(data){
+        var hasil = JSON.parse(data);
+
+        $.each(hasil, function(key,val){
+          document.getElementById('nama_donatur').value = val.nama_donatur;
+        });
+      }
+    });
+  }
+</script>

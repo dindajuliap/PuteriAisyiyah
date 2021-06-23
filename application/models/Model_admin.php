@@ -69,6 +69,36 @@
       return $this->db->get('tabel_donasi')->num_rows();
     }
 
+    public function getJenis1($search){
+      if($search){
+        $this->db->like('jenis_donasi', $search);
+      }
+      return $this->db->get('jenis_donasi')->result();
+    }
+
+    public function getJenis2($limit, $start){
+      return $this->db->get('jenis_donasi', $limit, $start)->result();
+    }
+
+    public function countJenis(){
+      return $this->db->get('jenis_donasi')->num_rows();
+    }
+
+    public function getDonatur1($search){
+      if($search){
+        $this->db->like('nama_donatur', $search);
+      }
+      return $this->db->get('tabel_donatur')->result();
+    }
+
+    public function getDonatur2($limit, $start){
+      return $this->db->get('tabel_donatur', $limit, $start)->result();
+    }
+
+    public function countDonatur(){
+      return $this->db->get('tabel_donatur')->num_rows();
+    }
+
     public function getBerita($search){
       if($search){
         $this->db->like('judul_berita', $search);

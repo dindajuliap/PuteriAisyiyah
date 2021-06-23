@@ -28,6 +28,7 @@
       }
 			else{
 				$data['judul'] = 'Form Donasi';
+        $data['record'] = $this->Model_donatur->tampil_data();
 
 				$this->form_validation->set_rules('nama_donatur', 'Nama', 'required|trim');
 				$this->form_validation->set_rules('tgl_donasi', 'Tanggal donasi', 'required|trim');
@@ -84,6 +85,32 @@
 							'jenis_donasi'  => 'Uang'
 						];
 						$this->db->insert('tabel_donasi', $data);
+
+            $donatur = $this->db->get_where('tabel_donatur', ['nama_donatur' => ucwords($nama_donatur)])->row_array();
+            if(!$donatur){
+              $this->db->select('*');
+              $this->db->from('tabel_donatur');
+              $tabel_donatur = $this->db->get()->result();
+
+              if(!$tabel_donatur){
+                $id_donatur = 1;
+              }
+              else{
+                $this->db->select('*');
+                $this->db->from('tabel_donatur');
+                $this->db->order_by('id_donatur', 'DESC');
+                $this->db->limit(1);
+                $donatur_terakhir = $this->db->get()->row_array();
+
+                $id_donatur = $donatur_terakhir['id_donatur'] + 1;
+              }
+
+              $data1 = [
+                'id_donatur'    => $id_donatur,
+                'nama_donatur'  => ucwords($nama_donatur)
+              ];
+              $this->db->insert('tabel_donatur', $data1);
+            }
 
 						redirect('Donasi/Berhasil');
 					}

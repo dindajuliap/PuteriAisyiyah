@@ -6,7 +6,7 @@
       <div class="row mt-4">
         <div class="col-lg-6 d-md-block" style="margin-left: auto; margin-right: auto">
           <label style="color: #030153" class="ml-4">Nama Lengkap <b style="color: red">*</b></label>
-          <input type="text" autocomplete="off" name="nama_donatur" id="nama_donatur" class="form-control ml-4" style="border-radius: 10px; padding: 18px 16px; color: #7E7E7E; background: #ECECEC; width: 90%">
+          <input type='text' name='nama_donatur' autocomplete="off" class='form-control ml-4' style='border-radius: 10px; padding: 20px 22px; color: #7E7E7E; background: #ECECEC; width: 90%' onchange='return autofill()' list='data_donatur'>
           <small class="form-text text-danger ml-4" align="left" style="margin-bottom: 3%"><?= form_error('nama_donatur') ?></small>
 
           <label style="color: #030153" class="ml-4">Tanggal Donasi <b style="color: red">*</b></label>
@@ -73,4 +73,29 @@
 		jumlah_donasi = split[1] != undefined ? jumlah_donasi + ',' + split[1] : jumlah_donasi;
 		return prefix == undefined ? jumlah_donasi : (jumlah_donasi ? 'Rp. ' + jumlah_donasi : '');
 	}
+</script>
+
+<datalist id="data_donatur">
+  <?php
+    foreach ($record->result() as $b){
+      echo "<option value='$b->nama_donatur'>$b->nama_donatur</option>";
+    }
+  ?>
+</datalist>
+
+<script>
+  function autofill(){
+    var nama_donatur = document.getElementById('nama_donatur').value;
+    $.ajax({
+      url:"<?= base_url() ?>Admin/cari",
+      data:'&nama_donatur='+nama_donatur,
+      success:function(data){
+        var hasil = JSON.parse(data);
+
+        $.each(hasil, function(key,val){
+          document.getElementById('nama_donatur').value = val.nama_donatur;
+        });
+      }
+    });
+  }
 </script>

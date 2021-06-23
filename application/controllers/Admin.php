@@ -12,6 +12,7 @@
       $this->load->library('form_validation');
       $this->load->library('pagination');
       $this->load->model('Model_admin', 'admin');
+      $this->load->model('Model_donatur');
     }
 
     public function index(){
@@ -1248,12 +1249,14 @@
     }
 
 		public function TambahDataDonasi(){
-      $data['judul'] = 'Tambah Data Donasi';
+      $data['judul']  = 'Tambah Data Donasi';
+      $data['jenis']  = $this->db->get('jenis_donasi')->result();
+      $data['record'] = $this->Model_donatur->tampil_data();
 
       $this->form_validation->set_rules('nama_donatur', 'Nama donatur', 'required|trim');
       $this->form_validation->set_rules('tgl_donasi', 'Tanggal donasi', 'required|trim');
       $this->form_validation->set_rules('jumlah_donasi', 'Jumlah donasi', 'required|trim');
-      $this->form_validation->set_rules('jenis_donasi', 'Jenis donasi', 'required|trim');
+      $this->form_validation->set_rules('jenis_donasi', 'Jenis donasi', 'required|trim', ['required' => 'Jenis donasi harus dipilih.']);
 
       if($this->form_validation->run() == false){
         $this->load->view('Templates/head', $data);
@@ -1310,6 +1313,32 @@
             ];
             $this->db->insert('tabel_donasi', $data);
 
+            $donatur = $this->db->get_where('tabel_donatur', ['nama_donatur' => ucwords($nama_donatur)])->row_array();
+            if(!$donatur){
+              $this->db->select('*');
+              $this->db->from('tabel_donatur');
+              $tabel_donatur = $this->db->get()->result();
+
+              if(!$tabel_donatur){
+                $id_donatur = 1;
+              }
+              else{
+                $this->db->select('*');
+                $this->db->from('tabel_donatur');
+                $this->db->order_by('id_donatur', 'DESC');
+                $this->db->limit(1);
+                $donatur_terakhir = $this->db->get()->row_array();
+
+                $id_donatur = $donatur_terakhir['id_donatur'] + 1;
+              }
+
+              $data1 = [
+                'id_donatur'    => $id_donatur,
+                'nama_donatur'  => ucwords($nama_donatur)
+              ];
+              $this->db->insert('tabel_donatur', $data1);
+            }
+
   					$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
             redirect('Admin/DaftarDonasi');
           }
@@ -1328,10 +1357,42 @@
           ];
           $this->db->insert('tabel_donasi', $data);
 
+          $donatur = $this->db->get_where('tabel_donatur', ['nama_donatur' => ucwords($nama_donatur)])->row_array();
+          if(!$donatur){
+            $this->db->select('*');
+            $this->db->from('tabel_donatur');
+            $tabel_donatur = $this->db->get()->result();
+
+            if(!$tabel_donatur){
+              $id_donatur = 1;
+            }
+            else{
+              $this->db->select('*');
+              $this->db->from('tabel_donatur');
+              $this->db->order_by('id_donatur', 'DESC');
+              $this->db->limit(1);
+              $donatur_terakhir = $this->db->get()->row_array();
+
+              $id_donatur = $donatur_terakhir['id_donatur'] + 1;
+            }
+
+            $data1 = [
+              'id_donatur'    => $id_donatur,
+              'nama_donatur'  => ucwords($nama_donatur)
+            ];
+            $this->db->insert('tabel_donatur', $data1);
+          }
+
           $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil ditambahkan.</div>');
           redirect('Admin/DaftarDonasi');
         }
       }
+    }
+
+    public function cari(){
+      $nama_donatur = $_GET['nama_donatur'];
+      $cari         = $this->Model_donatur->cari($nama_donatur)->result();
+      echo json_encode($cari);
     }
 
     public function HapusDataDonasi($id_donasi){
@@ -1339,6 +1400,186 @@
 
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donasi berhasil dihapus.</div>');
       redirect('Admin/DaftarDonasi');
+    }
+
+    public function DaftarDonatur(){
+      $data['judul']      = 'Daftar Donatur';
+      $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarDonatur/index';
+
+      if($this->input->post('submit')){
+        if($this->input->post('search')){
+          $data['search'] = $this->input->post('search');
+
+          $this->db->like('nama_donatur', $data['search']);
+          $this->db->from('tabel_donatur');
+          $config['total_rows'] = $this->db->count_all_results();
+          $data['total_rows']   = $config['total_rows'];
+
+          $data['start']  = 0;
+          $data['donatur'] = $this->admin->getDonatur1($data['search']);
+        }
+        else{
+          $config['total_rows'] = $this->admin->countDonatur();
+          $data['total_rows']   = $config['total_rows'];
+          $config['per_page']   = 8;
+
+          $this->pagination->initialize($config);
+
+          $data['start']  = $this->uri->segment(4);
+          $data['donatur'] = $this->admin->getDonatur2($config['per_page'], $data['start']);
+        }
+      }
+      else{
+        $config['total_rows'] = $this->admin->countDonatur();
+        $data['total_rows']   = $config['total_rows'];
+        $config['per_page']   = 8;
+
+        $this->pagination->initialize($config);
+
+        $data['start']  = $this->uri->segment(4);
+        $data['donatur'] = $this->admin->getDonatur2($config['per_page'], $data['start']);
+      }
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarDonatur/index', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function UbahDataDonatur($id_donatur){
+      $nama_donatur = strtolower($this->input->post('nama_donatur'));
+      $nama_donatur = ucwords($nama_donatur);
+
+      if(!$nama_donatur){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama donatur tidak boleh kosong.</div>');
+        redirect('Admin/DaftarDonatur');
+      }
+      else{
+        $donatur1 = $this->db->get_where('tabel_donatur', ['id_donatur' => $id_donatur])->row_array();
+
+        if($nama_donatur == $donatur1['nama_donatur']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama donatur sama seperti sebelumnya.</div>');
+          redirect('Admin/DaftarDonatur');
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('tabel_donatur');
+          $this->db->where_not_in('id_donatur', $id_donatur);
+          $donasi2 = $this->db->get()->result();
+
+          foreach($donasi2 as $val){
+            if($nama_donatur == $val->nama_donatur){
+              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Nama donatur sudah terdaftar.</div>');
+              redirect('Admin/DaftarDonatur');
+            }
+          }
+
+          $data = ['nama_donatur' => $nama_donatur];
+          $this->db->where('nama_donatur', $donatur1['nama_donatur']);
+          $this->db->update('tabel_donasi', $data);
+
+          $this->db->where('id_donatur', $id_donatur);
+          $this->db->update('tabel_donatur', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Nama donatur berhasil diperbarui.</div>');
+          redirect('Admin/DaftarDonatur');
+        }
+      }
+    }
+
+    public function HapusDataDonatur($id_donatur){
+      $this->db->where('id_donatur', $id_donatur);
+      $this->db->delete('tabel_donatur');
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donatur berhasil dihapus.</div>');
+      redirect('Admin/DaftarDonatur');
+    }
+
+    public function JenisDonasi(){
+      $data['judul']      = 'Jenis Donasi';
+      $config['base_url'] = 'http://localhost/PuteriAisyiyah/Admin/DaftarDonasi/JenisDonasi';
+
+      if($this->input->post('submit')){
+        if($this->input->post('search')){
+          $data['search'] = $this->input->post('search');
+
+          $this->db->like('jenis_donasi', $data['search']);
+          $this->db->from('jenis_donasi');
+          $config['total_rows'] = $this->db->count_all_results();
+          $data['total_rows']   = $config['total_rows'];
+
+          $data['start']  = 0;
+          $data['jenis'] = $this->admin->getJenis1($data['search']);
+        }
+        else{
+          $config['total_rows'] = $this->admin->countJenis();
+          $data['total_rows']   = $config['total_rows'];
+          $config['per_page']   = 8;
+
+          $this->pagination->initialize($config);
+
+          $data['start']  = $this->uri->segment(4);
+          $data['jenis'] = $this->admin->getJenis2($config['per_page'], $data['start']);
+        }
+      }
+      else{
+        $config['total_rows'] = $this->admin->countJenis();
+        $data['total_rows']   = $config['total_rows'];
+        $config['per_page']   = 8;
+
+        $this->pagination->initialize($config);
+
+        $data['start']  = $this->uri->segment(4);
+        $data['jenis'] = $this->admin->getJenis2($config['per_page'], $data['start']);
+      }
+
+      $this->load->view('Templates/head', $data);
+      $this->load->view('Templates/navbarAdmin');
+      $this->load->view('Admin/index');
+      $this->load->view('Admin/DaftarDonasi/JenisDonasi', $data);
+      $this->load->view('Templates/foot');
+    }
+
+    public function UbahJenisDonasi($id_jenis_donasi){
+      $jenis_donasi = strtolower($this->input->post('jenis_donasi'));
+      $jenis_donasi = ucwords($jenis_donasi);
+
+      if(!$jenis_donasi){
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Jenis donasi tidak boleh kosong.</div>');
+        redirect('Admin/JenisDonasi');
+      }
+      else{
+        $jenis1 = $this->db->get_where('jenis_donasi', ['id_jenis_donasi' => $id_jenis_donasi])->row_array();
+
+        if($jenis_donasi == $jenis1['jenis_donasi']){
+          $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Jenis donasi sama seperti sebelumnya.</div>');
+          redirect('Admin/JenisDonasi');
+        }
+        else{
+          $this->db->select('*');
+          $this->db->from('jenis_donasi');
+          $this->db->where_not_in('id_jenis_donasi', $id_jenis_donasi);
+          $donasi2 = $this->db->get()->result();
+
+          foreach($donasi2 as $val){
+            if($jenis_donasi == $val->jenis_donasi){
+              $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Gagal diperbarui! Jenis donasi sudah terdaftar.</div>');
+              redirect('Admin/JenisDonasi');
+            }
+          }
+
+          $data = ['jenis_donasi' => $jenis_donasi];
+          $this->db->where('jenis_donasi', $jenis1['jenis_donasi']);
+          $this->db->update('tabel_donasi', $data);
+
+          $this->db->where('id_jenis_donasi', $id_jenis_donasi);
+          $this->db->update('jenis_donasi', $data);
+
+          $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Jenis donasi berhasil diperbarui.</div>');
+          redirect('Admin/JenisDonasi');
+        }
+      }
     }
 
     public function DaftarBerita(){

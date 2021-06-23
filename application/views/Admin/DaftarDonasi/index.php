@@ -8,11 +8,27 @@
           <?= $this->session->flashdata('message') ?>
 
 		      <div class="row">
-            <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahDataDonasi') ?>" style="margin-left: -15%">
+            <div class="col-lg-2">
+              <a href="<?= base_url('Admin/TambahDataDonasi') ?>" style="margin-left: -8%">
                 <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
                   <i class="fas fa-plus-circle mr-2"></i>
                   Tambah Data
+                </button>
+              </a>
+            </div>
+
+            <div class="col-lg-2">
+              <a href="<?= base_url('Admin/DaftarDonatur') ?>" style="margin-left: -5%">
+                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
+                  Daftar Donatur
+                </button>
+              </a>
+            </div>
+
+            <div class="col-lg-2">
+              <a href="<?= base_url('Admin/JenisDonasi') ?>" style="margin-left: -30%">
+                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
+                  Jenis Donasi
                 </button>
               </a>
             </div>
