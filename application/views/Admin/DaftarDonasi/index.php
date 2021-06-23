@@ -33,7 +33,16 @@
               </a>
             </div>
 
-	          <div class="col-lg-6">
+            <div class="col-lg-1">
+              <a href="<?= base_url('Cetak/LaporanDonasi') ?>" style="margin-left: -131%">
+                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                  <i class="fas fa-print mr-2"></i>
+                  Cetak Data
+                </button>
+              </a>
+            </div>
+
+	          <div class="col-lg-5">
 							<form action="" method="post" style="width: 45%; margin-left: 53%; margin-top: 1%">
 								<div class="input-group">
 								  <input type="text" name="search" class="form-control" placeholder="Cari data donasi" autocomplete="off">

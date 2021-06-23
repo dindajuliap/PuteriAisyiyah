@@ -8,6 +8,11 @@ Class Cetak extends CI_Controller{
     }
     
     function CetakDataAnak(){
+
+        $this->db->select('*');
+        $this->db->from('view_anak');
+        $data_anak = $this->db->get()->result();
+
         $pdf = new FPDF('l','mm','A4');
         // membuat halaman baru
         $pdf->AddPage();
@@ -32,11 +37,7 @@ Class Cetak extends CI_Controller{
         $pdf->Cell(18,6,'Agama',1,0);
         $pdf->Cell(25,6,'Negara',1,0);
         $pdf->Cell(30,6,'Status Org Tua',1,1);
-
-        $this->db->select('*');
-        $this->db->from('view_anak');
-        $data_anak = $this->db->get()->result();
-
+        
         $pdf->SetFont('Arial','',10);
         $no = 1;
         foreach ($data_anak as $row){
@@ -99,4 +100,43 @@ Class Cetak extends CI_Controller{
         }
         $pdf->Output();
     }
+
+    function LaporanDonasi(){
+        $this->db->select('*');
+        $this->db->from('tabel_donasi');
+        $data_donasi = $this->db->get()->result();
+
+        $pdf = new FPDF('l','mm','A4');
+        $pdf->AddPage();
+        $pdf->SetMargins(50, 50, 30, 50);
+
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(280,7,'PANTI ASUHAN PUTERI AISYIYAH',0,1,'C');
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf->Cell(200,7,'LAPORAN DONASI',0,1,'C');
+        $pdf->Cell(10,7,'',0,1);
+
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(12,6,'No',1,0);
+        $pdf->Cell(60,6,'Nama Donatur',1,0);
+        $pdf->Cell(30,6,'Jumlah',1,0);
+        $pdf->Cell(27,6,'Jenis Donasi',1,0);
+        $pdf->Cell(30,6,'Keterangan',1,0);
+        $pdf->Cell(27,6,'Tgl Donasi',1,1);
+
+        $pdf->SetFont('Arial','',10);
+        $no = 1;
+        foreach ($data_donasi as $row){
+            $pdf->Cell(12,6,$no,1,0);
+            $pdf->Cell(60,6,$row->nama_donatur,1,0);
+            $pdf->Cell(30,6,$row->jumlah_donasi,1,0);
+            $pdf->Cell(27,6,$row->jenis_donasi,1,0);
+            $pdf->Cell(30,6,$row->ket_donasi,1,0);
+            $pdf->Cell(27,6,$row->tgl_donasi,1,1);
+            $no++;
+        }
+        $pdf->Output();
+    }
+
 }
