@@ -1489,8 +1489,7 @@
     }
 
     public function HapusDataDonatur($id_donatur){
-      $this->db->where('id_donatur', $id_donatur);
-      $this->db->delete('tabel_donatur');
+      $this->db->query('call procedure_hapus_donatur('.$id_donatur.')');
 
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Data donatur berhasil dihapus.</div>');
       redirect('Admin/DaftarDonatur');
@@ -1628,8 +1627,7 @@
     }
 
     public function HapusJenisDonasi($id_jenis_donasi){
-      $this->db->where('id_jenis_donasi', $id_jenis_donasi);
-      $this->db->delete('jenis_donasi');
+      $this->db->query('call procedure_hapus_jenis_donasi('.$id_jenis_donasi.')');
 
       $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: Arial; width: 98%; margin-left: 1%" align="left">Jenis donasi berhasil dihapus.</div>');
       redirect('Admin/JenisDonasi');
