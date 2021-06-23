@@ -15,10 +15,11 @@
                   Tambah Data
                 </button>
               </a>
+
               <a href="<?= base_url('Cetak/CetakDataPengurus') ?>" style="margin-left: -15%">
-                <button class="btn" style="width: 210px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
-                  <i class="fas fa-print mr-2"></i>
-                  Cetak Data Pengurus
+                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                  <i class="fas fa-download mr-2"></i>
+                  Data Pengurus
                 </button>
               </a>
             </div>

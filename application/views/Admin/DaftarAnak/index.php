@@ -8,17 +8,29 @@
           <?= $this->session->flashdata('message') ?>
 
 		      <div class="row">
-            <div class="col-lg-6">
-              <a href="<?= base_url('Admin/TambahDataAnak') ?>" style="margin-left: -15%">
-                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+            <div class="col-lg-2">
+              <a href="<?= base_url('Admin/TambahDataAnak') ?>">
+                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 6%">
                   <i class="fas fa-plus-circle mr-2"></i>
                   Tambah Data
                 </button>
               </a>
-              <a href="<?= base_url('Cetak/CetakDataAnak') ?>" style="margin-left: -15%">
-                <button class="btn" style="width: 200px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
-                  <i class="fas fa-print mr-2"></i>
-                  Cetak Data Anak
+            </div>
+
+            <div class="col-lg-2">
+              <a href="<?= base_url('Cetak/CetakDataAnak') ?>">
+                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white; margin-left: -10%">
+                  <i class="fas fa-download mr-2"></i>
+                  Data Anak
+                </button>
+              </a>
+            </div>
+
+            <div class="col-lg-2">
+              <a href="<?= base_url('Cetak/CetakDataOrtu') ?>">
+                <button class="btn" style="width: 200px; height: 40px; background-color: #030153; color: white; margin-left: -35%">
+                  <i class="fas fa-download mr-2"></i>
+                  Data Orang Tua
                 </button>
               </a>
             </div>

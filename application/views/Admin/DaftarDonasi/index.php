@@ -9,16 +9,25 @@
 
 		      <div class="row">
             <div class="col-lg-2">
-              <a href="<?= base_url('Admin/TambahDataDonasi') ?>" style="margin-left: -8%">
-                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+              <a href="<?= base_url('Admin/TambahDataDonasi') ?>" style="margin-left: 6%">
+                <button class="btn" style="width: 170px; height: 40px; background-color: #030153; color: white">
                   <i class="fas fa-plus-circle mr-2"></i>
                   Tambah Data
                 </button>
               </a>
             </div>
 
+            <div class="col-lg-1">
+              <a href="<?= base_url('Cetak/LaporanDonasi') ?>" style="margin-left: -35%">
+                <button class="btn" style="width: 120px; height: 40px; background-color: #030153; color: white">
+                  <i class="fas fa-download mr-2"></i>
+                  Laporan
+                </button>
+              </a>
+            </div>
+
             <div class="col-lg-2">
-              <a href="<?= base_url('Admin/DaftarDonatur') ?>" style="margin-left: -5%">
+              <a href="<?= base_url('Admin/DaftarDonatur') ?>" style="margin-left: -8.5%">
                 <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
                   Daftar Donatur
                 </button>
@@ -26,18 +35,9 @@
             </div>
 
             <div class="col-lg-2">
-              <a href="<?= base_url('Admin/JenisDonasi') ?>" style="margin-left: -29%">
-                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white">
+              <a href="<?= base_url('Admin/JenisDonasi') ?>" style="margin-left: -40%">
+                <button class="btn" style="width: 120px; height: 40px; background-color: #030153; color: white">
                   Jenis Donasi
-                </button>
-              </a>
-            </div>
-
-            <div class="col-lg-1">
-              <a href="<?= base_url('Cetak/LaporanDonasi') ?>" style="margin-left: -131%">
-                <button class="btn" style="width: 150px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
-                  <i class="fas fa-print mr-2"></i>
-                  Cetak Data
                 </button>
               </a>
             </div>
