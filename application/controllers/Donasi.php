@@ -10,6 +10,7 @@
       }
 
       $this->load->library('form_validation');
+      $this->load->model('Model_donatur');
     }
 
     public function index(){
@@ -38,7 +39,7 @@
 					$this->load->view('Templates/head', $data);
 					$this->load->view('Templates/navbar');
 					$this->load->view('Donasi/FormDonasi');
-      				$this->load->view('Templates/footer');
+      		$this->load->view('Templates/footer');
 					$this->load->view('Templates/foot');
 				}
 				else{
@@ -112,10 +113,74 @@
               $this->db->insert('tabel_donatur', $data1);
             }
 
+            $this->_sendEmail($id_donasi);
+
 						redirect('Donasi/Berhasil');
 					}
 				}
       }
+    }
+
+    private function _sendEmail($id_donasi){
+      $user        = $this->db->get_where('tabel_akun', ['id_user' => $this->session->userdata('id_user')])->row_array();
+      $donasi      = $this->db->get_where('tabel_donasi', ['id_donasi' => $id_donasi])->row_array();
+      $email_panti = $this->db->get_where('tabel_panti', ['jenis_biodata' => 'Email'])->row_array();
+
+      $config = [
+        'protocol'  => 'smtp',
+        'smtp_host' => 'ssl://smtp.googlemail.com',
+        'smtp_user' => 'puteriaisyiyah@gmail.com',
+        'smtp_pass' => 'puteriaisyiyah123',
+        'smtp_port' =>  465,
+        'mailtype'  => 'html',
+        'charset'   => 'utf-8',
+        'newline'   => "\r\n"
+      ];
+
+      $this->load->library('email', $config);
+      $this->email->initialize($config);
+
+      $this->email->from($email_panti, 'Panti Asuhan Puteri Aisyiyah');
+      $this->email->to($user['email_user']);
+
+      $this->email->subject('Bukti Donasi');
+      $this->email->message('
+        Hai '.$user['email_user'].',<br><br>
+        Terima kasih telah melakukan donasi kepada Panti Asuhan Puteri Aisyiyah dan bukti donasinya terlampir pada email ini<br><br>
+        <h3>Detail Donasi</h3>
+        <hr style="width: 350px; float: left"><br>
+        <table>
+          <tr>
+            <td style="float: left; width: 200px">Nama Pendonasi</td>
+            <td style="float: right; width: 200px">'.$donasi['nama_donatur'].'</td>
+          </tr>
+
+          <tr>
+            <td style="float: left; width: 200px">Tanggal Donasi</td>
+            <td style="float: right; width: 200px">'.date('d M Y', strtotime($donasi['tgl_donasi'])).'</td>
+          </tr>
+
+          <tr>
+            <td style="float: left; width: 200px">Jumlah Donasi</td>
+            <td style="float: right; width: 200px">'.$donasi['jumlah_donasi'].'</td>
+          </tr>
+
+          <tr>
+            <td style="float: left; width: 200px">Keterangan</td>
+            <td style="float: right; width: 200px">'.$donasi['ket_donasi'].'</td>
+          </tr>
+        </table><br>
+        <hr style="width: 350px; float: left"><br><br>
+        Salam,<br>
+        Panti Asuhan Puteri Aisyiyah
+      ');
+
+      if($this->email->send()){
+        return true;
+      }
+      else $this->email->print_debugger();
+
+      die;
     }
 
     public function Berhasil(){

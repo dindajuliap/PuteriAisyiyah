@@ -19,7 +19,7 @@
 
             <div class="col-lg-4">
               <a href="<?= base_url('Admin/UbahKataSandi') ?>" style="margin-left: -15%">
-                <button class="btn" style="width: 200px; height: 40px; background-color: #030153; color: white; margin-left: 17%">
+                <button class="btn" style="width: 200px; height: 40px; background-color: #030153; color: white; margin-left: 10%">
                   <i class="fas fa-edit mr-2"></i>
                   Ubah Kata Sandi
                 </button>

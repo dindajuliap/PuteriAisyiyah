@@ -32,8 +32,8 @@
       </div>
 
       <div class="row" style="margin-left: auto; margin-right: auto; display: block; margin-top: 40px" align="center">
-        <a href="<?= base_url('Donasi') ?>" class="btn form-control mr-3" style="background: #7F7F7F; color: white; border-radius: 10px; width: 10%">Batal</a>
-        <button type="submit" class="form-control btn" style="background: #030153; color: white; border-radius: 10px; width: 10%">Kirim</button>
+        <a href="<?= base_url('Donasi') ?>" class="btn form-control" style="background: #7F7F7F; color: white; border-radius: 10px; width: 10%; margin-right: 3%">Batal</a>
+        <button type="submit" class="form-control btn" style="background: #030153; color: white; border-radius: 10px; width: 10%; margin-left: 3%">Kirim</button>
       </div>
     </form>
   </div>
